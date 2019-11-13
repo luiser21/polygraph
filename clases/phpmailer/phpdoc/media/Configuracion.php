@@ -1,0 +1,1 @@
+<?php /** @author Herik Giovanny Cardozo Bustos @version 2014.01.03 @package Configuracion **/ include_once( dirname(dirname(__file__)) . "/Configuracion.php"); /** EndConfiguracion **/ ?>

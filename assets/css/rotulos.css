@@ -1,0 +1,17 @@
+/*
+* Contiene todas las figuras geometricas para generacion dinamica de rotulos
+*/
+.cuadrado {
+     width: 100px; 
+     height: 100px; 
+     background: #428bca;
+}
+
+.circulo {
+     width: 100px;
+     height: 100px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #5cb85c;
+}

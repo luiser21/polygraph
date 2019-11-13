@@ -1,0 +1,246 @@
+[29-Oct-2018 21:58:34 America/Bogota] PHP Fatal error:  Uncaught <span style="color: #AA0000; font-weight: bold;">ERROR n°6</span><br>Fichero : /home/ichwy5gpohii/public_html/html2pdf/html2pdf.class.php<br>Línea : 1321<br><br>Imposible cargar la imagen <b>CELSIA/599/2.jpg</b>
+  thrown in /home/ichwy5gpohii/public_html/html2pdf/html2pdf.class.php on line 1321
+[29-Oct-2018 22:00:35 America/Bogota] PHP Fatal error:  Uncaught <span style="color: #AA0000; font-weight: bold;">ERROR n°6</span><br>Fichero : /home/ichwy5gpohii/public_html/html2pdf/html2pdf.class.php<br>Línea : 1321<br><br>Imposible cargar la imagen <b>CELSIA/599/2.jpg</b>
+  thrown in /home/ichwy5gpohii/public_html/html2pdf/html2pdf.class.php on line 1321
+[29-Oct-2018 22:05:14 America/Bogota] PHP Fatal error:  Uncaught <span style="color: #AA0000; font-weight: bold;">ERROR n°6</span><br>Fichero : /home/ichwy5gpohii/public_html/html2pdf/html2pdf.class.php<br>Línea : 1321<br><br>Imposible cargar la imagen <b>CELSIA/599/2.jpg</b>
+  thrown in /home/ichwy5gpohii/public_html/html2pdf/html2pdf.class.php on line 1321
+[30-Oct-2018 15:51:17 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[30-Oct-2018 15:51:17 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[30-Oct-2018 15:51:17 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[30-Oct-2018 15:51:17 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[02-Nov-2018 14:44:27 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[02-Nov-2018 14:44:27 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[02-Nov-2018 14:44:27 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[02-Nov-2018 14:44:27 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[02-Nov-2018 17:19:31 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[02-Nov-2018 17:19:31 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[02-Nov-2018 17:19:31 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[02-Nov-2018 17:19:31 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[02-Nov-2018 21:59:07 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[02-Nov-2018 21:59:07 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[02-Nov-2018 21:59:07 UTC] PHP Notice:  Undefined index: d in /home/ichwy5gpohii/public_html/clases/login.class.php on line 26
+[02-Nov-2018 21:59:07 UTC] PHP Notice:  Undefined index: d in /home/ichwy5gpohii/public_html/clases/login.class.php on line 26
+[02-Nov-2018 21:59:07 UTC] PHP Notice:  Undefined index: d in /home/ichwy5gpohii/public_html/clases/login.class.php on line 26
+[02-Nov-2018 21:59:07 UTC] PHP Notice:  Undefined index: process in /home/ichwy5gpohii/public_html/clases/login.class.php on line 27
+[02-Nov-2018 21:59:17 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[02-Nov-2018 21:59:17 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[02-Nov-2018 21:59:17 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[02-Nov-2018 21:59:17 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[02-Nov-2018 21:59:17 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[06-Nov-2018 21:44:24 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[06-Nov-2018 21:44:24 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[06-Nov-2018 21:44:24 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[06-Nov-2018 21:44:24 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[06-Nov-2018 21:44:24 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[07-Nov-2018 13:37:26 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[07-Nov-2018 13:37:26 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[07-Nov-2018 13:37:26 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[07-Nov-2018 13:37:26 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[07-Nov-2018 13:37:26 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[15-Nov-2018 14:24:22 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[15-Nov-2018 14:24:22 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[15-Nov-2018 14:24:22 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[15-Nov-2018 14:24:22 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[15-Nov-2018 14:24:22 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[21-Nov-2018 12:56:10 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[21-Nov-2018 12:56:10 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[21-Nov-2018 12:56:10 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[21-Nov-2018 12:56:10 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[21-Nov-2018 12:56:10 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[26-Nov-2018 16:30:03 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[26-Nov-2018 16:30:03 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[26-Nov-2018 16:30:03 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[26-Nov-2018 16:30:03 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[26-Nov-2018 16:30:03 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[26-Nov-2018 19:36:25 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[26-Nov-2018 19:36:25 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[26-Nov-2018 19:36:25 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[26-Nov-2018 19:36:25 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[26-Nov-2018 19:36:25 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[29-Nov-2018 21:26:21 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[29-Nov-2018 21:26:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[29-Nov-2018 21:26:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[29-Nov-2018 21:26:21 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[29-Nov-2018 21:26:21 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[05-Dec-2018 18:49:06 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[05-Dec-2018 18:49:06 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[05-Dec-2018 18:49:06 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[05-Dec-2018 18:49:06 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[05-Dec-2018 18:49:06 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[05-Dec-2018 21:08:41 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[05-Dec-2018 21:08:41 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[05-Dec-2018 21:08:41 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[05-Dec-2018 21:08:41 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[06-Dec-2018 15:49:22 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[06-Dec-2018 15:49:22 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[06-Dec-2018 15:49:22 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[06-Dec-2018 15:49:22 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[06-Dec-2018 15:49:22 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[06-Dec-2018 20:43:31 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[06-Dec-2018 20:43:31 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[06-Dec-2018 20:43:31 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[06-Dec-2018 20:43:31 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[12-Dec-2018 16:49:19 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[12-Dec-2018 16:49:19 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[12-Dec-2018 16:49:19 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[12-Dec-2018 16:49:19 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[12-Dec-2018 16:49:19 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[12-Dec-2018 19:57:45 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[12-Dec-2018 19:57:45 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[12-Dec-2018 19:57:45 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[12-Dec-2018 19:57:45 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[14-Dec-2018 16:44:08 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[14-Dec-2018 16:44:09 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[14-Dec-2018 16:44:09 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[14-Dec-2018 16:44:09 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[14-Dec-2018 16:44:09 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[14-Dec-2018 19:09:33 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[14-Dec-2018 19:09:33 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[14-Dec-2018 19:09:33 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[14-Dec-2018 19:09:33 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[18-Dec-2018 20:47:50 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[18-Dec-2018 20:47:50 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[18-Dec-2018 20:47:50 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[18-Dec-2018 20:47:50 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[18-Dec-2018 20:47:50 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[19-Dec-2018 13:27:55 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[19-Dec-2018 13:27:55 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[19-Dec-2018 13:27:55 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[19-Dec-2018 13:27:55 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[19-Dec-2018 13:27:55 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[15-Jan-2019 04:03:07 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[15-Jan-2019 04:03:07 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[15-Jan-2019 04:03:07 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[15-Jan-2019 04:03:07 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[15-Jan-2019 18:00:48 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/cargarArchivo_Edicionmasiva.php on line 3
+[15-Jan-2019 18:00:48 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[15-Jan-2019 18:00:48 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[15-Jan-2019 18:00:48 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[15-Jan-2019 18:00:48 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/cargarArchivo_Edicionmasiva.class.php on line 64
+[15-Jan-2019 18:00:48 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/cargarArchivo_Edicionmasiva.class.php on line 68
+[15-Jan-2019 18:01:10 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/ichwy5gpohii/public_html/clases/sql.php on line 338
+[15-Jan-2019 18:01:48 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/ichwy5gpohii/public_html/clases/sql.php on line 338
+[15-Jan-2019 18:01:58 UTC] PHP Warning:  Illegal string offset 'id_ot' in /home/ichwy5gpohii/public_html/clases/editarOt.class.php on line 91
+[15-Jan-2019 18:01:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home/ichwy5gpohii/public_html/clases/editarOt.class.php on line 91
+[16-Jan-2019 23:05:25 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/cargarArchivo.php on line 3
+[16-Jan-2019 23:05:25 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[16-Jan-2019 23:05:25 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[16-Jan-2019 23:05:25 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[16-Jan-2019 23:05:25 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/cargarArchivo.class.php on line 74
+[19-Jan-2019 22:08:38 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/cargarArchivo.php on line 3
+[19-Jan-2019 22:08:38 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[19-Jan-2019 22:08:38 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[19-Jan-2019 22:08:38 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[19-Jan-2019 22:08:38 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/cargarArchivo.class.php on line 74
+[19-Jan-2019 22:57:16 UTC] PHP Notice:  Undefined variable: contador in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 872
+[20-Jan-2019 05:29:23 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/cargarArchivo.php on line 3
+[20-Jan-2019 05:29:23 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[20-Jan-2019 05:29:23 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[20-Jan-2019 05:29:23 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[20-Jan-2019 05:29:23 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/cargarArchivo.class.php on line 74
+[20-Jan-2019 16:15:59 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/cargarArchivo.php on line 3
+[20-Jan-2019 16:15:59 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[20-Jan-2019 16:15:59 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[20-Jan-2019 16:15:59 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[20-Jan-2019 16:15:59 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/cargarArchivo.class.php on line 74
+[07-Feb-2019 02:08:13 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/ichwy5gpohii/public_html/clases/sql.php on line 338
+[06-Feb-2019 21:08:13 America/Bogota] PHP Notice:  Undefined offset: -1 in /home/ichwy5gpohii/public_html/html2pdf/_class/myPdf.class.php on line 1275
+[11-Feb-2019 14:56:21 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[11-Feb-2019 14:56:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[11-Feb-2019 14:56:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[11-Feb-2019 14:56:21 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[11-Feb-2019 14:56:21 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[11-Feb-2019 17:28:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[11-Feb-2019 17:28:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[11-Feb-2019 17:28:21 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[11-Feb-2019 20:28:03 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/rotuloplanta.php on line 3
+[11-Feb-2019 20:28:03 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[11-Feb-2019 20:28:03 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[11-Feb-2019 20:28:03 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[11-Feb-2019 20:28:03 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/rotuloplanta.class.php on line 61
+[03-Mar-2019 03:30:42 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/empresas.php on line 3
+[03-Mar-2019 03:30:42 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[03-Mar-2019 03:30:42 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[03-Mar-2019 03:30:42 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[03-Mar-2019 03:30:42 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/empresas.class.php on line 48
+[03-Mar-2019 03:30:42 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 1540
+[03-Mar-2019 04:11:58 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/empresas.php on line 3
+[03-Mar-2019 04:11:58 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[03-Mar-2019 04:11:58 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[03-Mar-2019 04:11:58 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310
+[03-Mar-2019 04:11:58 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/clases/empresas.class.php on line 48
+[03-Mar-2019 04:11:58 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 1540
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:21:38 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:25:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:29:49 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:30:24 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:30:34 America/Bogota] PHP Notice:  Undefined index: archivo in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:30:34 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:30:34 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 71
+[02-Mar-2019 23:30:34 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 71
+[02-Mar-2019 23:30:34 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 110
+[03-Mar-2019 04:32:32 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 108
+[02-Mar-2019 23:32:56 America/Bogota] PHP Notice:  Undefined index: archivo in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:32:56 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:33:21 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 22
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 25
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 26
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 27
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  Undefined variable: key in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[02-Mar-2019 23:35:15 America/Bogota] PHP Notice:  String offset cast occurred in /home/ichwy5gpohii/public_html/guarda_empresa.php on line 28
+[10-Mar-2019 22:22:21 UTC] PHP Notice:  Undefined index: id_usuario in /home/ichwy5gpohii/public_html/reportes.php on line 3
+[10-Mar-2019 22:22:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 123
+[10-Mar-2019 22:22:21 UTC] PHP Notice:  Undefined index: bdatos in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 183
+[10-Mar-2019 22:22:21 UTC] PHP Notice:  Undefined index: tipo_usuario in /home/ichwy5gpohii/public_html/clases/crearHtml.class.php on line 310

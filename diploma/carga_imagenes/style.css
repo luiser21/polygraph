@@ -1,0 +1,301 @@
+/**
+ * Index
+ * 
+ * @package carLub
+ * @author Eric Chitan
+ * Clase dependientede Cargar Imagenes
+ * @copyright 2017
+ * @version 0.1
+ * @access public
+ */
+#images_table a:link {
+	color: #666;
+	font-weight: bold;
+	text-decoration:none;
+}
+#images_table a:visited {
+	color: #999999;
+	font-weight:bold;
+	text-decoration:none;
+}
+#images_table a:active,
+#images_table a:hover {
+	color: #bd5a35;
+	text-decoration:underline;
+}
+#images_table {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	font-size:12px;
+	text-shadow: 1px 1px 0px #fff;
+	background:#eaebec;
+	margin:20px;
+	border:#ccc 1px solid;
+
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+	-moz-box-shadow: 0 1px 2px #d1d1d1;
+	-webkit-box-shadow: 0 1px 2px #d1d1d1;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+#images_table th {
+	padding:5px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+#images_table th:first-child {
+	text-align: left;
+	padding-left:20px;
+}
+#images_table tr:first-child th:first-child {
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+#images_table tr:first-child th:last-child {
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+#images_table tr {
+	text-align: center;
+	padding-left:20px;
+}
+#images_table td:first-child {
+	text-align: left;
+	padding-left:20px;
+	border-left: 0;
+}
+#images_table td {
+	padding:5px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+#images_table tr td:nth-child(6)
+{
+	cursor: move;
+}
+#images_table tr.even td {
+	background: #f2f2f2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#f2f2f2));
+	background: -moz-linear-gradient(top,  #f4f4f4,  #f2f2f2);
+}
+#images_table tr:last-child td {
+	border-bottom:0;
+}
+#images_table tr:last-child td:first-child {
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+#images_table tr:last-child td:last-child {
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+#images_table tr:hover td {
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ededed));
+	background: -moz-linear-gradient(top,  #ebebeb,  #ebebeb);	
+}
+
+#images_table th, #images_table th a
+{
+	font-weight: bold!important;
+	color:#333!important;	
+}
+
+#images_table th:nth-child(6) a
+{
+	font-size:15px;
+}
+
+#images_table a img
+{
+	width: 64px;
+	height: 64px;
+	border: 1px solid gray;
+}
+
+#submit-button
+{
+	text-align:center;
+}
+
+#submit-button input
+{
+	width: 200px;
+	height:50px;
+	font-size:20px;
+	font-weight:bold;	
+}
+
+.center
+{
+	text-align:center;	
+}
+
+table td
+{
+	text-align: left;
+}
+
+.overlay {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.85);
+  cursor: pointer;
+
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay .modal {
+  cursor: pointer;
+  position: absolute;
+  z-index: 11;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  padding: 20px;
+  background-color: rgb(255,255,255);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.overlay .modal img
+{
+	width: 100%;
+	height: 100%;
+}
+
+.overlay.shown {
+  opacity: 1;
+}
+
+footer
+{
+	margin-top:20px;
+	text-align:center;
+	padding:10px;
+	color:black;
+	font-weight:bold;	
+}
+
+footer a
+{
+	font-weight:bold;
+	color:black;	
+}
+
+/* Responsible tables */
+@media all and (min-width: 1024px)
+{
+	#box
+	{
+		width:1024px;
+	}
+}
+	
+@media all and (max-width: 850px)
+{
+	#images_table, #images_table input[type='text']
+	{
+		padding:0px;
+		margin:0px;
+		width:100%;	
+	}
+	
+	#images_table td:last-child
+	{
+		padding-bottom:20px;
+	}
+			
+	/* Force table to not be like tables anymore */
+	#images_table table, #images_table thead, #images_table tbody, #images_table th, #images_table td, #images_table tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#images_table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	#images_table tr { border: 1px solid #ccc; }
+	
+	#images_table td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 35%;
+		padding-bottom:10px;
+		padding-top:10px;
+		word-wrap:break-word;
+	}
+	
+	#images_table td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	#images_table img
+	{
+		margin-left: 35%;
+	}
+	
+	#submit-button
+	{
+		margin-top:10px;	
+	}
+	
+	/*
+	Label the data
+	*/
+	#images_table td:before
+	{
+		padding-bottom:10px;
+		padding-top:10px;
+		font-weight:bold;
+	}
+
+    #images_table td:nth-of-type(1):before { content: "Image"; }
+    #images_table td:nth-of-type(2):before { content: "Name"; }
+    #images_table td:nth-of-type(3):before { content: "Description"; }
+    #images_table td:nth-of-type(4):before { content: "Select image"; }
+    #images_table td:nth-of-type(5):before { content: "Delete"; }
+}
