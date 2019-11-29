@@ -127,7 +127,7 @@ class Plantas extends crearHtml{
               SELECT
               E.id,
             	tp.NOMBRE AS TIPO,
-            	CONCAT(c.NOMBRES, ' ', c.APELLIDOS) AS EVALUADO,
+				c.NOMBRES  AS EVALUADO,
                 c.DOCUMENTO AS CEDULA,
                 C.EMAIL,
                 C.TELEFONO,

@@ -191,8 +191,13 @@ class crearHtml extends sql{
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="agendamiento.php?adm=1" title="Listar">
-                                         Listar Agendamiento
+                                    <a href="agendar.php?adm=1" title="Listar">
+                                         Cupos Disponibles Agendar
+                                    </a>
+                                </li>
+								 <li>
+                                    <a href="solicitudes.php?adm=1" title="Listar">
+                                         Listar Solicitudes
                                     </a>
                                 </li>
                 
@@ -1418,26 +1423,14 @@ $html .='    });
     function Imagenes($Campo, $Accion = 0,$formulario='formCrear'){
         switch( $Accion ){
             case 0:
-                if(	$_SESSION["tipo_usuario"]==3){
                 return <<<OE
-                CONCAT(  '<div class="fa fa-edit" style="cursor:pointer" title="Editar"  />' ) Editar
-OE;
-                }else{
-                    return <<<OE
                 CONCAT(  '<div class="fa fa-edit" style="cursor:pointer" title="Editar" ONCLICK=javascript:fn_editar(',  `$Campo` ,  ',\'{$this->_file}\'); />' ) Editar
 OE;
-                }
-            break;
+             break;
             case 1:
-                if(	$_SESSION["tipo_usuario"]==3){
-                return <<<OE
-                CONCAT(  '<div class="icon-ban" style="cursor:pointer" title="Inactivar"  />' ) Eliminar
-OE;
-                }else{
-                    return <<<OE
+                 return <<<OE
                 CONCAT(  '<div class="icon-ban" style="cursor:pointer" title="Inactivar" ONCLICK=javascript:fn_eliminar(',  `$Campo` ,  ',\'{$this->_file}\',\'{$formulario}\'); />' ) Eliminar
 OE;
-                }
             break;
             case 2:
                 return <<<OE
@@ -1509,6 +1502,17 @@ OE;
                 return <<<OE
                 CONCAT('<a class="thumbnail" href="#thumb"><img src="',e.LOGO2,'" width="100" height="100" /><span></span></a>') Logo_cliente
 OE;
+                break;
+            case 14:
+                return <<<OE
+                CASE
+                    WHEN ea.id_estados = 1 THEN CONCAT('<button type="button" id="guardarreagenda"   ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">REAGENDAR</button>' )
+                    WHEN ea.id_estados = 2 THEN CONCAT('<button type="button" id="guardarreagenda"  ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">REAGENDAR</button>' )
+                    WHEN ea.id_estados = 8 THEN CONCAT('<button type="button" id="guardarreagenda"  ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">REAGENDAR</button>' )
+                    WHEN ea.id_estados IN (4,5,6,7) THEN " "
+                END AGENDAR
+OE;
+                break;
             default:
                 return "";
             break;

@@ -137,7 +137,7 @@ class Plantas extends crearHtml{
                             foto='".$_POST['id_foto']."',
                             observaciones='".$_POST['observaciones']."',
                             firma='".$_POST['firma']."',
-                            fecha=SYSDATE()                          
+                            fecha=DATE_ADD(NOW(), INTERVAL -5 HOUR)                        
                    where estado='P' and idautorcandidato=".$_POST['idautorcandidato'];
              $this->QuerySql($sql);       
              $_respuesta = 'Se Autorizo Exitosamente';

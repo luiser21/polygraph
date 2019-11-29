@@ -4,20 +4,67 @@ class Plantas extends crearHtml{
     public $_titulo = 'ADMINISTRAR AGENDAMIENTOS';
     public $_subTitulo = 'Crear Solicitudes';
     public $_datos = '';
-    public $Table = 'agenda';
-    public $PrimaryKey = 'id_agenda';
+    public $Table = 'evaluado';
+    public $PrimaryKey = 'id_evaluado';
     
     
     
    function Contenido(){
-       
+       $html='';
+	   if(isset($_GET['id_fecha'])){
+	   
+	   $sql = "SELECT estado FROM cupo_fechas WHERE id_cupo_fecha=".$_GET['id_fecha'];
+	   $validar_estado = $this->Consulta($sql);
+	   
+	   
+	   
        $sql = 'SELECT id_prueba codigo, nombre as descripcion from tipo_prueba WHERE estado = 1';
        $arrPlantas = $this->Consulta($sql);
        
        $sql = "SELECT id_tipo codigo, CONCAT(TIPO_DOC, ' ', DESCRIPCION) as descripcion from tipo_identificacion WHERE estado = 'A'";
        $arrTipos = $this->Consulta($sql);
-       
+	   
+	   $sql = "SELECT id_empresa codigo, NOMBRE as descripcion from empresas WHERE activo = 1";
+       $arrClientes = $this->Consulta($sql);
+	   
+	   $sql = "UPDATE cupo_fechas SET estado='BLOQUEADO', hora=DATE_ADD(NOW(), INTERVAL -5 HOUR) WHERE id_cupo_fecha=".$_GET['id_fecha'];
+       $this->QuerySql($sql);
+	   
+	   $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday");
+	   $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");  
+	   
+	   $mesesin = array("January", "February", "March","April","May","June","July","August","September","October","November","December");
+	   $meseses   = array("de Enero de ", "de Febrero de ", "de Marzo de ","de Abril de ","de Mayo de ","de Junio de ","de Julio de ","de Agosto de ","de Septiembre de ","de Octubre de","de Noviembre de ","de Diciembre de");
+	   
+	   $sql = "SELECT
+					DATE_FORMAT(CF.fecha, '%W, %e %M %Y') AS fecha,
+					CH.cupo_hora
+				FROM
+					cupo_fechas CF
+				INNER JOIN cupo_hora CH ON CH.id_cupo_hora = CF.id_cupo_hora
+				WHERE
+					CF.activo = 1
+				AND CF.id_cupo_fecha =".$_GET['id_fecha'];
+       $arrcupos = $this->Consulta($sql);
+	    
+		$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
+		$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
+		if($validar_estado[0]['estado']=='BLOQUEADO' || $validar_estado[0]['estado']=='TOMADO'){
+		   echo "<script type=\"text/javascript\">alert(\"ESTE CUPO ".$arrcupos[0]['fecha'] ." YA FUE TOMADO\");</script>";  
+		   echo "<script type=\"text/javascript\">location.href='agendar.php';</script>";  		    
+		   exit;
+	    }
+	    
+		echo "<script type=\"text/javascript\">
+				function sayHi() {
+				   alert(\"Se ha exedido el limite de espera para agendar sera redericcionado, vuelva a seleccionar un nuevo cupo\");
+				   location.href='agendar.php?liberar=".$_GET['id_fecha']."';
+				}
+				setTimeout(sayHi, 600000);
+			</script>";  
+		
          $html='<section class="main-content-wrapper">
+		
             <div class="pageheader">
                 <h1>'.$this->_titulo.'</h1>
                 <p class="description">'.$this->_subTitulo.'</p>
@@ -29,87 +76,88 @@ class Plantas extends crearHtml{
                 </div>
             </div>
             
-            <div class="col-md-8">
+            <div class="col-md-8 ">
                           <div class="panel panel-default panelCrear">
                              <div class="panel-heading">
-                                <h3 class="panel-title">Agendamiento</h3>
+                                <h3 class="panel-title">Desplegar para Crear Solicitud </h3>
                                 <div class="actions pull-right">
                                     <i class="fa fa-expand"></i>
-                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-chevron-up"></i>
                                     <i class="fa fa-times"></i>
                                 </div>
                             </div>
                             <div class="panel-body">
                                 <form id="formCrear" role="form">
-                                    <div class="form-group">
+									<div class="form-group" style="height:10px; color: red;">
+                                        <label for="nombre">FECHA PROGRAMADA:</label>
+                                        '.$arrcupos[0]['fecha'] .'
+										  <label for="nombre">FRANJA:</label>
+                                        '.$arrcupos[0]['cupo_hora'] .'
+										
+                                    </div>
+                                    <br/>
+                                    <div class="form-group" >
                                         <label for="nombre">Tipo de Prueba:</label>
-                                      
-                                        '.$this->crearSelect('id_prueba','id_prueba',$arrPlantas,false,false,false,'class="form-control required"').'
+                                        '.$this->create_input('hidden','id_fecha','id_fecha',false,$_GET['id_fecha']).'                                    
+                                        '.$this->crearSelect('id_prueba','id_prueba',$arrPlantas,false,false,false,'class=" required" style="width: 40%;"').'
                                         
                                         
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <label for="id_cursos">Nombres del Entrevistado:</label>
-                                        '.$this->create_input('text','nombre','nombre','Nombre del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                    <div class="form-group" >
+                                        <label for="id_cursos">Nombres y Apellido del Evaluado:</label>
+                                        '.$this->create_input('text','NOMBRES','NOMBRES','Nombre del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         
                                         
                                     </div>
 
-                                     <div class="form-group">
-                                        <label for="id_cursos">Apellidos del Entrevistado:</label>
-                                        '.$this->create_input('text','apellido','apellido','Apellidos del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
-                                        
-                                        
-                                    </div>
-                                    
-                                    <div class="form-group">
+                                    <div class="form-group" >
                                          <label for="nombre">Tipo Documento:</label>
                                       
-                                        '.$this->crearSelect('id_tipo','id_tipo',$arrTipos,false,false,false,'class="form-control required"').'
+                                        '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,false,'class=" required" style="width: 40%;"').'
                                         
                                     </div>                                    
                                     
                                     
-                                    <div class="form-group">
-                                        <label for="id_cursos">Numero de Identificacion:</label>
-                                       '.$this->create_input('text','identificacion','identificacion','Numero de Identificacion',false,'form-control required').'
+                                    <div class="form-group" >
+                                        <label for="id_cursos" >Numero de Identificacion:</label>
+                                       '.$this->create_input('text','DOCUMENTO','DOCUMENTO','Numero de Identificacion',false,' required','','style="width: 50%;"').'
                                         
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="id_cursos">Lugar de Expedicion:</label>
-                                       '.$this->create_input('text','lugarexpedicion','lugarexpedicion','Lugar de Expedicion',false,'form-control required').'
-                                        
-                                    </div>
-                                    <div class="form-group">
+                                    </div>                                    
+                                   
+                                    <div class="form-group"  >
                                         <label for="id_cursos">Email:</label>
-                                        '.$this->create_input('email','email','email','email',false,'form-control required').'
+                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' required','','style="width: 80%;"').'
                                         
                                     </div> 
                                     
-                                    <div class="form-group">
+                                    <div class="form-group" >
                                         <label for="id_cursos">Telefono Contacto:</label>
-                                        '.$this->create_input('text','telefono','telefono','Telefono Contacto',false,'form-control required','','pattern="^[9|8|7|6]\d{8}$"').'
+                                        '.$this->create_input('text','telefono','telefono','Telefono Contacto',false,' required','','').'
+                                         '.$this->create_input('text','celular','celular','Celular Contacto',false,' required','','').'
                                         
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <label for="id_cursos">Cargo Aspirar:</label>
-                                        '.$this->create_input('text','cargo','cargo','Cargo Aspirar',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                   
+                                    <div class="form-group" >
+                                        <label for="id_cursos">Cliente (Empleador):</label>
+                                        '.$this->crearSelect('clientefinal','clientefinal',$arrClientes,false,false,false,'class=" required" style="width: 50%;"').'
+										
+                                    </div>
+									
+									 <div class="form-group" >
+                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
+                                        '.$this->create_input('text','cargo','cargo','Cargo Aspirar',false,' required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
                                         
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <label for="id_cursos">Cliente Final:</label>
-                                        '.$this->create_input('text','clientefinal','clientefinal','Cliente Final',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
-                                        
-                                    </div>'; 
+									'; 
                                   
-                                         $html.='<button type="button" id="guardarCurso" class="btn btn-primary">Guardar Solicitud</button>';
-                                    
-                                    $html.='<div id="Resultado" style="display:none">RESULTADO</div>
-                                </form>
+                                     $html.='<button type="button" class="btn btn-primary" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">Cancelar</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                      $html.='<button type="button" id="guardarCurso" class="btn btn-primary">Guardar Solicitud</button>';
+                                    $html.='<div id="Resultado" style="display:none; >RESULTADO</div>
+                                
+								</form>
                             </div>
                         </div>
 
@@ -117,31 +165,176 @@ class Plantas extends crearHtml{
                     
                         </div>
                     </div>
-                </div>                    
-
+                </div>         
         </section>  '; 
+	   }
+		if(isset($_GET['agendar']) && isset($_GET['cupo']) && $_GET['agendar']==1){
+			
+	   
+	   
+		   $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday");
+		   $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");  
+		   
+		   $mesesin = array("January", "February", "March","April","May","June","July","August","September","October","November","December");
+		   $meseses   = array("de Enero de ", "de Febrero de ", "de Marzo de ","de Abril de ","de Mayo de ","de Junio de ","de Julio de ","de Agosto de ","de Septiembre de ","de Octubre de","de Noviembre de ","de Diciembre de");
+		   
+		   $sql = "SELECT
+						DATE_FORMAT(CF.fecha, '%W, %e %M %Y') AS fecha,
+						CH.cupo_hora,
+						ea.nombre_estado_agenda AS ESTADO,
+						tp.NOMBRE AS TIPO_PRUEBA,
+						c.NOMBRES AS EVALUADO,
+						c.DOCUMENTO AS CEDULA,
+						E.cargo AS CARGO_ASPIRAR,
+						ti.TIPO_DOC AS TIPO_DOCUMENTO,
+					  c.DOCUMENTO,
+					  c.EMAIL,
+					  c.TELEFONO,
+					  c.CELULAR,
+					  CONCAT(em.nit,' - ',em.NOMBRE) AS CLIENTEFINAL,
+					  DATE_FORMAT( E.fecha_cupo_tomado, '%e %M %Y a las %H:%i:%S' ) AS CUPO_TOMADO,
+					  u.nombres AS PROGAMADOPOR  
+					FROM
+						cupo_fechas CF
+					INNER JOIN cupo_hora CH ON CH.id_cupo_hora = CF.id_cupo_hora
+					INNER JOIN evaluado E ON E.id_cupo_fecha = CF.id_cupo_fecha
+					INNER JOIN candidatos c ON c.id_candidatos = E.id_candidato
+					INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba
+					INNER JOIN estados_agenda ea ON ea.id_estados = E.estado
+					INNER JOIN tipo_identificacion ti on ti.ID_TIPO=c.TIPODOCUMENTO
+					INNER JOIN empresas em on em.id_empresa=E.clientefinal
+					INNER JOIN usuarios u on u.id_usuario=E.id_usuario
+					WHERE CF.id_cupo_fecha =".$_GET['cupo'];
+		   $arrcupos = $this->Consulta($sql);
+			
+			$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
+			$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
+			
+			$arrcupos[0]['CUPO_TOMADO'] = str_replace($healthy, $yummy, $arrcupos[0]['CUPO_TOMADO']);   
+			$arrcupos[0]['CUPO_TOMADO'] = str_replace($mesesin, $meseses, $arrcupos[0]['CUPO_TOMADO']);   					
+			
+         $html='<section class="main-content-wrapper">
+		
+            <div class="pageheader">
+                <h1>'.$this->_titulo.'</h1>
+                <p class="description">'.$this->_subTitulo.'</p>
+                <div class="breadcrumb-wrapper hidden-xs">
+                    <span class="label">Estas Aquí:</span>
+                    <ol class="breadcrumb">
+                        <li class="active">Administrar Solicitudes</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="col-md-8 ">
+                          <div class="panel panel-default panelCrear">
+                             <div class="panel-heading">
+                                <h3 class="panel-title">Informacion de la Agenda</h3>
+                                <div class="actions pull-right">
+                                    <i class="fa fa-expand"></i>
+                                    <i class="fa fa-chevron-up"></i>
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                
+									<div class="form-group" style="height:10px; color: red;">
+                                        <label for="nombre">FECHA PROGRAMADA:</label>
+                                        '.$arrcupos[0]['fecha'] .'
+										  <label for="nombre">FRANJA:</label>
+                                        '.$arrcupos[0]['cupo_hora'] .'
+										
+                                    </div>
+									 <br/>
+									<div class="form-group" >
+                                        <label for="nombre">Cupo tomado el :</label>
+                                        '.$arrcupos[0]['CUPO_TOMADO'] .' <br/><br/>
+										  <label for="nombre">Programada Por:</label>
+                                        '.$arrcupos[0]['PROGAMADOPOR'] .' &nbsp;&nbsp;&nbsp;&nbsp;
+										
+										<label for="nombre">Estado Solicitud:</label>
+                                        '.$arrcupos[0]['ESTADO'] .'
+										
+                                    </div>
+                                    <div class="form-group" >
+                                        <label for="nombre">Tipo de Prueba:</label>                                                                
+                                        Poligrafia - '.$arrcupos[0]['TIPO_PRUEBA'] .'
+                                        
+                                    </div>
+                                    
+                                    <div class="form-group" >
+                                        <label for="id_cursos">Nombres y Apellido del Evaluado:</label>
+                                         '.$arrcupos[0]['EVALUADO'] .'
+                                        
+                                    </div>
+
+                                    <div class="form-group" >
+                                         <label for="nombre">Tipo Documento:</label>
+                                          '.$arrcupos[0]['TIPO_DOCUMENTO'] .' &nbsp;&nbsp;&nbsp;&nbsp;
+                                          <label for="id_cursos" >Numero de Identificacion:</label>
+                                        '.$arrcupos[0]['DOCUMENTO'] .'
+                                    </div> 
+                                    <div class="form-group"  >
+                                        <label for="id_cursos">Email:</label>
+                                         '.$arrcupos[0]['EMAIL'] .'
+                                    </div> 
+                                    
+                                    <div class="form-group" >
+                                        <label for="id_cursos">Telefono Contacto:</label>
+                                        '.$arrcupos[0]['TELEFONO'] .' - '.$arrcupos[0]['CELULAR'] .'
+                                    </div>
+                                    
+                                   
+                                    <div class="form-group" >
+                                        <label for="id_cursos">Cliente (Empleador):</label>
+                                        '.$arrcupos[0]['CLIENTEFINAL'] .'
+                                    </div>
+									
+									 <div class="form-group" >
+                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
+                                         '.$arrcupos[0]['CARGO_ASPIRAR'] .'
+                                    </div>
+                                    
+									'; 
+                                    $html.='<button type="button" class="btn btn-primary" onclick="window.location=\'solicitudes.php\'">OK</button>';
+                                    
+                                    $html.='</div>
+                        </div>
+
+                    </div> 
+                    
+                        </div>
+                    </div>
+                </div>         
+        </section>  '; 
+		}
+		
         return $html;
         
     }
     
+
     function guardarDatos(){
         //$this->imprimir($_POST);exit; 
         //$this->imprimir($_SESSION['id_usuario']);
         try {
         $sql="INSERT INTO candidatos (
                 NOMBRES,
-                APELLIDOS, 
                 TIPODOCUMENTO,
-                DOCUMENTO, 
-                LUGAREXPEDICION,
+                DOCUMENTO, 				
                 EMAIL, 
-                TELEFONO, 
-                IDSOLICITANTE) 
-                VALUES ('".$_POST['nombre']."', '".$_POST['apellido']."', ".$_POST['id_tipo'].", ".$_POST['identificacion'].", '".$_POST['lugarexpedicion']."', '".$_POST['email']."', ".$_POST['telefono'].", ".$_SESSION['id_usuario'].") ";
+                TELEFONO,
+				CELULAR,
+                IDSOLICITANTE,
+				FECHA_CREACION,
+				FECHA_MODIFICACION) 
+                VALUES ('".$_POST['NOMBRES']."', ".$_POST['ID_TIPO'].", ".$_POST['DOCUMENTO'].", '".$_POST['EMAIL']."', ".$_POST['telefono'].",".$_POST['celular'].",
+						".$_SESSION['id_usuario'].",
+						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR)) ";
         $this->QuerySql($sql);
         
         
-        $sql="SELECT @@identity AS id";
+        $sql="SELECT @@identity AS id_candidatos";
         $datos = $this->Consulta($sql,1); 
 
         
@@ -152,18 +345,25 @@ class Plantas extends crearHtml{
                 resultado,
                 id_usuario,
                 cargo,
-                clientefinal) 
-                VALUES (".$_POST['id_prueba'].", ".$datos[0]['id'].", '1', '0',".$_SESSION['id_usuario'].",'".$_POST['cargo']."','".$_POST['clientefinal']."')";     
+                clientefinal,
+				fecha_cupo_tomado,
+				fecha_modificacion,
+				id_cupo_fecha,
+				primer_cupo) 
+                VALUES (".$_POST['id_prueba'].", ".$datos[0]['id_candidatos'].", '2', '0',".$_SESSION['id_usuario'].",'".$_POST['cargo']."',
+						".$_POST['clientefinal'].",
+						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),
+						".$_POST['id_fecha'].",".$_POST['id_fecha'].")";     
        
         $this->QuerySql($sql);
         
-        $sql="SELECT @@identity AS id";
+        $sql="SELECT @@identity AS id_evaluado";
         $datos2 = $this->Consulta($sql,1); 
         
-        $sql="SELECT u.id_usuario,a.idautorizacion,a.clientetercerizado FROM usuarios U
+        $sql="SELECT U.id_usuario,A.idautorizacion,A.clientetercerizado FROM usuarios U
                 INNER JOIN usuarios_parametros UP ON UP.id_usuario=U.id_usuario
                 INNER JOIN autorizaciones A on A.idautorizacion=UP.clientercerizados
-                where u.id_usuario=".$_SESSION['id_usuario'];
+                where U.id_usuario=".$_SESSION['id_usuario'];
         $datos3 = $this->Consulta($sql,1); 
         
         $sql="INSERT INTO autorizacion_evaluado (
@@ -171,10 +371,14 @@ class Plantas extends crearHtml{
                 idautorizacion,
                 idevaluado,
                 estado)
-                VALUES (".$datos[0]['id'].", ".$datos3[0]['idautorizacion'].",".$datos2[0]['id'].",'P')";
+                VALUES (".$datos[0]['id_candidatos'].", ".$datos3[0]['idautorizacion'].",".$datos2[0]['id_evaluado'].",'P')";
         
         $this->QuerySql($sql);
         
+		$sql="UPDATE cupo_fechas set estado='TOMADO' WHERE id_cupo_fecha=".$_POST['id_fecha'];
+        
+        $this->QuerySql($sql);
+		
         $_respuesta = 'OK Se ha creado la Solicitud';
         }
         catch (exception $e) {
@@ -182,6 +386,10 @@ class Plantas extends crearHtml{
         }
         
         echo $_respuesta;
+		echo "<script type=\"text/javascript\">				
+				   alert(\"Agendamiento Realizado con Exito\");
+				   location.href='agendamiento.php?agendar=1&cupo=".$_POST['id_fecha']."';			
+			</script>";  
     }
 
     function fn_guardar(){
@@ -206,11 +414,13 @@ class Plantas extends crearHtml{
     }
     
     function fn_editar(){
-        
+     
     }
     
     function getDatos(){
-        $res = $this->Consulta('SELECT * FROM '.$this->Table .' WHERE '.$this->PrimaryKey.' = '.$this->_datos);
+      
+        $res = $this->Consulta('SELECT * FROM '.$this->Table .' 
+        WHERE '.$this->PrimaryKey.' = '.$this->_datos);
         $resultado = $res[0];
         
         print_r( json_encode( $resultado ) );
@@ -221,36 +431,31 @@ class Plantas extends crearHtml{
         $this->arrJs = array('./js/jsCrud.js');*/
         $html = $this->Cabecera();
         $html .= $this->contenido();
-      //  $html .= $this->tablaDatos();
+        //$html .= $this->tablaDatos();
         $html .= $this->Pata();
         echo $html;
     }
     
     function tablaDatos(){
-
-        $editar = $this->Imagenes($this->PrimaryKey,0);
+       $agendar = $this->Imagenes($this->PrimaryKey,14);
+        //$editar = $this->Imagenes($this->PrimaryKey,0);
         $eliminar = $this->Imagenes($this->PrimaryKey,1);
       //  $eliminar = $this->Imagenes($this->PrimaryKey,1);
-        $sql=<<<OE
-              SELECT
-              E.id,
+        $sql="SELECT
+              
                 ea.nombre_estado_agenda AS ESTADO,
             	tp.NOMBRE AS TIPO_PRUEBA,
-            	CONCAT(c.NOMBRES, ' ', c.APELLIDOS) AS EVALUADO,
-                c.DOCUMENTO AS CEDULA,
-                c.EMAIL,
-                c.TELEFONO,
-            	E.fecha_inicio AS FECHA,
-            	E.cargo AS CARGO_ASPIRAR,	
-                E.clientefinal AS CLIENTE_FINAL            	
+				c.NOMBRES AS EVALUADO,
+                c.DOCUMENTO AS CEDULA,            
+            	e.cargo AS CARGO_ASPIRAR,	
+                e.clientefinal AS CLIENTE_FINAL                      
             FROM
-            	candidatos c
-            INNER JOIN evaluado E ON E.id_candidato = c.ID
-            INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba 
-            INNER JOIN estados_agenda ea ON ea.id_estados=E.estado
-OE;
+            	evaluado e
+            INNER JOIN candidatos c ON e.id_candidato = c.id_candidatos
+            INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = e.id_tipo_prueba 
+            INNER JOIN estados_agenda ea ON ea.id_estados=e.estado ";
         
-        
+     
         $datos = $this->Consulta($sql,1); 
         if(count($datos)){
             $_array_formu = array();
@@ -263,7 +468,7 @@ OE;
                             <div class="panel-body recargaDatos"  style="page-break-after: always;">
                             <div class="table-responsive">';
             $tablaHtml  .='';
-    		$tablaHtml .= $this->print_table($_array_formu, 9, true, 'table table-striped table-bordered',"id='tablaDatos'");
+    		$tablaHtml .= $this->print_table($_array_formu, 6, true, 'table table-striped table-bordered',"id='tablaDatos'");
     		$tablaHtml .=' </div>
            </div>
                         </div>

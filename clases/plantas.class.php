@@ -4,8 +4,8 @@ class Plantas extends crearHtml{
     public $_titulo = 'ADMINISTRAR SOLICITUDES';
     public $_subTitulo = 'Crear Solicitudes';
     public $_datos = '';
-    public $Table = 'plantas';
-    public $PrimaryKey = 'id_planta';
+    public $Table = 'evaluado';
+    public $PrimaryKey = 'id_evaluado';
     
     
     
@@ -216,9 +216,9 @@ class Plantas extends crearHtml{
       //  $eliminar = $this->Imagenes($this->PrimaryKey,1);
         $sql=<<<OE
               SELECT
-              E.id,
+             
             	tp.NOMBRE AS TIPO,
-            	CONCAT(c.NOMBRES, ' ', c.APELLIDOS) AS EVALUADO,
+				c.NOMBRES AS EVALUADO,
                 c.DOCUMENTO AS CEDULA,
                 c.EMAIL,
                 c.TELEFONO,
@@ -231,11 +231,11 @@ class Plantas extends crearHtml{
             	WHEN E.resultado=2 THEN CONCAT('<div align="center"><img src="img/amarillo.png" align="center" width="20" height="20" /></div>') 
             	WHEN E.resultado=3 THEN CONCAT('<div align="center"><img src="img/rojo.png" align="center" width="20" height="20" /></div>')  
             	END AS RESULTADO,
-                CONCAT(  '<div class="fa fa-edit" align="center" style="cursor:pointer" title="Crear Reporte" ONCLICK=javascript:fn_guardarMecMet(',  E.id ,  ',\'{$this->_file}\'); />' ) 
+                CONCAT(  '<div class="fa fa-edit" align="center" style="cursor:pointer" title="Crear Reporte" ONCLICK=javascript:fn_guardarMecMet(',  E.id_evaluado ,  ',\'{$this->_file}\'); />' ) 
                     AS ACCION
             FROM
             	candidatos c
-            INNER JOIN evaluado E ON E.id_candidato = c.ID
+            INNER JOIN evaluado E ON E.id_candidato = c.id_candidatos
             INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba 
             INNER JOIN estados_agenda ea ON ea.id_estados=E.estado 
 OE;

@@ -27,6 +27,7 @@ function iniciar_scripts(){
     
     $('#buscarMecanismo').on('click',fn_buscarMecanismo);
     $('#crearOt').on('click',fn_crearOt);
+	$('#fn_tomarcupo').on('click',fn_tomarcupo);
     $('#verDetalleOt').on('click',fn_verDetalleOt);  
     $('#descargarDetalleOt').on('click',fn_descargarDetalleOt);
     $('#limpiarMecanismo').on('click',fn_limpiarMecanismo);
@@ -493,6 +494,7 @@ function fn_guardarCapitulo(){
 /* Funcion estandar para guardar datos*/
 
 function fn_guarda(){
+	//alert(hola);
 	 if(validar_all('required')){
 		  var datos = $('#formCrear').serializeArray();
 	      var formData = new FormData( document.getElementById( "formCrear" ) );
@@ -771,6 +773,11 @@ function fn_crearOt(){
     });
 }
 
+function fn_tomarcupo(id_fecha){
+    //console.log('aqui');
+    location.href = 'agendamiento.php?id_fecha='+id_fecha;    
+}
+
 
 function fn_verDetalleOt(){
     $("#Resultado").html("Cargando...");
@@ -935,19 +942,11 @@ function fn_editar(id,f){
 
 function fn_eliminar(id,f,formulario){
     
-    if( confirm('¿ Realmentte desea eliminar este item? ') ){
-        $.post(f, { 'process':'runEliminar', 'd':id},function(r){
-            
-            $("#Resultado").fadeIn(3000).html(r.Mensaje);
-            if(r.Codigo == 99){
-                jQuery("#Resultado").addClass('alert alert-danger alert-dismissable');
-                return false;
-            }else{
-                jQuery("#Resultado").removeClass('alert alert-danger alert-dismissable');
-                jQuery("#Resultado").addClass('alert alert-success alert-dismissable');
-            }
-            
-        },'json').done(recargaDatos(formulario));
+   if( confirm('Realmente desea eliminar este item? ') ){
+        $.post(f, { 'process':'runEliminar', 'd':id},function(res){
+            var json=jQuery.parseJSON(res);
+            alert(json.Mensaje);  			
+        }).done(recargaDatos());
     }
   
 }

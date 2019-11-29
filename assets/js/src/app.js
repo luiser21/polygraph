@@ -113,7 +113,7 @@ var app = function() {
     };
 
     var widgetToggle = function() {
-        $(".actions > .fa-chevron-down").click(function() {
+        $(".actions > .fa-chevron-up").click(function() {
             $(this).parent().parent().next().slideToggle("fast"), $(this).toggleClass("fa-chevron-down fa-chevron-up")
         });
     };

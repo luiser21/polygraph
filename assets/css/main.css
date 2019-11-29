@@ -1072,14 +1072,14 @@ canvas {
 }
 .btn {
   border: none;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: normal;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  padding: 8px 14px;
+  padding: 8px 8px;
   margin-bottom: 5px;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
@@ -1105,7 +1105,7 @@ canvas {
   filter: alpha(opacity=70);
 }
 .btn i {
-  padding: 0 5px;
+  padding: 0 2px;
 }
 /* Default Buttons*/
 .btn-default,
