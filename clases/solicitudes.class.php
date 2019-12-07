@@ -112,6 +112,7 @@ class Plantas extends crearHtml{
         //$editar = $this->Imagenes($this->PrimaryKey,0);
         $eliminar = $this->Imagenes($this->PrimaryKey,1);
       //  $eliminar = $this->Imagenes($this->PrimaryKey,1);
+		
         $sql="SELECT
                 $agendar,
                 $eliminar,
@@ -119,7 +120,7 @@ class Plantas extends crearHtml{
             	tp.NOMBRE AS PRUEBA,
 				c.NOMBRES AS EVALUADO,
                 c.DOCUMENTO AS CEDULA,             
-            	CONCAT(cp.fecha,' ',ch.cupo_hora)AS FECHA_AGENDADA,
+            	CONCAT(DATE_FORMAT(fecha, '%e %b %Y'),' ',ch.cupo_hora) AS FECHA_AGENDADA,
             	e.cargo AS CARGO_ASPIRAR,	
                  em.NOMBRE AS CLIENTE_FINAL                                  
             FROM
@@ -130,10 +131,12 @@ class Plantas extends crearHtml{
 			INNER JOIN cupo_fechas cp on cp.id_cupo_fecha=e.id_cupo_fecha
 			INNER JOIN cupo_hora ch on ch.id_cupo_hora=cp.id_cupo_hora
 			INNER JOIN empresas em on em.id_empresa=e.clientefinal
-			";
+			WHERE c.idsolicitante=".$_SESSION['id_usuario'];
         
      
         $datos = $this->Consulta($sql,1); 
+		
+		
         if(count($datos)){
             $_array_formu = array();
             $_array_formu = $this->generateHead($datos);

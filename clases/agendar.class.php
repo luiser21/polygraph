@@ -11,9 +11,10 @@ class Plantas extends crearHtml{
     
    function Contenido(){
        
-       if(isset($_GET['liberar'])){
+       if(isset($_GET['liberar']) && !empty($_GET['liberar']) ){
 		   $sql = "UPDATE cupo_fechas SET estado='LIBRE' WHERE id_cupo_fecha=".$_GET['liberar'];
 		   $this->QuerySql($sql);
+		   unset($_SESSION["liberar"]);
 	   }
        
          $html='<section class="main-content-wrapper">
@@ -32,6 +33,9 @@ class Plantas extends crearHtml{
                           
 
                     </div> '.$this->tablaDatos().'
+					
+					'.$this->tablaDatos2().'
+                    
                     
                         </div>
                     </div>
@@ -147,6 +151,7 @@ class Plantas extends crearHtml{
     }
     
     function tablaDatos(){
+		
        $agendar = $this->Imagenes($this->PrimaryKey,14);
         //$editar = $this->Imagenes($this->PrimaryKey,0);
         $eliminar = $this->Imagenes($this->PrimaryKey,1);
@@ -168,8 +173,105 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 			
 			$sql2="SELECT DATE_FORMAT(fecha, '%W, %e %b') as fecha,estado,id_cupo_fecha
 					FROM cupo_fechas
-					where activo=1 and id_cupo_hora=".$datos[$i]['id_cupo_hora'];      
+					where activo=1   and fecha>= CURDATE() -6 and id_cupo_hora=".$datos[$i]['id_cupo_hora']."
+					";      
 			$datos2 = $this->Consulta($sql2,1);
+			$k=0;
+		//	$this->imprimir($datos2);
+			foreach($datos2 as $value2){
+				if(	$k>=6){
+					unset($datos2[$k]);
+				}else{
+					/*$hoy = getdate();
+					print_r($hoy['hours']-5);
+					$cupo_hora_comparar=explode(':',$datos[$i]['cupo_hora']);
+					print_r($cupo_hora_comparar);					
+					*/
+					$value2['fecha'] = str_replace($healthy, $yummy, $value2['fecha']);   
+					if($value2['estado']=='LIBRE'){
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  ONCLICK=javascript:fn_tomarcupo('.$value2['id_cupo_fecha'].'); class="btn btn-success">'.$value2['estado'].'</button>';
+					}
+					if($value2['estado']=='TOMADO'){
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-danger">'.$value2['estado'].'</button>';
+					}
+					if($value2['estado']=='BLOQUEADO'){
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-warning">'.$value2['estado'].'</button>';
+					}
+						
+					
+				}
+				$k++;
+			}
+			//$this->imprimir($datos2);
+			unset($datos[$i]['id_cupo_hora']);
+		}
+		//$this->imprimir($datos);
+        if(count($datos)){
+            $_array_formu = array();
+            $_array_formu = $this->generateHead($datos);
+            $this->CamposHead = ( isset($_array_formu[0]) && is_array($_array_formu[0]) )? $_array_formu[0]: array();
+            
+            $tablaHtml  = '<div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body recargaDatos"  style="page-break-after: always;">
+                            <div class="table-responsive">';
+            $tablaHtml  .='';
+    		$tablaHtml .= $this->print_table($_array_formu, 4, true, 'table table-striped table-bordered',"id='tablaDatos'");
+    		$tablaHtml .=' </div>
+           </div>
+                        </div>
+                    </div>
+                </div>
+            ';
+        }else{
+            $tablaHtml = '<div class="col-md-8">
+                            <div class="alert alert-info alert-dismissable">
+                                <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                                <strong>Atenci&oacute;n</strong>
+                                No se encontraron registros.
+                            </div>
+                          </div>';
+        }
+ 
+        if($this->_datos=='r')  echo $tablaHtml;
+        else    return $tablaHtml;
+        
+    }   
+	 function tablaDatos2(){
+		
+       $agendar = $this->Imagenes($this->PrimaryKey,14);
+        //$editar = $this->Imagenes($this->PrimaryKey,0);
+        $eliminar = $this->Imagenes($this->PrimaryKey,1);
+      //  $eliminar = $this->Imagenes($this->PrimaryKey,1);
+// Produce: You should eat pizza, beer, and ice cream every day
+
+$healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday");
+$yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");   
+//$newphrase = str_replace($healthy, $yummy, $phrase);    
+
+	   $sql="SELECT cp.cupo_hora,id_cupo_hora
+				FROM cupo_hora cp
+				WHERE activo=1
+				GROUP BY cupo_hora";        
+     
+        $datos = $this->Consulta($sql,1); 
+		
+		for($i=0;$i<count($datos);$i++){
+			
+			$sql2="SELECT DATE_FORMAT(fecha, '%W, %e %b') as fecha,estado,id_cupo_fecha
+					FROM cupo_fechas
+					where activo=1   and fecha>= CURDATE() -6 and id_cupo_hora=".$datos[$i]['id_cupo_hora']." 
+					 ";      
+			$datos2 = $this->Consulta($sql2,1);
+		
+			unset($datos2[0]);
+			unset($datos2[1]);
+			unset($datos2[2]);
+			unset($datos2[3]);
+			unset($datos2[4]);
+			unset($datos2[5]);
+				//$this->imprimir($datos2);
 			foreach($datos2 as $value2){
 				$value2['fecha'] = str_replace($healthy, $yummy, $value2['fecha']);   
 				if($value2['estado']=='LIBRE'){

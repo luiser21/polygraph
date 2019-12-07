@@ -1,4 +1,5 @@
 <meta charset="ISO-8859-1">
+<meta http-equiv=refresh content=60;URL=agendar.php>
 <?php
 
 session_start();

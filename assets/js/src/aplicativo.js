@@ -496,6 +496,7 @@ function fn_guardarCapitulo(){
 function fn_guarda(){
 	//alert(hola);
 	 if(validar_all('required')){
+		 if(confirm('¿Confirma la Información cargada?')){
 		  var datos = $('#formCrear').serializeArray();
 	      var formData = new FormData( document.getElementById( "formCrear" ) );
 	              formData.append( "process", "guardarDatos" );
@@ -519,6 +520,7 @@ function fn_guarda(){
 	                  $('#formCrear').find('input').val('');
 	                  recargaDatos('formCrear');	                  
 	                  });
+		}
 	  }else{
 	        alert('Campos obligatorios');
 	  }    

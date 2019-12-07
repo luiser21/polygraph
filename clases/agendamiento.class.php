@@ -1,4 +1,5 @@
 <?php
+@$_SESSION["liberar"]=@$_GET['id_fecha'];
 class Plantas extends crearHtml{
     
     public $_titulo = 'ADMINISTRAR AGENDAMIENTOS';
@@ -13,6 +14,7 @@ class Plantas extends crearHtml{
        $html='';
 	   if(isset($_GET['id_fecha'])){
 	   
+
 	   $sql = "SELECT estado FROM cupo_fechas WHERE id_cupo_fecha=".$_GET['id_fecha'];
 	   $validar_estado = $this->Consulta($sql);
 	   
@@ -60,7 +62,7 @@ class Plantas extends crearHtml{
 				   alert(\"Se ha exedido el limite de espera para agendar sera redericcionado, vuelva a seleccionar un nuevo cupo\");
 				   location.href='agendar.php?liberar=".$_GET['id_fecha']."';
 				}
-				setTimeout(sayHi, 600000);
+				setTimeout(sayHi, 300000);
 			</script>";  
 		
          $html='<section class="main-content-wrapper">
@@ -96,17 +98,40 @@ class Plantas extends crearHtml{
 										
                                     </div>
                                     <br/>
+									 <div class="form-group" >
+                                        <label for="id_cursos">Cliente (Empleador):</label>
+                                        '.$this->crearSelect('clientefinal','clientefinal',$arrClientes,false,false,'Seleccione...','class=" required" style="width: 50%;"').'
+										
+                                    </div>
                                     <div class="form-group" >
                                         <label for="nombre">Tipo de Prueba:</label>
                                         '.$this->create_input('hidden','id_fecha','id_fecha',false,$_GET['id_fecha']).'                                    
-                                        '.$this->crearSelect('id_prueba','id_prueba',$arrPlantas,false,false,false,'class=" required" style="width: 40%;"').'
+                                        '.$this->crearSelect('id_prueba','id_prueba',$arrPlantas,false,false,'Seleccione...','class=" required" style="width: 40%;"').'
                                         
                                         
                                     </div>
-                                    
+                                     <div class="form-group" >
+                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
+                                        '.$this->create_input('text','cargo','cargo','Cargo Aspirar',false,' required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
+                                        
+                                    </div>
+									<div class="form-group" >
+                                        <label for="nombre">Sexo:</label>
+                                                               
+                                         <input type="radio" name="sexo" id="sexo" value="MASCULINO" class="required"> Hombre
+										 <input type="radio" name="sexo" id="sexo" value="FEMENINO" class="required"> Mujer
+                                        
+                                    </div>
                                     <div class="form-group" >
-                                        <label for="id_cursos">Nombres y Apellido del Evaluado:</label>
+                                        <label for="id_cursos">Nombres del Evaluado:</label>
                                         '.$this->create_input('text','NOMBRES','NOMBRES','Nombre del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                        
+                                        
+                                    </div>
+									
+									 <div class="form-group" >
+                                        <label for="id_cursos">Apellido del Evaluado:</label>
+                                        '.$this->create_input('text','APELLIDOS','APELLIDOS','Apellido del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         
                                         
                                     </div>
@@ -114,7 +139,7 @@ class Plantas extends crearHtml{
                                     <div class="form-group" >
                                          <label for="nombre">Tipo Documento:</label>
                                       
-                                        '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,false,'class=" required" style="width: 40%;"').'
+                                        '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,'Seleccione...','class=" required" style="width: 40%;"').'
                                         
                                     </div>                                    
                                     
@@ -127,7 +152,7 @@ class Plantas extends crearHtml{
                                    
                                     <div class="form-group"  >
                                         <label for="id_cursos">Email:</label>
-                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' required','','style="width: 80%;"').'
+                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,'','','style="width: 80%;"').'
                                         
                                     </div> 
                                     
@@ -139,17 +164,9 @@ class Plantas extends crearHtml{
                                     </div>
                                     
                                    
-                                    <div class="form-group" >
-                                        <label for="id_cursos">Cliente (Empleador):</label>
-                                        '.$this->crearSelect('clientefinal','clientefinal',$arrClientes,false,false,false,'class=" required" style="width: 50%;"').'
-										
-                                    </div>
+                                   
 									
-									 <div class="form-group" >
-                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
-                                        '.$this->create_input('text','cargo','cargo','Cargo Aspirar',false,' required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
-                                        
-                                    </div>
+									
                                     
 									'; 
                                   
@@ -191,6 +208,7 @@ class Plantas extends crearHtml{
 					  c.EMAIL,
 					  c.TELEFONO,
 					  c.CELULAR,
+					  c.SEXO,
 					  CONCAT(em.nit,' - ',em.NOMBRE) AS CLIENTEFINAL,
 					  DATE_FORMAT( E.fecha_cupo_tomado, '%e %M %Y a las %H:%i:%S' ) AS CUPO_TOMADO,
 					  u.nombres AS PROGAMADOPOR  
@@ -246,6 +264,7 @@ class Plantas extends crearHtml{
 										
                                     </div>
 									 <br/>
+									 
 									<div class="form-group" >
                                         <label for="nombre">Cupo tomado el :</label>
                                         '.$arrcupos[0]['CUPO_TOMADO'] .' <br/><br/>
@@ -256,12 +275,23 @@ class Plantas extends crearHtml{
                                         '.$arrcupos[0]['ESTADO'] .'
 										
                                     </div>
+									<div class="form-group" >
+                                        <label for="id_cursos">Cliente (Empleador):</label>
+                                        '.$arrcupos[0]['CLIENTEFINAL'] .'
+                                    </div>
                                     <div class="form-group" >
                                         <label for="nombre">Tipo de Prueba:</label>                                                                
                                         Poligrafia - '.$arrcupos[0]['TIPO_PRUEBA'] .'
                                         
                                     </div>
-                                    
+                                     <div class="form-group" >
+                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
+                                         '.$arrcupos[0]['CARGO_ASPIRAR'] .'
+                                    </div>
+                                    <div class="form-group" >
+                                        <label for="id_cursos">Sexo:</label>
+                                         '.$arrcupos[0]['SEXO'] .'
+                                    </div>
                                     <div class="form-group" >
                                         <label for="id_cursos">Nombres y Apellido del Evaluado:</label>
                                          '.$arrcupos[0]['EVALUADO'] .'
@@ -285,18 +315,11 @@ class Plantas extends crearHtml{
                                     </div>
                                     
                                    
-                                    <div class="form-group" >
-                                        <label for="id_cursos">Cliente (Empleador):</label>
-                                        '.$arrcupos[0]['CLIENTEFINAL'] .'
-                                    </div>
-									
-									 <div class="form-group" >
-                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
-                                         '.$arrcupos[0]['CARGO_ASPIRAR'] .'
-                                    </div>
                                     
+									
+									
 									'; 
-                                    $html.='<button type="button" class="btn btn-primary" onclick="window.location=\'solicitudes.php\'">OK</button>';
+                                    $html.='<button type="button" class="btn btn-primary" onclick="window.location=\'solicitudes.php\'">OK</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                                     
                                     $html.='</div>
                         </div>
@@ -315,9 +338,10 @@ class Plantas extends crearHtml{
     
 
     function guardarDatos(){
-        //$this->imprimir($_POST);exit; 
+        //$this->imprimir($_POST);//exit; 
         //$this->imprimir($_SESSION['id_usuario']);
         try {
+			
         $sql="INSERT INTO candidatos (
                 NOMBRES,
                 TIPODOCUMENTO,
@@ -327,10 +351,12 @@ class Plantas extends crearHtml{
 				CELULAR,
                 IDSOLICITANTE,
 				FECHA_CREACION,
-				FECHA_MODIFICACION) 
-                VALUES ('".$_POST['NOMBRES']."', ".$_POST['ID_TIPO'].", ".$_POST['DOCUMENTO'].", '".$_POST['EMAIL']."', ".$_POST['telefono'].",".$_POST['celular'].",
+				FECHA_MODIFICACION,
+				SEXO) 
+                VALUES ('".$_POST['NOMBRES']." ".$_POST['APELLIDOS']."', ".$_POST['ID_TIPO'].", ".$_POST['DOCUMENTO'].", '".$_POST['EMAIL']."', ".$_POST['telefono'].",".$_POST['celular'].",
 						".$_SESSION['id_usuario'].",
-						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR)) ";
+						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),
+						'".$_POST['sexo']."' )";
         $this->QuerySql($sql);
         
         
@@ -382,7 +408,8 @@ class Plantas extends crearHtml{
         $_respuesta = 'OK Se ha creado la Solicitud';
         }
         catch (exception $e) {
-            $_respuesta =  $e->getMessage();
+			 echo    $_respuesta =  $e->getMessage();
+			 exit;
         }
         
         echo $_respuesta;

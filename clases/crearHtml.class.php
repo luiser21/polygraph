@@ -179,6 +179,7 @@ class crearHtml extends sql{
     }
     
     function menuAdmin(){
+		
         $open = ( strpos($_SERVER['SCRIPT_NAME'],'generarOt.php') )? 'open' : ''; 
         $html ='';
         if(!isset($_SESSION["tipo_usuario"])){           
@@ -191,12 +192,12 @@ class crearHtml extends sql{
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="agendar.php?adm=1" title="Listar">
+                                    <a href="agendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
                                          Cupos Disponibles Agendar
                                     </a>
                                 </li>
 								 <li>
-                                    <a href="solicitudes.php?adm=1" title="Listar">
+                                    <a href="solicitudes.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
                                          Listar Solicitudes
                                     </a>
                                 </li>
