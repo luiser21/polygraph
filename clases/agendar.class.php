@@ -173,7 +173,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 			
 			$sql2="SELECT DATE_FORMAT(fecha, '%W, %e %b') as fecha,estado,id_cupo_fecha
 					FROM cupo_fechas
-					where activo=1   and fecha>= CURDATE() -6 and id_cupo_hora=".$datos[$i]['id_cupo_hora']."
+					where activo=1   and fecha>= CURDATE() and id_cupo_hora=".$datos[$i]['id_cupo_hora']."
 					";      
 			$datos2 = $this->Consulta($sql2,1);
 			$k=0;
@@ -261,7 +261,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 			
 			$sql2="SELECT DATE_FORMAT(fecha, '%W, %e %b') as fecha,estado,id_cupo_fecha
 					FROM cupo_fechas
-					where activo=1   and fecha>= CURDATE() -6 and id_cupo_hora=".$datos[$i]['id_cupo_hora']." 
+					where activo=1   and fecha>= CURDATE() and id_cupo_hora=".$datos[$i]['id_cupo_hora']." 
 					 ";      
 			$datos2 = $this->Consulta($sql2,1);
 		

@@ -537,8 +537,9 @@ class Index extends crearHtml{
        // $empresa=(isset($_POST['empresa']))? $_POST['empresa'] : @$_POST['empresa2'];
       
 	    $sql = 'SELECT u.'.$this->PrimaryKey.', u.tipo_usuario, u.activo, u.nombres, u.apellidos, u.ciudad, u.foto, u.id_facebook,
-                u.email,u.duenocliente FROM '.$_SESSION["bdatos"].'.'.$this->Table.' u
-		WHERE email="'.$email.'" AND pass="'.md5($password).'" ';
+                u.email,u.duenocliente,a.logo FROM '.$_SESSION["bdatos"].'.'.$this->Table.' u
+		LEFT JOIN aliados a ON a.id_aliado=u.id_aliado 
+		WHERE u.email="'.$email.'" AND u.pass="'.md5($password).'" ';
 		
         $datos = $this->Consulta($sql);				
 		
@@ -557,6 +558,7 @@ class Index extends crearHtml{
            	$_SESSION["tipo_usuario"]   = $datos[0]['tipo_usuario'];
             $_SESSION["correo"]         = $datos[0]['email'];
             $_SESSION["dueno"]          = $datos[0]['duenocliente'];
+			$_SESSION["logo"]           = $datos[0]['logo'];
             $_SESSION["empresa"]        = 0;
             //$_SESSION["bdatos"]       = $datos2[0]['ruta'];
 			if($datos[0]['foto']==0){				

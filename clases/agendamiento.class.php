@@ -52,20 +52,39 @@ class Plantas extends crearHtml{
 		$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
 		$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
 		if($validar_estado[0]['estado']=='BLOQUEADO' || $validar_estado[0]['estado']=='TOMADO'){
-		   echo "<script type=\"text/javascript\">alert(\"ESTE CUPO ".$arrcupos[0]['fecha'] ." YA FUE TOMADO\");</script>";  
-		   echo "<script type=\"text/javascript\">location.href='agendar.php';</script>";  		    
-		   exit;
+		  	/*
+		   echo '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
+			  <div class="modal-dialog modal-sm">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Este cupo <br/>
+						 <label for="nombre">FECHA PROGRAMADA:</label>&nbsp;&nbsp;'.$arrcupos[0]['fecha'] .'<br/>
+										  <label for="nombre">FRANJA:</label>&nbsp;&nbsp;'.$arrcupos[0]['cupo_hora'] .'
+					<br/> ya fue tomado</h4>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">ACEPTAR</button>
+				  </div>
+				</div>
+			  </div>
+			</div>';*/
 	    }
-	    
+	   
+			
 		echo "<script type=\"text/javascript\">
 				function sayHi() {
-				   alert(\"Se ha exedido el limite de espera para agendar sera redericcionado, vuelva a seleccionar un nuevo cupo\");
-				   location.href='agendar.php?liberar=".$_GET['id_fecha']."';
+					$( document ).ready(function() {
+						$('#mi-modal3').modal('toggle')
+					});
+				   
 				}
-				setTimeout(sayHi, 300000);
+				setTimeout(sayHi, 600000);
 			</script>";  
 		
-         $html='<section class="main-content-wrapper">
+         $html='
+		
+		 <section class="main-content-wrapper">
 		
             <div class="pageheader">
                 <h1>'.$this->_titulo.'</h1>
@@ -99,55 +118,55 @@ class Plantas extends crearHtml{
                                     </div>
                                     <br/>
 									 <div class="form-group" >
-                                        <label for="id_cursos">Cliente (Empleador):</label>
+                                        <label for="id_cursos">Cliente (Empleador):<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         '.$this->crearSelect('clientefinal','clientefinal',$arrClientes,false,false,'Seleccione...','class=" required" style="width: 50%;"').'
-										
+										  <div id="demo7"></div>
                                     </div>
                                     <div class="form-group" >
-                                        <label for="nombre">Tipo de Prueba:</label>
+                                        <label for="nombre">Tipo de Prueba:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         '.$this->create_input('hidden','id_fecha','id_fecha',false,$_GET['id_fecha']).'                                    
                                         '.$this->crearSelect('id_prueba','id_prueba',$arrPlantas,false,false,'Seleccione...','class=" required" style="width: 40%;"').'
-                                        
+                                        <div id="demo6"></div>
                                         
                                     </div>
                                      <div class="form-group" >
-                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:</label>
+                                        <label for="id_cursos">Cargo al que Aspira el Evaluado:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         '.$this->create_input('text','cargo','cargo','Cargo Aspirar',false,' required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
-                                        
+                                        <div id="demo"></div>
                                     </div>
 									<div class="form-group" >
-                                        <label for="nombre">Sexo:</label>
+                                        <label for="nombre">Sexo:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                                                
                                          <input type="radio" name="sexo" id="sexo" value="MASCULINO" class="required"> Hombre
 										 <input type="radio" name="sexo" id="sexo" value="FEMENINO" class="required"> Mujer
-                                        
+                                          <div id="demo8"></div>
                                     </div>
                                     <div class="form-group" >
-                                        <label for="id_cursos">Nombres del Evaluado:</label>
+                                        <label for="id_cursos">Nombres del Evaluado:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         '.$this->create_input('text','NOMBRES','NOMBRES','Nombre del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
-                                        
+                                        <div id="demo1"></div>
                                         
                                     </div>
 									
 									 <div class="form-group" >
-                                        <label for="id_cursos">Apellido del Evaluado:</label>
+                                        <label for="id_cursos">Apellido del Evaluado:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         '.$this->create_input('text','APELLIDOS','APELLIDOS','Apellido del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
-                                        
+                                        <div id="demo2"></div>
                                         
                                     </div>
 
                                     <div class="form-group" >
-                                         <label for="nombre">Tipo Documento:</label>
+                                         <label for="nombre">Tipo Documento:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                       
                                         '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,'Seleccione...','class=" required" style="width: 40%;"').'
-                                        
+                                         <div id="demo5"></div>
                                     </div>                                    
                                     
                                     
                                     <div class="form-group" >
-                                        <label for="id_cursos" >Numero de Identificacion:</label>
+                                        <label for="id_cursos" >Numero de Identificacion:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                        '.$this->create_input('text','DOCUMENTO','DOCUMENTO','Numero de Identificacion',false,' required','','style="width: 50%;"').'
-                                        
+                                        <div id="demo3"></div>
                                     </div>                                    
                                    
                                     <div class="form-group"  >
@@ -157,21 +176,16 @@ class Plantas extends crearHtml{
                                     </div> 
                                     
                                     <div class="form-group" >
-                                        <label for="id_cursos">Telefono Contacto:</label>
-                                        '.$this->create_input('text','telefono','telefono','Telefono Contacto',false,' required','','').'
-                                         '.$this->create_input('text','celular','celular','Celular Contacto',false,' required','','').'
-                                        
+                                        <label for="id_cursos">Telefono Contacto:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                        '.$this->create_input('text','telefono','telefono','Telefono Contacto',false,' ','','').'
+                                         '.$this->create_input('text','celular','celular','Celular Contacto',false,' ','','').'
+                                        <div id="demo4"></div>
                                     </div>
-                                    
-                                   
-                                   
-									
-									
                                     
 									'; 
                                   
                                      $html.='<button type="button" class="btn btn-primary" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">Cancelar</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                      $html.='<button type="button" id="guardarCurso" class="btn btn-primary">Guardar Solicitud</button>';
+                                      $html.='<button  type="button" class="btn btn-primary" id="guardarCurso">Guardar Solicitud</button>';
                                     $html.='<div id="Resultado" style="display:none; >RESULTADO</div>
                                 
 								</form>
@@ -183,7 +197,38 @@ class Plantas extends crearHtml{
                         </div>
                     </div>
                 </div>         
-        </section>  '; 
+        </section>
+		
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+			  <div class="modal-dialog modal-sm">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">¿Confirma la Información cargada?</h4>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+					<button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal3">
+			  <div class="modal-dialog modal-sm">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Se ha exedido el limite de espera para agendar sera redericcionado. <br/> <br/>Vuelva a seleccionar un nuevo cupo</h4>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">ACEPTAR</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+		'; 
 	   }
 		if(isset($_GET['agendar']) && isset($_GET['cupo']) && $_GET['agendar']==1){
 			
@@ -342,7 +387,7 @@ class Plantas extends crearHtml{
         //$this->imprimir($_SESSION['id_usuario']);
         try {
 			
-        $sql="INSERT INTO candidatos (
+         $sql="INSERT INTO candidatos (
                 NOMBRES,
                 TIPODOCUMENTO,
                 DOCUMENTO, 				
@@ -353,10 +398,8 @@ class Plantas extends crearHtml{
 				FECHA_CREACION,
 				FECHA_MODIFICACION,
 				SEXO) 
-                VALUES ('".$_POST['NOMBRES']." ".$_POST['APELLIDOS']."', ".$_POST['ID_TIPO'].", ".$_POST['DOCUMENTO'].", '".$_POST['EMAIL']."', ".$_POST['telefono'].",".$_POST['celular'].",
-						".$_SESSION['id_usuario'].",
-						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),
-						'".$_POST['sexo']."' )";
+                VALUES ('".$_POST['NOMBRES']." ".$_POST['APELLIDOS']."',".$_POST['ID_TIPO'].",".$_POST['DOCUMENTO'].",'".$_POST['EMAIL']."','".$_POST['telefono']."','".$_POST['celular']."',
+						".$_SESSION['id_usuario'].",DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),'".$_POST['sexo']."' )";
         $this->QuerySql($sql);
         
         
@@ -383,9 +426,9 @@ class Plantas extends crearHtml{
        
         $this->QuerySql($sql);
         
-        $sql="SELECT @@identity AS id_evaluado";
+         $sql="SELECT @@identity AS id_evaluado";
         $datos2 = $this->Consulta($sql,1); 
-        
+       
         $sql="SELECT U.id_usuario,A.idautorizacion,A.clientetercerizado FROM usuarios U
                 INNER JOIN usuarios_parametros UP ON UP.id_usuario=U.id_usuario
                 INNER JOIN autorizaciones A on A.idautorizacion=UP.clientercerizados
@@ -413,10 +456,26 @@ class Plantas extends crearHtml{
         }
         
         echo $_respuesta;
+		
+		echo '  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal4">
+			  <div class="modal-dialog modal-sm">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Agendamiento Realizado con Exito </h4>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="window.location=\'agendamiento.php?agendar=1&cupo='.$_POST['id_fecha'].'\'">ACEPTAR</button>
+				  </div>
+				</div>
+			  </div>
+			</div>';
 		echo "<script type=\"text/javascript\">				
-				   alert(\"Agendamiento Realizado con Exito\");
-				   location.href='agendamiento.php?agendar=1&cupo=".$_POST['id_fecha']."';			
+				  $( document ).ready(function() {
+						$('#mi-modal4').modal('show')
+					});	
 			</script>";  
+		
     }
 
     function fn_guardar(){

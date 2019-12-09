@@ -495,37 +495,153 @@ function fn_guardarCapitulo(){
 
 function fn_guarda(){
 	//alert(hola);
-	 if(validar_all('required')){
-		 if(confirm('¿Confirma la Información cargada?')){
-		  var datos = $('#formCrear').serializeArray();
-	      var formData = new FormData( document.getElementById( "formCrear" ) );
-	              formData.append( "process", "guardarDatos" );
-	              formData.append( "d", '1' );
-	              
-	              $.ajax({
-	                  url: file,
-	                  type: "post",
-	                  dataType: "html",
-	                  data: formData,
-	                  cache: false,
-	                  contentType: false,
-	  	     processData: false
-	              })
-	                  .done(function(res){
-	                  $("#Resultado").removeClass('alert alert-danger alert-dismissable');	                	
-	                  $("#Resultado").fadeOut("slow");
-	                  $("#Resultado").fadeIn(3000).html(res);
-	                  $("#Resultado").addClass('alert alert-success alert-dismissable');
-	                  $('#formCrear').find('select').val('');
-	                  $('#formCrear').find('input').val('');
-	                  recargaDatos('formCrear');	                  
-	                  });
+	
+	cargo = document.getElementById("cargo").value;
+	NOMBRES = document.getElementById("NOMBRES").value;
+	APELLIDOS = document.getElementById("APELLIDOS").value;
+	DOCUMENTO = document.getElementById("DOCUMENTO").value;
+	telefono = document.getElementById("telefono").value;
+	celular = document.getElementById("celular").value;
+	ID_TIPO = document.getElementById("ID_TIPO").selectedIndex;
+	id_prueba = document.getElementById("id_prueba").selectedIndex;
+	clientefinal = document.getElementById("clientefinal").selectedIndex;
+	sexo = document.getElementsByName("sexo");
+	if( clientefinal == null || clientefinal == 0 ) {	  
+	  document.getElementById("demo7").innerHTML = "<stron style=' color: red;'> Debe seleccionar el Cliente</stron>"; 	
+	  return false;
+	}
+	if( id_prueba == null || id_prueba == 0 ) {
+	  document.getElementById("demo6").innerHTML = "<stron style=' color: red;'> Debe seleccionar un Tipo de Prueba</stron>"; 
+	  return false;	
+	}
+	if( cargo == null || cargo.length == 0 || /^\s+$/.test(cargo) ) {
+	  document.getElementById("cargo").focus();
+	  document.getElementById("demo").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Cargo </stron>"; 	  
+	  return false;
+	}
+	var seleccionado = false;
+	for(var i=0; i<sexo.length; i++) {
+	  if(sexo[i].checked) {
+		seleccionado = true;
+		break;
+	  }
+	}
+
+	if(!seleccionado) {
+	   document.getElementById("demo8").innerHTML = "<stron style=' color: red;'> Debe Seleccionar el Sexo del Evaluado </stron>"; 	
+	  return false;
+	}
+	if( NOMBRES == null || NOMBRES.length == 0 || /^\s+$/.test(NOMBRES) ) {
+	  document.getElementById("NOMBRES").focus();
+	  document.getElementById("demo1").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Nombre del Evaluado </stron>"; 	  
+	  return false;
+	}
+	if( APELLIDOS == null || APELLIDOS.length == 0 || /^\s+$/.test(APELLIDOS) ) {
+	  document.getElementById("APELLIDOS").focus();
+	  document.getElementById("demo2").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Apellido del Evaluado </stron>"; 	  
+	  return false;
+	}
+	if( ID_TIPO == null || ID_TIPO == 0 ) {
+	  document.getElementById("demo5").innerHTML = "<stron style=' color: red;'> Debe seleccionar un Tipo de documento </stron>"; 
+	   return false;
+	}
+	if( DOCUMENTO == null || DOCUMENTO.length == 0 || /^\s+$/.test(DOCUMENTO) ) {
+	  document.getElementById("DOCUMENTO").focus();
+	  document.getElementById("demo3").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Número de Documento </stron>"; 	  
+	  return false;
+	}
+	if( isNaN(DOCUMENTO) ) {
+	   document.getElementById("DOCUMENTO").focus();	
+	   document.getElementById("demo3").innerHTML = "<stron style=' color: red;'> El Número de Documento debe ser númerico</stron>"; 	  
+	  return false;
+	}
+	if( (telefono == null || telefono.length == 0) && (celular == null || celular.length == 0)   ) {
+	  document.getElementById("telefono").focus();
+	  document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> Campo vacio Digita Telefono o Celular</stron>"; 	  
+	  return false;
+	}		
+	
+	if( telefono != null && telefono.length != 0 ) {
+		if( isNaN(telefono) ) {
+		   document.getElementById("telefono").focus();	
+		   document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe ser numerico</stron>"; 	  
+		  return false;
+		}	
+		if( !(/^\d{10}$/.test(telefono)) ) {
+			document.getElementById("telefono").focus();	
+			document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe contener maximo 10 digitos</stron>"; 	  
+		return false;
 		}
+	}
+	if( celular != null && celular.length != 0 ) {
+		if( isNaN(celular) ) {
+		   document.getElementById("celular").focus();	
+		   document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe ser numerico</stron>"; 	  
+		  return false;
+		}
+		if( !(/^\d{10}$/.test(celular)) ) {
+			document.getElementById("celular").focus();	
+		   document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe contener maximo 10 digitos</stron>"; 	  
+		  return false;
+		}
+	}
+	
+	 if(validar_all('required')){
+		 $( document ).ready(function() {
+			$('#mi-modal').modal('show')
+		});
+		modalConfirm(function(confirm){
+			if(confirm){
+			  var datos = $('#formCrear').serializeArray();
+			  var formData = new FormData( document.getElementById( "formCrear" ) );
+					  formData.append( "process", "guardarDatos" );
+					  formData.append( "d", '1' );
+					  
+					  $.ajax({
+						  url: file,
+						  type: "post",
+						  dataType: "html",
+						  data: formData,
+						  cache: false,
+						  contentType: false,
+				 processData: false
+					  })
+						  .done(function(res){
+						  $("#Resultado").removeClass('alert alert-danger alert-dismissable');	                	
+						  $("#Resultado").fadeOut("slow");
+						  $("#Resultado").fadeIn(3000).html(res);
+						  $("#Resultado").addClass('alert alert-success alert-dismissable');
+						  $('#formCrear').find('select').val('');
+						  $('#formCrear').find('input').val('');
+						  recargaDatos('formCrear');	                  
+						  });
+			}
+		});
 	  }else{
 	        alert('Campos obligatorios');
 	  }    
 }
 
+	$( document ).ready(function() {
+		$('#mi-modal2').modal('toggle')
+	});
+	
+	var modalConfirm = function(callback){
+	  
+	  $("#btn-confirm").on("click", function(){
+		$("#mi-modal").modal('show');
+	  });
+
+	  $("#modal-btn-si").on("click", function(){
+		callback(true);
+		$("#mi-modal").modal('hide');
+	  });
+	  
+	  $("#modal-btn-no").on("click", function(){
+		callback(false);
+		$("#mi-modal").modal('hide');
+	  });
+	};
 
 function fn_guardaPDF(){
 	 if(validar_all('required')){

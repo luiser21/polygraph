@@ -1,3 +1,19 @@
+<style>
+.embed-container {
+    position: relative;
+    padding-bottom: 86.25%;
+    height: 0;
+    overflow: hidden;
+}
+.embed-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+}
+</style>
+
 <?php
 session_start();
 include './clases/packege.php';

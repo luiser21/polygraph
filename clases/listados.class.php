@@ -16,7 +16,9 @@ class Index extends crearHtml{
      */
     function Contenido(){
         
-        $html =  '<section class="main-content-wrapper">
+        $html =  '
+		
+		<section class="main-content-wrapper">
             <div class="pageheader">
                 <h1>'.$this->_titulo.'</h1>
                 <p class="description">'.$this->_subTitulo.'</p>
@@ -26,7 +28,19 @@ class Index extends crearHtml{
                         <li class="active">Modulos de trabajo</li>
                     </ol>
                 </div>
-            </div>';
+            </div>
+			 <div class="col-md-8" >
+						
+                       <div class="embed-container" align="center" >
+                           <iframe width="1000" height="450" src="http://saipolygraph.com/" frameborder="0" allowfullscreen  scrolling="no"></iframe>
+                        </div>
+                    </div> 
+                    
+                        </div>
+                    </div>
+                </div>   
+			
+			';
             //$html .= $this->listarCursos();
             
         $html .=' </section>';

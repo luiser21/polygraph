@@ -846,10 +846,18 @@ function menuLogueado(){
         $this->fotoUsuario = $_SESSION['foto'];
        // print_r($this);
         $tipoUsuario = $this->getTipoUsuario();
-        $html = '       
+		$imagen='<img  class="img-circle profile-image" src="./imagenes/polygraph-03.png" alt="profile" width="85" height="85">';
+		if(!empty($_SESSION["logo"])){
+			$imagen='<style>
+					.sidebar-profile .profile-image {
+						width: 150px;						
+					}
+				</style>
+				<img style=" background-color: #ffffff; " class=" profile-image" src="'.$_SESSION["logo"].'" alt="profile" width="85" height="85">';
+		}
+        $html = ' 
                 <div class="sidebar-profile">
-                    <div class="avatar">
-                        <img class="img-circle profile-image" src="./imagenes/polygraph-03.png" alt="profile" width="85" height="85">
+                    <div class="avatar"  >'.$imagen.'
                         
                     </div>
                     <div class="profile-body dropdown">
@@ -941,8 +949,8 @@ function menuLogueado(){
     function _header(){
         $html = ' <header id="header">
             <!--logo start-->
-            <div class="brand">
-
+            <div class="brand" align="center">
+				<img src="./imagenes/polygraph-03.png" width="60" height="60"/>                    								        
             </div>
             <!--logo end-->
             <ul class="nav navbar-nav navbar-left">
