@@ -188,17 +188,22 @@ class crearHtml extends sql{
         if($_SESSION["tipo_usuario"]==3){
             $html = '<li class="nav-dropdown">
                             <a href="#" title="AGENDAMIENTO">
-                                <i class="fa fa-bar-chart-o"></i>LISTADO AGENDAMIENTO
+                                <i class="fa fa-bar-chart-o"></i>AGENDAMIENTO
                             </a>
                             <ul class="nav-sub">
                                 <li>
                                     <a href="agendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
-                                         Cupos Disponibles Agendar
+                                        Agendar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="reagendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                        Reagendar
                                     </a>
                                 </li>
 								 <li>
                                     <a href="solicitudes.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
-                                         Listar Solicitudes
+                                        Reportes
                                     </a>
                                 </li>
                 
@@ -395,7 +400,7 @@ class crearHtml extends sql{
     function menuUsuario(){
         $html = '<li class="nav-dropdown open">
                     <div style="width:100%">
-                    <a href="login.php" title="Iniciar sesion">
+                    <a href="index.php" title="Iniciar sesion">
                         <div class="btn btn-success" style="width:100%">Iniciar Sesi&oacute;n</div>
                     </a>
                     <div style="color:#FFF; width:100%;" class="text-center">&Oacute;</div>
@@ -857,9 +862,7 @@ function menuLogueado(){
 		}
         $html = ' 
                 <div class="sidebar-profile">
-                    <div class="avatar"  >'.$imagen.'
-                        
-                    </div>
+                   
                     <div class="profile-body dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><h4>'.$this->NombreUsuario.' '.$this->ApellidoUsuario.'  <span class="caret"></span></h4></a>
                         <small class="title">'.$tipoUsuario[0]['descripcion'].'</small>
@@ -948,9 +951,14 @@ function menuLogueado(){
      */
     function _header(){
         $html = ' <header id="header">
-            <!--logo start-->
-            <div class="brand" align="center">
-				<img src="./imagenes/polygraph-03.png" width="60" height="60"/>                    								        
+            <!--logo start--> 
+            <div class="brand" align="center" style="padding-right: 120px;">
+				<img src="'.$_SESSION["logo"] .'" width="90" height="90"/>                    								        
+            </div>
+            <!--logo end-->
+             <!--logo start-->
+            <div  align="center" style="position: absolute; float: right !important; padding-left: 170px;" class="col-md-6 col-md-offset-6 clearfix">
+				<img src="./imagenes/polygraph-03.png" width="90" height="90"/>                    								        
             </div>
             <!--logo end-->
             <ul class="nav navbar-nav navbar-left">
@@ -1154,7 +1162,7 @@ $html.= '</head>';
                     
                     ';
         $html .= $this->_head();
-        $html .= '<section id="main-wrapper" class="theme-default">';
+        $html .= '<section id="main-wrapper" class="theme-default sidebar-mini">';
         $html .= $this->_header();
         $html .= $this->crearMenu();
         $html .= '';
@@ -1178,8 +1186,8 @@ $html.= '</head>';
        </section>
             <!--/Config demo-->
     <!--Global JS-->
-    <script src="assets/js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="assets/plugins/navgoco/jquery.navgoco.min.js"></script>
     <script src="assets/plugins/pace/pace.min.js"></script>
     <script src="assets/plugins/fullscreen/jquery.fullscreen-min.js"></script>
@@ -1193,7 +1201,7 @@ $html.= '</head>';
     <!--Page Level JS-->
     <script src="assets/plugins/countTo/jquery.countTo.js"></script>
     <script src="assets/plugins/weather/js/skycons.js"></script>
-    <script src="assets/plugins/daterangepicker/moment.min.js"></script>
+    
     <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
     
     <script src="assets/plugins/dataTables/js/jquery.dataTables.js"></script>
@@ -1203,16 +1211,11 @@ $html.= '</head>';
     <!-- Morris  -->
     <script src="assets/plugins/morris/js/morris.min.js"></script>
     <script src="assets/plugins/morris/js/raphael.2.1.0.min.js"></script>
-    <!-- Vector Map  -->
-    <script src="assets/plugins/jvectormap/js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="assets/plugins/jvectormap/js/jquery-jvectormap-world-mill-en.js"></script>
+    
     <!-- Gauge  
     <script src="assets/plugins/gauge/gauge.min.js"></script>
     <script src="assets/plugins/gauge/gauge-demo.js"></script> -->
-    <!-- Calendar  -->
-    <script src="assets/plugins/calendar/clndr.js"></script>
-    <script src="assets/plugins/calendar/clndr-demo.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+   
     <!-- Switch -->
     <script src="assets/plugins/switchery/switchery.min.js"></script>
     <!--Load these page level functions-->
@@ -1801,127 +1804,279 @@ function tablaCheckbox($ArrayValores,$Nombre,$Id){
         echo "</pre>";
     }
     
-    function EnviarCorreo($Desde, $ParaQuienArray, $Titulo, $Cuerpo, $HTML = false,
-        $CCArray = array(), $CCOArray = array(), $Respuesta = "",
-        $AttachmentArray = array(), $bind = 0
-        ){
-            require_once("phpmailer/class.phpmailer.php");
-            require_once("phpmailer/class.smtp.php");
-            
-            $nivel_error=0;
-            $isValidaConexion=FALSE;
-            
-            $mail = new PHPMailer();
-            $mail->IsSMTP();                               // send via SMTP
-
-            $httpHost = explode('.',$_SERVER['HTTP_HOST']);           
-                
-            $mail->Host     = "localhost"; // SMTP servers
-            $mail->SMTPAuth = false;     // turn on SMTP authentication
-            $mail->Username = $httpHost[1]."@".$httpHost[1].".com";  // SMTP username
-            $mail->Password = $httpHost[1]; // SMTP password
-            $mail->language = 'es';    
-            
-            /**
-             *
-             * porcion de codigo para validar que halla conectividad con el servidor de smtp
-             */
-            $nivel_error=error_reporting();
-            
-            error_reporting(E_ERROR);
-            $isValidaConexion=$mail->SmtpConnect();
-            
-            error_reporting($nivel_error);
-            /**
-             *
-             * fin porcion de codigo para validar que halla conectividad con el servidor de smtp
-             */
-            if($isValidaConexion)
-            {
-                
-                
-                if (strpos($Desde,"|")===false) {$offset = 0;} else {$offset = 1;}
-                $NombreDe = substr($Desde,0,strpos($Desde,"|"));
-                $De = substr($Desde,strpos($Desde,"|")+$offset);
-                
-                $mail->From     = $De;
-                $mail->FromName = $NombreDe;
-                
-                foreach ($ParaQuienArray as $IdParaQuien => $ParaQuien)
-                {
-                    if (strpos($ParaQuien,"|")===false) {$offset = 0;} else {$offset = 1;}
-                    $NombrePara = substr($ParaQuien,0,strpos($ParaQuien,"|"));
-                    $Para = substr($ParaQuien,strpos($ParaQuien,"|")+$offset);
-                    
-                    $mail->AddAddress($Para, $NombrePara);
-                }
-                
-                $mail->WordWrap = 50;                              // set word wrap
-                
-                foreach ($CCArray as $IdCC => $CC)
-                {
-                    if (strpos($CC,"|")===false) {$offset = 0;} else {$offset = 1;}
-                    $NombreCC = substr($CC,0,strpos($CC,"|"));
-                    $CC = substr($CC,strpos($CC,"|")+$offset);
-                    
-                    $mail->AddCC($CC, $NombreCC);
-                }
-                
-                foreach ($CCOArray as $IdCCO => $CCO)
-                {
-                    if (strpos($CCO,"|")===false) {$offset = 0;} else {$offset = 1;}
-                    $NombreCCO = substr($CCO,0,strpos($CCO,"|"));
-                    $CCO = substr($CCO,strpos($CCO,"|")+$offset);
-                    
-                    $mail->AddBCC($CCO, $NombreCCO);
-                }
-                
-                foreach ($AttachmentArray as $IdAttachment => $Attachment)
-                {
-                    $mail->AddAttachment($Attachment);      // attachment
-                }
-                
-                if ($Respuesta != "")
-                {
-                    if(!is_array($Respuesta)){
-                        if (strpos($Respuesta,"|")===false) {$offset = 0;} else {$offset = 1;}
-                        $NombreResponderA = substr($Respuesta,0,strpos($Respuesta,"|"));
-                        $ResponderA = substr($Respuesta,strpos($Respuesta,"|")+$offset);
-                        
-                        $mail->AddReplyTo($ResponderA,$NombreResponderA);
-                    }
-                    
-                }
-                
-                $mail->IsHTML($HTML);// send as HTML
-                
-                $mail->Subject  =  $Titulo;
-                $mail->Body     =  $Cuerpo;
-                if ($HTML==true) { $mail->AltBody = HTMLToText($Cuerpo); } else { $mail->AltBody = $Cuerpo; }
-             
-                if(!$mail->Send())
-                {
-                    # Se adiciona validacion para variables bind
-                    # Julie Sarmiento <sarmientoj@globalhitss.com>
-                    # 06/04/2016
-                    if($bind == 0){
-                        echo "Correo no enviado";
-                        echo "Mailer Error: " . $mail->ErrorInfo;
-                        $isValidaConexion=FALSE;
-                    }
-                    
-                } else {
-                    # Se adiciona validacion para variables bind
-                    # Julie Sarmiento <sarmientoj@globalhitss.com>
-                    # 06/04/2016
-                    if($bind == 0){
-                        echo "Correo enviado";
-                    }
-                }
-                
-                //Correo
-                return $isValidaConexion;
-            }
+    function HTMLToText($Texto)
+    {
+        $Texto = str_replace("\n","",$Texto);
+        while (str_replace("  "," ",$Texto)!=$Texto) { $Texto = str_replace("  "," ",$Texto); }
+        $Texto = str_replace("&nbsp;"," ",$Texto);
+        $Texto = str_replace("<br>","\n",$Texto);
+        $Texto = str_replace("&aacute;","Ã¡",$Texto);
+        $Texto = str_replace("&eacute;","Ã©",$Texto);
+        $Texto = str_replace("&iacute;","Ã­",$Texto);
+        $Texto = str_replace("&oacute;","Ã³",$Texto);
+        $Texto = str_replace("&uacute;","Ãº",$Texto);
+        $Texto = str_replace("&lt;","<",$Texto);
+        $Texto = str_replace("&gt;",">",$Texto);
+        $Texto = str_replace("&iquest;","Â¿",$Texto);
+        $Texto = str_replace("&Ntilde;","Ã‘",$Texto);
+        $Texto = str_replace("&ntilde;","Ã±",$Texto);
+        return $Texto;
     }
+    
+    function EnviarSms($celular,$fecha,$hora){
+        
+        $query = http_build_query(array(
+            'key' => '901aa18b42da8c55f02bfa16bb72269db58ad6955ea7a4cda6790',
+            'client' => '1174',
+            'phone' => $celular,
+            'sms' => 'SAIPolygraph,Agendo Cita para el dia '.$fecha.'-'.$hora.' Prueba Preempleo, presentarse 10min antes, direccion Av18E #19AN-36 Niza(Cucuta N.S)',
+            'country-code' => 'CO'
+        ));
+        //$this->imprimir($query);
+     /*
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://www.onurix.com/api/v1/send-sms",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_POST  => 1,
+            CURLOPT_POSTFIELDS => $query,
+            CURLOPT_HTTPHEADER => array(
+                "content-type: application/x-www-form-urlencoded"
+            ),
+        ));
+      
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+      */  
+        $err=TRUE;
+        if ($err) {
+            return  "cURL Error #:" . $err;
+        } else {
+            return  'Se envio SMS al celular'.PHP_EOL;
+        }
+    }
+    
+    function EnviarCorreo($fullname, $clienteterce, $solicitud, $fecha, $hora ){
+      
+        $sql = "SELECT upper(empresas.NOMBRE) as NOMBRE
+                        FROM
+                        empresas
+                        Inner Join aliados ON aliados.id_aliado = empresas.id_aliado
+                        WHERE empresas.id_empresa=".$clienteterce;
+        $clienteterce = $this->Consulta($sql);
+        $clienteterce=$clienteterce[0]['NOMBRE'];
+        
+       $html='
+<html><meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+  <head>
+    <style type="text/css">
+      ReadMsgBody{ width: 100%;}
+      .ExternalClass {width: 100%;}
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+      body {-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;margin:0 !important;}
+      p { margin: 1em 0;}
+      table td { border-collapse: collapse;}
+      img {outline:0;}
+      a img {border:none;}
+      p {margin: 1em 0;}
+      @-ms-viewport{ width: device-width;}
+    .Estilo1 {
+	font-size: 19px;
+	color: #00aec7;
+}
+</style><!--[if mso]>       <style type="text/css">           /* Begin Outlook Font Fix */           body, table, td {               font-family: Arial, Helvetica, sans-serif ;               font-size:16px;               color:#808080;               line-height:1;           }           /* End Outlook Font Fix */       </style>     <![endif]-->
+  </head>
+  <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;"><style type="text/css">
+div.preheader 
+{ display: none !important; } 
+</style>   
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+      <tr>
+        <td align="center" valign="top">
+          
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <table cellspacing="0" cellpadding="0" border="0" width="600" class="container" align="center">
+            <tr>
+              <td>
+                <!-- added the border style here -->
+                <table class="tb_properties border_style" cellspacing="0" cellpadding="0" bgcolor="#ffffff" width="100%">
+                  <!-- end of comment -->
+                  <tr>
+                    <td align="center" valign="top">
+                      <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                          <!-- added padding here -->
+                          <td class="content_padding" style="padding:10px;border:0px;">
+                            <!-- end of comment -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td align="left" class="header" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" style="border-bottom: 1px solid #AEAEAE; min-width: 100%; " class="slot-styling"><tr>
+                                    <td class="slot-styling camarker-inner"><!---->
+                                    <!---->
+                                        <!---->
+                                        <!----></td>
+                                  </tr></table>
+                                  
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" class="" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" style="border-bottom: 1px solid #AEAEAE; min-width: 100%; " class="slot-styling"><tr><td style="padding-top: 10px; padding-bottom: 10px; " class="slot-styling camarker-inner"><!----><table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168313" src="http://saipolygraph.com/polygraph/img/agent-scorecard.png" width="600" style="display: block; padding: 0px; text-align: center; height: auto; width: 100%; border: 0px;"></td></tr></table></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 15px 25px; " class="stylingblock-content-wrapper camarker-inner" align="center"><span style="color:#0033a0;"><i><span style="font-size:21px;"><span style="font-family:Arial,Helvetica,sans-serif;" ><b>Hola ¡'.$fullname.'!
+<br/>
+La empresa <span style="color:#b30707;"> '.$clienteterce.' </span>
+<br/>
+SOLICITA PRACTICARLE PRUEBA DE POLIGRAFO 
+
+
+<br/><br/>
+Solicitud No. '.$solicitud.'
+
+</b></span></span></i></span><br>
+<br>
+<span style="font-size:17px;"><span style="font-family:Arial,Helvetica,sans-serif;">Queremos informarle que la empresa '.$clienteterce.', solicit&oacute; practicarle una prueba de Pol&iacute;grafo. Le invitamos a presentarse el pr&oacute;ximo '.$fecha.' a las '.$hora.', en la direcci&oacute;n: Av18E # 19AN-36 Niza (C&uacute;cuta N.S).</span></span></td>
+                                  </tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #00AEC7; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 25px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#ffffff;"><span style="font-size:20px;"><i><b>Recomendaciones para la prueba de POLIGRAFO:</b></i></span></span></td></tr></table>
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168306" src="http://saipolygraph.com/polygraph/img/personas.png" height="82" width="85" style="display: block; padding: 0px; text-align: center; height: 62px; width: 65px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+  <td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><p><span style="color:#00aec7;"><b><span style="font-size:19px;">Presente su cédula de ciudadanía original.</span></b></span></p></td>
+</tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 5px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!---->
+</td></tr></table></td></tr></table></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><br/>
+<img data-assetid="168309" src="http://saipolygraph.com/polygraph/img/durmiendo.png" height="82" width="85" style="display: block; padding: 0px; text-align: center; height: 62px; width: 65px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 23px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><font color="#00aec7"><span style="font-size: 19px;"><b>Descanse muy bien la noche anterior, m&iacute;nimo 6 horas, procure no trasnochar.</b></span></font></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 0px 0px 5px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168318" src="http://saipolygraph.com/polygraph/img/reloj.png" height="84" width="85" style="display: block; padding: 0px; text-align: center; height: 84px; width: 85px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 18px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size:18px;"><b>Pres&eacute;ntese en el lugar indicado con 20 minutos antes de la hora agendada. Disponga de dos horas (2) para la realizaci&oacute;n de la prueba.</b></span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 5px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" align="center" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper">
+<tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><br/><img data-assetid="168308" src="http://saipolygraph.com/polygraph/img/medicamento.png" height="62" width="65" style="display: block; padding: 0px; text-align: center; height: 62px; width: 65px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size:18px;"><b>Consuma los medicamentos prescritos por su médico de manera habitual (en los casos que aplique).</b></span></span></td></tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 5px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><br/>
+<img data-assetid="168307" src="http://saipolygraph.com/polygraph/img/Alcohol.png" height="82" width="85" style="display: block; padding: 0px; text-align: center; height: 62px; width: 75px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 23px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size:18px;"><b>No consuma bebidas alcohólicas, sustancias alucinógenas, antidepresivos o energizantes 24 horas antes de la prueba.</b></span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+  
+</tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168310" src="http://saipolygraph.com/polygraph/img/comida.png" height="82" width="85" style="display: block; padding: 0px; text-align: center; height: 82px; width: 85px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size:18px;"><b>Desayune y/o almuerce bien de manera previa (según la hora de su cita).</b></span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+ 
+</tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168310" src="http://saipolygraph.com/polygraph/img/adulto.png" height="82" width="85" style="display: block; padding: 0px; text-align: center; height: 82px; width: 85px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size:18px;"><b>Tome en cuenta que no se permiten acompa&ntilde;antes, especialmente menores de edad ni adultos mayores.</b></span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+  
+</tr></table><!----></td></tr></table></td></tr></table></td></tr></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 10px solid #F2F2F2; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 0px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 3px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168310" src="http://saipolygraph.com/polygraph/img/lluvia.jpg" height="82" width="85" style="display: block; padding: 0px; text-align: center; height: 82px; width: 85px; border: 0px;"></td>
+</tr></table></td></tr></table><!----></td><td valign="top" style="width: 80%; padding-left: 0px;"><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size:18px;"><b><br/>En caso de lluvia evite presentarse mojado.</b></span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+
+</tr></table><!----></td></tr></table></td></tr></table></td></tr></table>
+
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #00AEC7; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 25px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#ffffff;"><span style="font-size:20px;"><i><b>Excepciones para la prueba de POLIGRAFO:</b></i></span></span></td></tr></table>
+<!---->
+<!---->
+<!---->
+<!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 0px; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 2px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" class="responsive-td" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 8px 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0">
+<tr><td align="center"><img data-assetid="168349" src="http://saipolygraph.com/polygraph/img/embarazada.jpg" height="72" width="74" style="display: block; padding: 0px; text-align: center; height: 72px; width: 74px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" class="responsive-td" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 9px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="font-size:17px;"><span style="color:#0033a0;"><br/>Mujeres en Gestaci&oacute;n (Embarazo).</span>
+</span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 10px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 7px 25px 15px; " class="stylingblock-content-wrapper camarker-inner"><span style="color:#00aec7;"><span style="font-size: 20px;"><b><i>Personas     que    presenten alguna de las siguientes condiciones de salud</i></b></span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 0px; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 2px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" class="responsive-td" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="162606" src="http://saipolygraph.com/polygraph/img/corazon.jpg" height="77" width="99" style="display: block; padding: 0px; text-align: center; height: 77px; width: 99px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" class="responsive-td" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="font-size:17px;"><span style="color:#0033a0;">Enfermedad Cardiovascular como marcapasos o cirug&iacute;a a coraz&oacute;n abierto.</span></span></td></tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 10px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!---->
+<table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 0px; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 2px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td valign="top" class="responsive-td" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="167171" src="http://saipolygraph.com/polygraph/img/enfermo.jpg" height="96" width="99" style="display: block; padding: 0px; text-align: center; height: 96px; width: 99px; border: 0px;">
+</td></tr></table></td></tr></table><!----></td><td valign="top" class="responsive-td" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner"><span style="font-size:17px;"><span style="color:#0033a0;">Episodios gripales fuertes (fiebre, congesti&oacute;n nasal severa y/o sintomatolog&iacute;a Covid 19).</span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 10px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td></tr></table><!----></td></tr></table></td></tr></table></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; border: 0px; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 10px 2px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr>
+<td valign="top" class="responsive-td" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168311" src="http://saipolygraph.com/polygraph/img/sentado.jpg" height="96" width="99" style="display: block; padding: 0px; text-align: center; height: 96px; width: 99px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" class="responsive-td" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner">
+<span style="font-size:17px;"><span style="color:#0033a0;">Que no puedan permanecer sentadas por lo menos durante 2 horas de forma continua.</span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 10px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td>
+</tr></table><!----></td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tr>
+<td valign="top" class="responsive-td" style="width: 20%; padding-right: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center"><img data-assetid="168311" src="http://saipolygraph.com/polygraph/img/epilepsia.png" height="96" width="99" style="display: block; padding: 0px; text-align: center; height: 66px; width: 69px; border: 0px;"></td></tr></table></td></tr></table><!----></td><td valign="top" class="responsive-td" style="width: 80%; padding-left: 0px;"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 15px 20px 10px 10px; " class="stylingblock-content-wrapper camarker-inner">
+<span style="font-size:17px;"><span style="color:#0033a0;">Diagn&oacute;stico de Epilepsia.</span></span></td></tr></table><!----><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 10px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr>
+</tr></table></td>
+</tr></table><!----></td></tr></table></td></tr></table></td></tr></table>
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!----><!---->
+<!---->
+<!---->
+<!---->
+<!----></td>
+                                  </tr></table>
+                                  
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" class="" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" style="border-bottom: 1px solid #AEAEAE; min-width: 100%; " class="slot-styling"><tr><td style="padding-top: 10px; padding-bottom: 10px; " class="slot-styling camarker-inner"><!----><table cellpadding="0" cellspacing="0" width="100%" style="background-color: #0033A0; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 10px 0px; " class="stylingblock-content-wrapper camarker-inner"><div style="text-align: center;">
+	<span style="color:#ffffff;"><span style="font-size:15px;"><a href="http://saipolygraph.com" style="color:#ffffff;text-decoration:none;">www.saipolygraph.com</a></span></span></div></td></tr></table><!----></td></tr></table>
+                                  
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" class="" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="slot-styling"><tr><td style="padding-top: 20px; " class="slot-styling camarker-inner"><!----><table cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding-top: 10px; padding-right: 10px; padding-left: 10px; " class="stylingblock-content-wrapper camarker-inner"><div style="text-align: justify;">
+	<font size="1"><font color="#686868" face="Arial" style="font-size:12px;">Por su tranquilidad, seguridad y la de su Familia al llegar al lugar  indicado para la prueba se le informara  el  <strong><span style="color: #0033a0;">protocolo de prevenci&oacute;n</span></strong> con el fin de evitar la propagaci&oacute;n del COVID-19: <br/><br/> <strong><span style="color: #0033a0;">
+Si usted o alguno de los miembros de su n&uacute;cleo familiar o de convivencia ha tenido alg&uacute;n signo de alerta como fiebre, tos, dolor de cabeza, dolor de  garganta, malestar de gripa, hace o ha hecho parte de la cadena de contagio o fue diagnosticado positivo con COVID -19 favor abstenerse de presentarse a la prueba y <span style="color: #ff0000;"> solicite la reprogramaci&oacute;n </span> de la misma de forma inmediata. <br/><br/></span></strong>
+Comun&iacute;quese con nosotros a los siguientes  tel&eacute;fonos/WS: 3107552830/ 3002475138  fijo: 5971536
+
+
+<br>
+	<br>
+	<p align="center"><span style="color: #0033a0;" ><strong><span style="font-size: 10pt;">Tu bienestar es primero, si no es indispensable salir, qu&eacute;date en casa</span>
+<br/><span style="color: #ff0000;">“OJOS, NARIZ Y BOCA NO SE TOCAN”</span>
+</strong></span>&nbsp;</p>
+	</font></font>
+	<div style="text-align: center;">
+		<font size="1"><font color="#686868" face="Arial" size="1"><font color="#336666" face="Arial" size="1"><a   href="#" title="Ver Políticas de Uso y seguridad">Ver Pol&iacute;ticas de Uso y seguridad</a> - <a   href="#" title="Ver Políticas de Privacidad Ley de Datos Personales">Ver Pol&iacute;ticas de Privacidad Ley de Datos Personales</a> </font> </font></font></div><font size="1"><font color="#686868" face="Arial" size="1"> </font></font>
+<div style="text-align: center;">
+		<font size="1"><font color="#686868" face="Arial" size="1"><font size="1"><font color="#686868" face="Arial">Este email fue enviado por: SAIPOLYGRAPH, Colombia </font> </font> </font></font></div><font size="1"><font color="#686868" face="Arial" size="1"> </font></font></div></td></tr></table><!----></td></tr></table>
+                                  
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>';
+            
+        return $html;
+            
+    }
+    
+    
+  
 }
 ?>

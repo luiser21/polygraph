@@ -512,7 +512,7 @@ class Index extends crearHtml{
         session_start();
         $dominio = $this->getEmpresaUrl();
        
-        $_SESSION["bdatos"] = 'u504621598_polygraph';
+        $_SESSION["bdatos"] = 'polygraph';
         if($dominio == 'admin'){
             if($_POST['email']=='adminLubricador' && $_POST['password'] == '123456'){
                 $_SESSION["bdatos"] = 'cartas_inicio';   
@@ -536,7 +536,7 @@ class Index extends crearHtml{
         $password=$_POST['password'];
        // $empresa=(isset($_POST['empresa']))? $_POST['empresa'] : @$_POST['empresa2'];
       
-	    $sql = 'SELECT u.'.$this->PrimaryKey.', u.tipo_usuario, u.activo, u.nombres, u.apellidos, u.ciudad, u.foto, u.id_facebook,
+	     $sql = 'SELECT u.'.$this->PrimaryKey.', u.tipo_usuario, u.activo, u.nombres, u.apellidos, u.ciudad, u.foto, u.id_facebook,u.id_aliado,
                 u.email,u.duenocliente,a.logo FROM '.$_SESSION["bdatos"].'.'.$this->Table.' u
 		LEFT JOIN aliados a ON a.id_aliado=u.id_aliado 
 		WHERE u.email="'.$email.'" AND u.pass="'.md5($password).'" ';
@@ -558,8 +558,8 @@ class Index extends crearHtml{
            	$_SESSION["tipo_usuario"]   = $datos[0]['tipo_usuario'];
             $_SESSION["correo"]         = $datos[0]['email'];
             $_SESSION["dueno"]          = $datos[0]['duenocliente'];
-			$_SESSION["logo"]           = $datos[0]['logo'];
-            $_SESSION["empresa"]        = 0;
+            $_SESSION["logo"]           = (!empty($datos[0]['logo']))? $datos[0]['logo'] : "./imagenes/polygraph-03.png";
+			$_SESSION["empresa"]        = $datos[0]['id_aliado'];
             //$_SESSION["bdatos"]       = $datos2[0]['ruta'];
 			if($datos[0]['foto']==0){				
 				$_SESSION["foto"]		=   'archivosApp/usuario.jpg';
@@ -572,12 +572,19 @@ class Index extends crearHtml{
 				$_SESSION["foto"]		=   'http://graph.facebook.com/'.$datos[0]['id_facebook'].'/picture?type=large';				
 			}			
 			
-			
+			if($datos[0]['tipo_usuario']<>1){
 			    echo'
     				<script>
     				   location.href="listados.php";
     				</script>
     				';
+			}elseif($datos[0]['tipo_usuario']==1){
+			    echo'
+    				<script>
+    				   location.href="listados_admin.php";
+    				</script>
+    				';
+			}
 			
 		}else{			
 			$this->Error($this->mensaje='Este Usuario No Existe');
@@ -617,7 +624,7 @@ class Index extends crearHtml{
 	#echo $this->mensaje;
 		echo'
 			<script>
-			   location.href="login.php?me='.$mensaje.'";
+			   location.href="index.php?me='.$mensaje.'";
 			</script>
 			';
 	}	

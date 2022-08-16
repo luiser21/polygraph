@@ -495,9 +495,10 @@ function fn_guardarCapitulo(){
 
 function fn_guarda(){
 	//alert(hola);
-	
+
 	cargo = document.getElementById("cargo").value;
 	NOMBRES = document.getElementById("NOMBRES").value;
+	EMAIL = document.getElementById("EMAIL").value;
 	APELLIDOS = document.getElementById("APELLIDOS").value;
 	DOCUMENTO = document.getElementById("DOCUMENTO").value;
 	telefono = document.getElementById("telefono").value;
@@ -506,6 +507,7 @@ function fn_guarda(){
 	id_prueba = document.getElementById("id_prueba").selectedIndex;
 	clientefinal = document.getElementById("clientefinal").selectedIndex;
 	sexo = document.getElementsByName("sexo");
+	
 	if( clientefinal == null || clientefinal == 0 ) {	  
 	  document.getElementById("demo7").innerHTML = "<stron style=' color: red;'> Debe seleccionar el Cliente</stron>"; 	
 	  return false;
@@ -547,46 +549,29 @@ function fn_guarda(){
 	}
 	if( DOCUMENTO == null || DOCUMENTO.length == 0 || /^\s+$/.test(DOCUMENTO) ) {
 	  document.getElementById("DOCUMENTO").focus();
-	  document.getElementById("demo3").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Número de Documento </stron>"; 	  
+	  document.getElementById("demo3").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el N&uacute;mero de Documento </stron>"; 	  
 	  return false;
 	}
 	if( isNaN(DOCUMENTO) ) {
 	   document.getElementById("DOCUMENTO").focus();	
-	   document.getElementById("demo3").innerHTML = "<stron style=' color: red;'> El Número de Documento debe ser númerico</stron>"; 	  
+	   document.getElementById("demo3").innerHTML = "<stron style=' color: red;'> El Número de Documento debe ser num&eacute;rico</stron>"; 	  
 	  return false;
 	}
+	if( EMAIL == null ) {
+		   document.getElementById("EMAIL").focus();	
+		  document.getElementById("demo10").innerHTML = "<stron style=' color: red;'> Campo vacio  </stron>"; 
+		   return false;
+	}
+	
 	if( (telefono == null || telefono.length == 0) && (celular == null || celular.length == 0)   ) {
 	  document.getElementById("telefono").focus();
 	  document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> Campo vacio Digita Telefono o Celular</stron>"; 	  
 	  return false;
 	}		
 	
-	if( telefono != null && telefono.length != 0 ) {
-		if( isNaN(telefono) ) {
-		   document.getElementById("telefono").focus();	
-		   document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe ser numerico</stron>"; 	  
-		  return false;
-		}	
-		if( !(/^\d{10}$/.test(telefono)) ) {
-			document.getElementById("telefono").focus();	
-			document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe contener maximo 10 digitos</stron>"; 	  
-		return false;
-		}
-	}
-	if( celular != null && celular.length != 0 ) {
-		if( isNaN(celular) ) {
-		   document.getElementById("celular").focus();	
-		   document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe ser numerico</stron>"; 	  
-		  return false;
-		}
-		if( !(/^\d{10}$/.test(celular)) ) {
-			document.getElementById("celular").focus();	
-		   document.getElementById("demo4").innerHTML = "<stron style=' color: red;'> El numero telefonico debe contener maximo 10 digitos</stron>"; 	  
-		  return false;
-		}
-	}
 	
 	 if(validar_all('required')){
+		
 		 $( document ).ready(function() {
 			$('#mi-modal').modal('show')
 		});
@@ -621,11 +606,11 @@ function fn_guarda(){
 	        alert('Campos obligatorios');
 	  }    
 }
-
+/*
 	$( document ).ready(function() {
 		$('#mi-modal2').modal('toggle')
 	});
-	
+	*/
 	var modalConfirm = function(callback){
 	  
 	  $("#btn-confirm").on("click", function(){
@@ -894,6 +879,11 @@ function fn_crearOt(){
 function fn_tomarcupo(id_fecha){
     //console.log('aqui');
     location.href = 'agendamiento.php?id_fecha='+id_fecha;    
+	$("#tomarcupo").click(function(){
+	    	$.get("agendamiento.php", {id_fecha: "id_fecha"}, function(htmlexterno){
+	$("#cargaexterna").html(htmlexterno);
+			});
+	});
 }
 
 

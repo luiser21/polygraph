@@ -1,7 +1,7 @@
 <?php
 class Plantas extends crearHtml{
     
-    public $_titulo = 'ADMINISTRAR AGENDAMIENTOS';
+    public $_titulo = 'AGENDAMIENTO';
     public $_subTitulo = 'Crear Solicitudes';
     public $_datos = '';
     public $Table = 'evaluado';
@@ -12,19 +12,62 @@ class Plantas extends crearHtml{
    function Contenido(){
        
        if(isset($_GET['liberar']) && !empty($_GET['liberar']) ){
-		   $sql = "UPDATE cupo_fechas SET estado='LIBRE' WHERE id_cupo_fecha=".$_GET['liberar'];
+		   $sql = "UPDATE cupo_fechas SET estado='SALA1' WHERE id_cupo_fecha=".$_GET['liberar'];
 		   $this->QuerySql($sql);
 		   unset($_SESSION["liberar"]);
 	   }
        
+	   $sql = "SELECT
+	                CH.id_cupo_hora,   
+					CH.cupo_hora
+				FROM
+					cupo_hora CH";
+	   $arrcupos2 = $this->Consulta($sql);
+	   
+	  /*
+	   $date_now = date('Y-m-d');	  
+	   for($i=1;$i<=60;$i++){
+	       $date_future = strtotime('+'.$i.' day', strtotime($date_now));
+	       $date_future = date('Y-m-d', $date_future);	       
+    	   foreach($arrcupos2 as $value){ 	     	       
+    	       $sql="INSERT INTO cupo_fechas (
+                        fecha,
+                        id_cupo_hora,
+                        estado, 				
+                        activo
+                        ) 
+                        VALUES (
+                        '".$date_future."',
+                        ".$value['id_cupo_hora'].",
+                        'SALA1',
+                        1 
+                        )";
+    	       echo $sql.PHP_EOL;
+    	       $this->QuerySql($sql);    	       
+    	   }
+	   }
+	   */
+	   
+	   
+	   
          $html='<section class="main-content-wrapper">
             <div class="pageheader">
-                <h1>'.$this->_titulo.'</h1>
+                <h1>'. $this->NombreUsuario.' '. $this->ApellidoUsuario.'</h1>
                 <p class="description">'.$this->_subTitulo.'</p>
+<p> 
+<p> <button type="button" id="tomarcupo" class="btn btn-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    Reservado &nbsp;&nbsp;&nbsp;
+ <button type="button" id="tomarcupo" style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+  No disponible   &nbsp;&nbsp;&nbsp;
+ <button type="button" id="tomarcupo" style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;"  class="btn btn-warning">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+ Disponible   
+
+
+
                 <div class="breadcrumb-wrapper hidden-xs">
-                    <span class="label">Estas Aquí:</span>
+                    <span class="label">Estas Aqu&iacute;:</span>
                     <ol class="breadcrumb">
-                        <li class="active">Administrar Solicitudes</li>
+                        <li class="active">SAI Poligraf&iacute;as <p><a href="http://saipolygraph.com" target="_blank" ><strong style="font-size:13px;color:#EE1414;"> www.saipolygraph.com </strong></a></li>
                     </ol>
                 </div>
             </div>
@@ -170,11 +213,26 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
         $datos = $this->Consulta($sql,1); 
 		
 		for($i=0;$i<count($datos);$i++){
-			
-			$sql2="SELECT DATE_FORMAT(fecha, '%W, %e %b') as fecha,estado,id_cupo_fecha
-					FROM cupo_fechas
-					where activo=1   and fecha>= CURDATE() and id_cupo_hora=".$datos[$i]['id_cupo_hora']."
-					";      
+		    $sql2='';
+		    if(date("H")<=16){
+			     $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+					FROM cupo_fechas c
+					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
+					left Join empresas ON empresas.id_empresa = E.clientefinal
+					where c.activo=1   and c.fecha>= CURDATE() and 
+                    DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
+                    c.id_cupo_hora=".$datos[$i]['id_cupo_hora']."
+					";    
+		    }elseif(date("H")>=16){
+		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+					FROM cupo_fechas c
+					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
+					left Join empresas ON empresas.id_empresa = E.clientefinal
+					where c.activo=1   and c.fecha>= CURDATE()+2 and
+                    DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
+                    c.id_cupo_hora=".$datos[$i]['id_cupo_hora']."
+					";    
+		    }
 			$datos2 = $this->Consulta($sql2,1);
 			$k=0;
 		//	$this->imprimir($datos2);
@@ -188,14 +246,14 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					print_r($cupo_hora_comparar);					
 					*/
 					$value2['fecha'] = str_replace($healthy, $yummy, $value2['fecha']);   
-					if($value2['estado']=='LIBRE'){
-						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  ONCLICK=javascript:fn_tomarcupo('.$value2['id_cupo_fecha'].'); class="btn btn-success">'.$value2['estado'].'</button>';
+					if($value2['estado']=='SALA1'){
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo" style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;"  ONCLICK=javascript:fn_tomarcupo('.$value2['id_cupo_fecha'].'); class="btn btn-warning">DISPONIBLE</button>';
 					}
 					if($value2['estado']=='TOMADO'){
-						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-danger">'.$value2['estado'].'</button>';
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-success">'.$value2['CLIENTE_FINAL'].'</button>';
 					}
 					if($value2['estado']=='BLOQUEADO'){
-						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-warning">'.$value2['estado'].'</button>';
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">NO DISPONIBLE</button>';
 					}
 						
 					
@@ -211,13 +269,18 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
             $_array_formu = $this->generateHead($datos);
             $this->CamposHead = ( isset($_array_formu[0]) && is_array($_array_formu[0]) )? $_array_formu[0]: array();
             
-            $tablaHtml  = '<div class="row">
+            $tablaHtml  = '<style>
+                        table.dataTable {
+                            font-size: 18px;
+                        }
+                        </style>
+                        <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-body recargaDatos"  style="page-break-after: always;">
                             <div class="table-responsive">';
             $tablaHtml  .='';
-    		$tablaHtml .= $this->print_table($_array_formu, 4, true, 'table table-striped table-bordered',"id='tablaDatos'");
+    		$tablaHtml .= $this->print_table($_array_formu, 4, true, 'table table-striped table-bordered',"id='tablaDatos' style='font-size=20'");
     		$tablaHtml .=' </div>
            </div>
                         </div>
@@ -258,11 +321,26 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
         $datos = $this->Consulta($sql,1); 
 		
 		for($i=0;$i<count($datos);$i++){
-			
-			$sql2="SELECT DATE_FORMAT(fecha, '%W, %e %b') as fecha,estado,id_cupo_fecha
-					FROM cupo_fechas
-					where activo=1   and fecha>= CURDATE() and id_cupo_hora=".$datos[$i]['id_cupo_hora']." 
-					 ";      
+		    $sql2='';
+		    if(date("H")<=16){
+		      	$sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+					FROM cupo_fechas c
+					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
+					left Join empresas ON empresas.id_empresa = E.clientefinal
+					where c.activo=1   and c.fecha> CURDATE() and
+                    DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
+                     c.id_cupo_hora=".$datos[$i]['id_cupo_hora']." LIMIT 12
+					 ";
+		    }elseif(date("H")>=16){
+		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+					FROM cupo_fechas c
+					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
+					left Join empresas ON empresas.id_empresa = E.clientefinal
+					where c.activo=1   and c.fecha> CURDATE()+2 and
+                    DAYOFWEEK(fecha) IN (2,3,4,5,6,7) AND
+                     c.id_cupo_hora=".$datos[$i]['id_cupo_hora']." LIMIT 12
+					 ";
+		    }
 			$datos2 = $this->Consulta($sql2,1);
 		
 			unset($datos2[0]);
@@ -274,14 +352,14 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 				//$this->imprimir($datos2);
 			foreach($datos2 as $value2){
 				$value2['fecha'] = str_replace($healthy, $yummy, $value2['fecha']);   
-				if($value2['estado']=='LIBRE'){
-					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  ONCLICK=javascript:fn_tomarcupo('.$value2['id_cupo_fecha'].'); class="btn btn-success">'.$value2['estado'].'</button>';
+				if($value2['estado']=='SALA1'){
+					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"    style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;" ONCLICK=javascript:fn_tomarcupo('.$value2['id_cupo_fecha'].'); class="btn btn-warning">DISPONIBLE</button>';
 				}
 				if($value2['estado']=='TOMADO'){
-					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-danger">'.$value2['estado'].'</button>';
+					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-success">'.$value2['CLIENTE_FINAL'].'</button>';
 				}
 				if($value2['estado']=='BLOQUEADO'){
-					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-warning">'.$value2['estado'].'</button>';
+					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">NO DISPONIBLE</button>';
 				}
 			}
 			unset($datos[$i]['id_cupo_hora']);
@@ -291,7 +369,12 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
             $_array_formu = $this->generateHead($datos);
             $this->CamposHead = ( isset($_array_formu[0]) && is_array($_array_formu[0]) )? $_array_formu[0]: array();
             
-            $tablaHtml  = '<div class="row">
+            $tablaHtml  = '<style>
+                        table.dataTable {
+                            font-size: 18px;
+                        }
+                        </style>
+                <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-body recargaDatos"  style="page-break-after: always;">

@@ -125,7 +125,7 @@ canvas {
 }
 #header {
   z-index: 200;
-  height: 60px;
+  height: 90px;
   position: absolute;
   width: 100%;
   margin-right: 0;
@@ -455,7 +455,7 @@ canvas {
   border: 1px solid #eff2f2;
 }
 .sidebar-profile {
-  padding: 20px;
+  padding: 40px;
 }
 .sidebar-profile .profile-image {
   display: block;
@@ -822,7 +822,7 @@ canvas {
   margin-right: 240px;
 }
 .pageheader {
-  padding: 15px;
+  padding: 42px;
   border-bottom: 1px solid #dce0e6;
   border-top: 1px solid #eee;
   background: #F6F8F8;
@@ -839,7 +839,7 @@ canvas {
 }
 .pageheader .breadcrumb-wrapper {
   position: absolute;
-  top: 13px;
+  top: 40px;
   right: 25px;
 }
 .pageheader .breadcrumb-wrapper .label {
@@ -3490,7 +3490,7 @@ label.valid {
   background: #f6f8f8;
 }
 .theme-default .sidebar-left {
-  background-color: #1d212a;
+  background-color: #112651;
 }
 .theme-default .sidebar-mini .sidebar-left .nav > li.active > a:focus,
 .theme-default .sidebar-mini .sidebar-left .nav > li.active > a:hover,
@@ -3510,7 +3510,7 @@ label.valid {
   background-color: #1d212a;
 }
 .theme-default .sidebar-profile {
-  background: #13161c;
+  background: #06296f;
 }
 .theme-default.sidebar-mini .sidebar-left .nav > li.active > a,
 .theme-default.sidebar-mini .sidebar-left .nav > li.active > a:focus,

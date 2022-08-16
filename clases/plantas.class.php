@@ -214,35 +214,35 @@ class Plantas extends crearHtml{
         $editar = $this->Imagenes($this->PrimaryKey,0);
         $eliminar = $this->Imagenes($this->PrimaryKey,1);
       //  $eliminar = $this->Imagenes($this->PrimaryKey,1);
-         $sql=<<<OE
-              SELECT             
+        $sql=<<<OE
+              SELECT
+             
             	tp.NOMBRE AS TIPO,
 				c.NOMBRES AS EVALUADO,
                 c.DOCUMENTO AS CEDULA,
                 c.EMAIL,
                 c.TELEFONO,
-                e.cargo AS CARGO_ASPIRAR,	
-                em.NOMBRE AS CLIENTE_FINAL   ,
-            	CONCAT(DATE_FORMAT(fecha, '%e %b %Y'),' ',ch.cupo_hora) AS FECHA_AGENDADA,
+                E.cargo AS CARGO_ASPIRAR,	
+                empresas.NOMBRE AS CLIENTE_FINAL,
+                aliados.NOMBRE AS CLIENTETERCERIZADO,
+            --	E.fecha_inicio AS FECHA,	
             	ea.nombre_estado_agenda AS ESTADO,    
             	CASE
-            	WHEN e.resultado=1 THEN CONCAT('<div align="center"><img src="img/verde.png" align="center" width="20" height="20" /></div>') 
-            	WHEN e.resultado=2 THEN CONCAT('<div align="center"><img src="img/amarillo.png" align="center" width="20" height="20" /></div>') 
-            	WHEN e.resultado=3 THEN CONCAT('<div align="center"><img src="img/rojo.png" align="center" width="20" height="20" /></div>')  
+            	WHEN E.resultado=1 THEN CONCAT('<div align="center"><img src="img/verde.png" align="center" width="20" height="20" /></div>') 
+            	WHEN E.resultado=2 THEN CONCAT('<div align="center"><img src="img/amarillo.png" align="center" width="20" height="20" /></div>') 
+            	WHEN E.resultado=3 THEN CONCAT('<div align="center"><img src="img/rojo.png" align="center" width="20" height="20" /></div>')  
             	END AS RESULTADO,
-                CONCAT(  '<div class="fa fa-edit" align="center" style="cursor:pointer" title="Crear Reporte" ONCLICK=javascript:fn_guardarMecMet(',  e.id_evaluado ,  ',\'{$this->_file}\'); />' ) 
+                CONCAT(  '<div class="fa fa-edit" align="center" style="cursor:pointer" title="Crear Reporte" ONCLICK=javascript:fn_guardarMecMet(',  E.id_evaluado ,  ',\'{$this->_file}\'); />' ) 
                     AS ACCION
             FROM
-            	evaluado e
-            INNER JOIN candidatos c ON e.id_candidato = c.id_candidatos
-            INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = e.id_tipo_prueba 
-            INNER JOIN estados_agenda ea ON ea.id_estados=e.estado 
-			INNER JOIN cupo_fechas cp on cp.id_cupo_fecha=e.id_cupo_fecha
-			INNER JOIN cupo_hora ch on ch.id_cupo_hora=cp.id_cupo_hora
-			INNER JOIN empresas em on em.id_empresa=e.clientefinal
+            	candidatos c
+            INNER JOIN evaluado E ON E.id_candidato = c.id_candidatos
+            INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba 
+            INNER JOIN estados_agenda ea ON ea.id_estados=E.estado 
+            Inner Join empresas ON empresas.id_empresa = E.clientefinal
+            Inner Join aliados ON aliados.id_aliado = empresas.id_aliado
 OE;
         
-		
         
         $datos = $this->Consulta($sql,1); 
         if(count($datos)){

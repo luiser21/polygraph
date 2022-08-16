@@ -1,4 +1,5 @@
 <?php
+//include('footer.php');
 include './clases/packege.php';
 include('./clases/login.class.php');
 $ob 	= 	new Index;
@@ -31,6 +32,6 @@ switch($class){
 	}break;
 }
 
-
+//include('header.php');
 
 ?>

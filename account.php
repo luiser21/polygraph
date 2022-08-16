@@ -1,4 +1,5 @@
 <?php
+include('footer.php');
 session_start();
 if(!$_SESSION['id_usuario'])
     header('Location: ./login.php');
@@ -17,5 +18,5 @@ switch($class){
 		$ob->Iniciar();
 	}break;
 }
-
+include('header.php');
 ?>

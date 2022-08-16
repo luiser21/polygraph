@@ -15,6 +15,7 @@
 </style>
 
 <?php
+include('footer.php');
 session_start();
 include './clases/packege.php';
 include('./clases/listados.class.php');
@@ -34,4 +35,7 @@ if( isset( $_GET['t'] ) ){
     }
 }
 $ob->Iniciar();
+
+include('header.php');
+
 ?>

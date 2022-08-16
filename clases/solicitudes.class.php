@@ -14,12 +14,13 @@ class Plantas extends crearHtml{
      
          $html='<section class="main-content-wrapper">
             <div class="pageheader">
-                <h1>'.$this->_titulo.'</h1>
+                <h1>'. $this->NombreUsuario.' '. $this->ApellidoUsuario.'</h1>
                 <p class="description">'.$this->_subTitulo.'</p>
                 <div class="breadcrumb-wrapper hidden-xs">
                     <span class="label">Estas Aquí:</span>
                     <ol class="breadcrumb">
-                        <li class="active">Administrar Solicitudes</li>
+                        <li class="active">SAI Poligraf&iacute;as <p><a href="http://saipolygraph.com" target="_blank" ><strong style="font-size:13px;color:#EE1414;"> www.saipolygraph.com </strong></a></li>
+                  
                     </ol>
                 </div>
             </div>

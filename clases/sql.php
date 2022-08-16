@@ -26,7 +26,7 @@ class sql{
      * @param string $db
      * @return
      */
-     function sql($host = 'sql137.main-hosting.eu', $user = 'u504621598_polygraph', $pass = 'scnBcj5gNS|d@t', $db = 'u504621598_polygraph'){
+     function sql($host = 'localhost', $user = 'cartas_db', $pass = 'c0ntr4s3n42018*', $db = 'polygraph'){
      //function sql($host = 'localhost', $user = 'cartas_db', $pass = 'c0ntr4s3n42018*', $db = 'cartas_pintuco'){
         
          if(isset($_SESSION["bdatos"])){

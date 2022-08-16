@@ -1,4 +1,5 @@
 <?php
+include('footer.php');
 session_start();
 if(!$_SESSION['id_usuario'])
     header('Location: ./login.php');
@@ -7,4 +8,5 @@ if(!$_SESSION['id_usuario'])
     
     $ob = new Index;
     $ob->Iniciar();
+include('header.php');
 ?>
