@@ -59,7 +59,7 @@ class Plantas extends crearHtml{
 		$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
 		$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
 		if($validar_estado[0]['estado']=='BLOQUEADO' || $validar_estado[0]['estado']=='TOMADO'){
-		  	/*
+		  	
 		   echo '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
 			  <div class="modal-dialog modal-sm">
 				<div class="modal-content">
@@ -75,7 +75,7 @@ class Plantas extends crearHtml{
 				  </div>
 				</div>
 			  </div>
-			</div>';*/
+			</div>';
 	    }
 	   
 			
@@ -159,36 +159,36 @@ class Plantas extends crearHtml{
                                           <div id="demo8"></div>
                                     </div>
                                     <div class="form-group" >
-                                        <label for="id_cursos">Nombres del Evaluado:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('text','NOMBRES','NOMBRES','Nombre del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                        <label for="id_cursos">Nombres del Evaluado:</label>
+                                        '.$this->create_input('text','NOMBRES','NOMBRES','Nombre del Entrevistado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         <div id="demo1"></div>
                                         
                                     </div>
 									
 									 <div class="form-group" >
-                                        <label for="id_cursos">Apellidos del Evaluado:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('text','APELLIDOS','APELLIDOS','Apellido del Entrevistado',false,'form-control required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                        <label for="id_cursos">Apellidos del Evaluado:</label>
+                                        '.$this->create_input('text','APELLIDOS','APELLIDOS','Apellido del Entrevistado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         <div id="demo2"></div>
                                         
                                     </div>
 
                                     <div class="form-group" >
-                                         <label for="nombre">Tipo Documento:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                         <label for="nombre">Tipo Documento:</label>
                                       
-                                        '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,'Seleccione...','class=" required" style="width: 40%;"').'
+                                        '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,'Seleccione...','class="" style="width: 40%;"').'
                                          <div id="demo5"></div>
                                     </div>                                    
                                     
                                     
                                     <div class="form-group" >
-                                        <label for="id_cursos" >Numero de Identificacion:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                       '.$this->create_input('number','DOCUMENTO','DOCUMENTO','Numero de Identificacion',false,' required digits','','style="width: 50%;"').'
+                                        <label for="id_cursos" >Numero de Identificacion:</label>
+                                       '.$this->create_input('number','DOCUMENTO','DOCUMENTO','Numero de Identificacion',false,'  digits','','style="width: 50%;"').'
                                         <div id="demo3"></div>
                                     </div>                                    
                                    
                                     <div class="form-group"  >
-                                        <label for="id_cursos">Email:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' required email','','style="width: 80%;" ').'
+                                        <label for="id_cursos">Email:</label>
+                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' email','','style="width: 80%;" ').'
                                         <br/>                                       
                                         <label for="id_cursos">Email 2:</label>
                                         '.$this->create_input('email','EMAIL2','EMAIL2','EMAIL',false,' email ','','style="width: 80%;" ').'
@@ -196,8 +196,8 @@ class Plantas extends crearHtml{
                                     </div> 
                                     
                                     <div class="form-group" >
-                                        <label for="id_cursos">Telefono Contacto:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                            '.$this->create_input('number','celular','celular','Celular Contacto',false,' required digits ','',' data-validation-length="min4"').'
+                                        <label for="id_cursos">Telefono Contacto:</label>
+                                            '.$this->create_input('number','celular','celular','Celular Contacto',false,' digits ','',' data-validation-length="min4"').'
                                             '.$this->create_input('number','telefono','telefono','Telefono Contacto',false,' digits ','',' data-validation-length="min4"').'
                                          
                                         <div id="demo4"></div>
@@ -261,7 +261,7 @@ class Plantas extends crearHtml{
 		   $mesesin = array("January", "February", "March","April","May","June","July","August","September","October","November","December");
 		   $meseses   = array("de Enero de ", "de Febrero de ", "de Marzo de ","de Abril de ","de Mayo de ","de Junio de ","de Julio de ","de Agosto de ","de Septiembre de ","de Octubre de","de Noviembre de ","de Diciembre de");
 		   
-		   $sql = "SELECT
+		    $sql = "SELECT
 						DATE_FORMAT(CF.fecha, '%W, %e %M %Y') AS fecha,
 						CH.cupo_hora,
 						ea.nombre_estado_agenda AS ESTADO,
@@ -285,7 +285,7 @@ class Plantas extends crearHtml{
 					INNER JOIN candidatos c ON c.id_candidatos = E.id_candidato
 					INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba
 					INNER JOIN estados_agenda ea ON ea.id_estados = E.estado
-					INNER JOIN tipo_identificacion ti on ti.ID_TIPO=c.TIPODOCUMENTO
+					LEFT JOIN tipo_identificacion ti on ti.ID_TIPO=c.TIPODOCUMENTO
 					INNER JOIN empresas em on em.id_empresa=E.clientefinal
 					INNER JOIN usuarios u on u.id_usuario=E.id_usuario
 					WHERE CF.id_cupo_fecha =".$_GET['cupo'];
@@ -421,7 +421,7 @@ class Plantas extends crearHtml{
     				FECHA_CREACION,
     				FECHA_MODIFICACION,
     				SEXO) 
-                    VALUES ('".$_POST['NOMBRES']." ".$_POST['APELLIDOS']."',".$_POST['ID_TIPO'].",".$_POST['DOCUMENTO'].",'".$_POST['EMAIL']."','".$_POST['telefono']."','".$_POST['celular']."',
+                    VALUES ('".$_POST['NOMBRES']." ".$_POST['APELLIDOS']."','".$_POST['ID_TIPO']."','".$_POST['DOCUMENTO']."','".$_POST['EMAIL']."','".$_POST['telefono']."','".$_POST['celular']."',
     						".$_SESSION['id_usuario'].",DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),'".$_POST['sexo']."' )";
             $this->QuerySql($sql);            
             

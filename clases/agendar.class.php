@@ -21,12 +21,13 @@ class Plantas extends crearHtml{
 	                CH.id_cupo_hora,   
 					CH.cupo_hora
 				FROM
-					cupo_hora CH";
+					cupo_hora CH ";
 	   $arrcupos2 = $this->Consulta($sql);
 	   
 	  /*
-	   $date_now = date('Y-m-d');	  
-	   for($i=1;$i<=60;$i++){
+	   $date_now = date('Y-m-d');
+	   // $date_now = '2022-08-01';
+	   for($i=0;$i<=60;$i++){
 	       $date_future = strtotime('+'.$i.' day', strtotime($date_now));
 	       $date_future = date('Y-m-d', $date_future);	       
     	   foreach($arrcupos2 as $value){ 	     	       
@@ -56,9 +57,9 @@ class Plantas extends crearHtml{
                 <p class="description">'.$this->_subTitulo.'</p>
 <p> 
 <p> <button type="button" id="tomarcupo" class="btn btn-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-    Reservado &nbsp;&nbsp;&nbsp;
+    Agendado &nbsp;&nbsp;&nbsp;
  <button type="button" id="tomarcupo" style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-  No disponible   &nbsp;&nbsp;&nbsp;
+    Reservado  &nbsp;&nbsp;&nbsp;
  <button type="button" id="tomarcupo" style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;"  class="btn btn-warning">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
  Disponible   
 
@@ -205,7 +206,7 @@ $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"
 $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");   
 //$newphrase = str_replace($healthy, $yummy, $phrase);    
 
-	   $sql="SELECT cp.cupo_hora,id_cupo_hora
+	   $sql="SELECT cp.cupo_hora as HORA_INICIO,id_cupo_hora
 				FROM cupo_hora cp
 				WHERE activo=1
 				GROUP BY cupo_hora";        
@@ -214,28 +215,28 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 		
 		for($i=0;$i<count($datos);$i++){
 		    $sql2='';
-		    if(date("H")<=16){
+		    if(date("H")<=22){
 			     $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE() and 
+					where c.activo=1   and c.fecha>= CURDATE()-19 and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['id_cupo_hora']."
 					";    
-		    }elseif(date("H")>=16){
+		    }elseif(date("H")>=22){
 		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()+2 and
+					where c.activo=1   and c.fecha>= CURDATE()-19 and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['id_cupo_hora']."
 					";    
 		    }
 			$datos2 = $this->Consulta($sql2,1);
 			$k=0;
-		//	$this->imprimir($datos2);
+			//$this->imprimir($datos2);
 			foreach($datos2 as $value2){
 				if(	$k>=6){
 					unset($datos2[$k]);
@@ -253,7 +254,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-success">'.$value2['CLIENTE_FINAL'].'</button>';
 					}
 					if($value2['estado']=='BLOQUEADO'){
-						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">NO DISPONIBLE</button>';
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">RESERVADO</button>';
 					}
 						
 					
@@ -313,7 +314,7 @@ $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"
 $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");   
 //$newphrase = str_replace($healthy, $yummy, $phrase);    
 
-	   $sql="SELECT cp.cupo_hora,id_cupo_hora
+	   $sql="SELECT cp.cupo_hora AS HORA_INICIO,id_cupo_hora
 				FROM cupo_hora cp
 				WHERE activo=1
 				GROUP BY cupo_hora";        
@@ -322,21 +323,21 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 		
 		for($i=0;$i<count($datos);$i++){
 		    $sql2='';
-		    if(date("H")<=16){
+		    if(date("H")<=22){
 		      	$sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha> CURDATE() and
+					where c.activo=1   and c.fecha>= CURDATE()-19 and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                      c.id_cupo_hora=".$datos[$i]['id_cupo_hora']." LIMIT 12
 					 ";
-		    }elseif(date("H")>=16){
+		    }elseif(date("H")>=22){
 		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha> CURDATE()+2 and
+					where c.activo=1   and c.fecha>= CURDATE()-19 and
                     DAYOFWEEK(fecha) IN (2,3,4,5,6,7) AND
                      c.id_cupo_hora=".$datos[$i]['id_cupo_hora']." LIMIT 12
 					 ";
@@ -359,7 +360,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-success">'.$value2['CLIENTE_FINAL'].'</button>';
 				}
 				if($value2['estado']=='BLOQUEADO'){
-					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">NO DISPONIBLE</button>';
+					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">RESERVADO</button>';
 				}
 			}
 			unset($datos[$i]['id_cupo_hora']);

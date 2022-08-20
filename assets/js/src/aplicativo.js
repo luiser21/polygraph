@@ -533,6 +533,7 @@ function fn_guarda(){
 	   document.getElementById("demo8").innerHTML = "<stron style=' color: red;'> Debe Seleccionar el Sexo del Evaluado </stron>"; 	
 	  return false;
 	}
+	/*
 	if( NOMBRES == null || NOMBRES.length == 0 || /^\s+$/.test(NOMBRES) ) {
 	  document.getElementById("NOMBRES").focus();
 	  document.getElementById("demo1").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Nombre del Evaluado </stron>"; 	  
@@ -569,7 +570,7 @@ function fn_guarda(){
 	  return false;
 	}		
 	
-	
+	*/
 	 if(validar_all('required')){
 		
 		 $( document ).ready(function() {

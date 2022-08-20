@@ -13,13 +13,13 @@ class Plantas extends crearHtml{
     
    function Contenido(){
       
-       $sql = "SELECT ae.idautorcandidato,a.idautorizacion,a.nombre as nombre_autorizacion,a.politicas,a.clientetercerizado,e.cargo,e.clientefinal,C.DOCUMENTO as CEDULA,
-                CONCAT(c.NOMBRES, ' ', c.APELLIDOS) AS EVALUADO,C.CELULAR,t.NOMBRE as tipo_prueba,c.LUGAREXPEDICION,a.logo
+       $sql = "SELECT ae.idautorcandidato,a.idautorizacion,a.nombre as nombre_autorizacion,a.politicas,a.clientetercerizado,E.cargo,E.clientefinal,C.DOCUMENTO as CEDULA,
+                CONCAT(C.NOMBRES) AS EVALUADO,C.CELULAR,t.NOMBRE as tipo_prueba,C.LUGAREXPEDICION,a.logo
                 FROM autorizaciones a
                 INNER JOIN autorizacion_evaluado ae ON ae.idautorizacion=a.idautorizacion
-                INNER JOIN evaluado E ON e.id_candidato=ae.idcandidato
-                INNER JOIN candidatos C ON C.ID=E.id_candidato
-                INNER JOIN tipo_prueba t ON t.ID_PRUEBA=e.id_tipo_prueba
+                INNER JOIN evaluado E ON E.id_candidato=ae.idcandidato
+                INNER JOIN candidatos C ON C.id_candidatos=E.id_candidato
+                INNER JOIN tipo_prueba t ON t.ID_PRUEBA=E.id_tipo_prueba
                 WHERE a.estado='A' and ae.estado='P' and C.DOCUMENTO=".$_GET['cedula'];
        $arrPlantas = $this->Consulta($sql);
        
