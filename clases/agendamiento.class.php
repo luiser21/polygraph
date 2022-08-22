@@ -59,7 +59,7 @@ class Plantas extends crearHtml{
 		$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
 		$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
 		if($validar_estado[0]['estado']=='BLOQUEADO' || $validar_estado[0]['estado']=='TOMADO'){
-		  	
+		  	/*
 		   echo '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
 			  <div class="modal-dialog modal-sm">
 				<div class="modal-content">
@@ -75,7 +75,7 @@ class Plantas extends crearHtml{
 				  </div>
 				</div>
 			  </div>
-			</div>';
+			</div>';*/
 	    }
 	   
 			
