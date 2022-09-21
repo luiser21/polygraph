@@ -31,8 +31,12 @@ class Index extends crearHtml{
             </div>
 			 <div class="col-md-8" >
 						
-                       <div class="embed-container" align="center" >
-                           <iframe width="1000" height="450" src="http://saipolygraph.com/" frameborder="0" allowfullscreen  scrolling="no"></iframe>
+                        <div class="embed-container" align="center" >
+                            <video autoplay muted="muted">
+
+							<source src="/imagenes/polygrap.mp4" type="video/mp4">
+
+							</video>
                         </div>
                     </div> 
                     

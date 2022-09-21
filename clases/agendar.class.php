@@ -206,7 +206,7 @@ $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"
 $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");   
 //$newphrase = str_replace($healthy, $yummy, $phrase);    
 
-	   $sql="SELECT cp.cupo_hora as HORA_INICIO,id_cupo_hora
+	   $sql="SELECT id_cupo_hora AS ITEM,cp.cupo_hora as HORA
 				FROM cupo_hora cp
 				WHERE activo=1
 				GROUP BY cupo_hora";        
@@ -216,22 +216,22 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 		for($i=0;$i<count($datos);$i++){
 		    $sql2='';
 		    if(date("H")<=22){
-			     $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+			     $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
-					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-19 and 
+					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
+					where c.activo=1   and c.fecha>= CURDATE() and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
-                    c.id_cupo_hora=".$datos[$i]['id_cupo_hora']."
+                    c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
 		    }elseif(date("H")>=22){
-		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
-					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-19 and
+					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
+					where c.activo=1   and c.fecha>= CURDATE() and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
-                    c.id_cupo_hora=".$datos[$i]['id_cupo_hora']."
+                    c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
 		    }
 			$datos2 = $this->Consulta($sql2,1);
@@ -262,7 +262,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 				$k++;
 			}
 			//$this->imprimir($datos2);
-			unset($datos[$i]['id_cupo_hora']);
+			//unset($datos[$i]['id_cupo_hora']);
 		}
 		//$this->imprimir($datos);
         if(count($datos)){
@@ -314,7 +314,7 @@ $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"
 $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");   
 //$newphrase = str_replace($healthy, $yummy, $phrase);    
 
-	   $sql="SELECT cp.cupo_hora AS HORA_INICIO,id_cupo_hora
+	   $sql="SELECT id_cupo_hora AS ITEM,cp.cupo_hora as HORA
 				FROM cupo_hora cp
 				WHERE activo=1
 				GROUP BY cupo_hora";        
@@ -324,22 +324,22 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 		for($i=0;$i<count($datos);$i++){
 		    $sql2='';
 		    if(date("H")<=22){
-		      	$sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+		      	$sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
-					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-19 and
+					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
+					where c.activo=1   and c.fecha>= CURDATE() and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
-                     c.id_cupo_hora=".$datos[$i]['id_cupo_hora']." LIMIT 12
+                     c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";
 		    }elseif(date("H")>=22){
-		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,empresas.NOMBRE AS CLIENTE_FINAL
+		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
-					left Join empresas ON empresas.id_empresa = E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-19 and
+					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
+					where c.activo=1   and c.fecha>= CURDATE() and
                     DAYOFWEEK(fecha) IN (2,3,4,5,6,7) AND
-                     c.id_cupo_hora=".$datos[$i]['id_cupo_hora']." LIMIT 12
+                     c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";
 		    }
 			$datos2 = $this->Consulta($sql2,1);
@@ -363,7 +363,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">RESERVADO</button>';
 				}
 			}
-			unset($datos[$i]['id_cupo_hora']);
+			//unset($datos[$i]['id_cupo_hora']);
 		}
         if(count($datos)){
             $_array_formu = array();

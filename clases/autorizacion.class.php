@@ -1,5 +1,12 @@
 <?php
-
+if(!isset($_GET['cedula']) || empty($_GET['cedula'])){
+	   echo'
+    				<script>
+    				   location.href="index.php";
+    				</script>
+    				';
+	exit;
+}
 class Plantas extends crearHtml{
 
     
@@ -42,7 +49,7 @@ class Plantas extends crearHtml{
        $autorizacion.=$politica[8].' <strong>'.$empresa.'</strong> '.$politica[9].' <strong>'.$empresa.'</strong> '.$politica[10];
          
          $html='<section class="main-content-wrapper">
-            <div class="pageheader">
+            <!--<div class="pageheader">
                 <h1>'.$this->_titulo.'</h1>
                 
                 <div class="breadcrumb-wrapper hidden-xs">
@@ -52,7 +59,7 @@ class Plantas extends crearHtml{
                     </ol>
                 </div>
             </div>
-            
+            -->
             <div class="col-md-8">
                           <div class="panel panel-default panelCrear">
                              <div class="panel-heading">
@@ -68,7 +75,7 @@ class Plantas extends crearHtml{
                                   <input type="hidden" name="idautorcandidato" value="'.$arrPlantas[0]['idautorcandidato'].'" id="idautorcandidato">
                                            <input type="hidden" name="cedula" value="'.$cedula.'" id="cedula"> 
                                     <div class="form-group" align="center">
-                                        <img src="'.$arrPlantas[0]['logo'].'" width="400" height="130" class="img-fluid"  />
+                                        <img src="./imagenes/polygraph-03.png" width="130" height="130" class="img-fluid"  />
                                         <br/>
                                     </div>
                                       <h1 align="center">'.$titulo.'</h1><br/>
@@ -106,7 +113,7 @@ class Plantas extends crearHtml{
                                         '.$this->create_input('textarea','observaciones','observaciones','',false,'form-control').'
                                         
                                     </div>
-                                    <div align="center" id="autorizacion" style="display:none">
+                                    <div align="center" id="autorizacion" >
                                     '.$this->create_input('checkbox','autorizar','autorizar','0',false,'required').'                                        
                                     <button type="button" id="guardarCursoPDF" class="btn btn-primary">Autorizar</button>
                                     </div>
@@ -153,7 +160,7 @@ class Plantas extends crearHtml{
     function _mostrar(){
       /**  $this->arrCss = array('./css/misDatos.css','./css/theme.blue.css');
         $this->arrJs = array('./js/jsCrud.js');*/
-        $html = $this->Cabecera();
+       $html = $this->Cabecera_autorizacion();
         $html .= $this->contenido();
       //  $html .= $this->tablaDatos();
         $html .= $this->Pata();

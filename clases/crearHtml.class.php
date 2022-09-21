@@ -233,6 +233,17 @@ class crearHtml extends sql{
                                 <i class="fa fa-bar-chart-o"></i>INFORME DE POLIGRAFO
                             </a>
                             <ul class="nav-sub">
+								  <li>
+                                    <a href="agendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                        Agendar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="reagendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                        Reagendar
+                                    </a>
+                                </li>
+								
                                 <li>
                                     <a href="plantas.php?adm=1" title="Listar">
                                          Listar Solicitudes
@@ -1169,6 +1180,25 @@ $html.= '</head>';
                     
         return $html;
     }
+	function Cabecera_autorizacion(){
+        $html ='<!DOCTYPE html>
+                    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+                    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+                    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+                    <!--[if gt IE 8]><!-->
+                    <html class="no-js">
+                    <!--<![endif]--> 
+                    
+                    ';
+        $html .= $this->_head();
+      //  $html .= '<section id="main-wrapper" class="theme-default sidebar-mini">';
+       // $html .= $this->_header();
+        $html .= $this->crearMenu();
+        $html .= '';
+                    
+        return $html;
+    }
+
 
     /**
      * crearHtml::Pata()

@@ -499,7 +499,7 @@ function fn_guarda(){
 	cargo = document.getElementById("cargo").value;
 	NOMBRES = document.getElementById("NOMBRES").value;
 	EMAIL = document.getElementById("EMAIL").value;
-	APELLIDOS = document.getElementById("APELLIDOS").value;
+	
 	DOCUMENTO = document.getElementById("DOCUMENTO").value;
 	telefono = document.getElementById("telefono").value;
 	celular = document.getElementById("celular").value;
@@ -508,10 +508,10 @@ function fn_guarda(){
 	clientefinal = document.getElementById("clientefinal").selectedIndex;
 	sexo = document.getElementsByName("sexo");
 	
-	if( clientefinal == null || clientefinal == 0 ) {	  
+	/*if( clientefinal == null || clientefinal == 0 ) {	  
 	  document.getElementById("demo7").innerHTML = "<stron style=' color: red;'> Debe seleccionar el Cliente</stron>"; 	
 	  return false;
-	}
+	}*/
 	if( id_prueba == null || id_prueba == 0 ) {
 	  document.getElementById("demo6").innerHTML = "<stron style=' color: red;'> Debe seleccionar un Tipo de Prueba</stron>"; 
 	  return false;	

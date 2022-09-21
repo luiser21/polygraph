@@ -239,8 +239,8 @@ class Plantas extends crearHtml{
             INNER JOIN evaluado E ON E.id_candidato = c.id_candidatos
             INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba 
             INNER JOIN estados_agenda ea ON ea.id_estados=E.estado 
-            Inner Join empresas ON empresas.id_empresa = E.clientefinal
-            Inner Join aliados ON aliados.id_aliado = empresas.id_aliado
+            Inner Join aliados ON aliados.id_aliado = E.clientefinal
+			Inner Join empresas ON empresas.id_empresa = E.clientetercerizado
 OE;
         
         

@@ -37,11 +37,11 @@
 <?php
 date_default_timezone_set('America/Bogota');
 setlocale(LC_ALL,"es_ES");
-session_start();
+//session_start();
 
 
-if(!$_SESSION['id_usuario'])
-      header('Location: ./login.php');
+//if(!$_SESSION['id_usuario'])
+  //    header('Location: ./login.php');
 include './clases/packege.php';
 include('./clases/autorizacion.class.php');
  

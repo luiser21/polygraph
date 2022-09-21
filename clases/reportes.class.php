@@ -144,18 +144,18 @@ class Index extends crearHtml{
                 	a.clientetercerizado AS TERCERO,
                 	e.clientefinal,
                 	C.DOCUMENTO AS CEDULA,
-                	CONCAT(c.NOMBRES, ' ', c.APELLIDOS) AS EVALUADO,
+                	C.NOMBRES AS EVALUADO,
                 	CASE
                 	WHEN ae.estado='P' THEN 'PENDIENTE'
                 	WHEN ae.estado='A' THEN 'AUTORIZO'
                 	END AS ESTADO,
-                    AE.FECHA AS FECHA,                   
+                    ae.FECHA AS FECHA,                   
                     ".$editar."
                 FROM
                 	autorizaciones a
                 INNER JOIN autorizacion_evaluado ae ON ae.idautorizacion = a.idautorizacion
-                INNER JOIN evaluado E ON e.id_candidato = ae.idcandidato
-                INNER JOIN candidatos C ON C.ID = E.id_candidato
+                INNER JOIN evaluado e ON e.id_candidato = ae.idcandidato
+                INNER JOIN candidatos C ON C.id_candidatos = e.id_candidato
                 INNER JOIN tipo_prueba t ON t.ID_PRUEBA = e.id_tipo_prueba ";
        
        // echo $sql;

@@ -29,10 +29,13 @@ class Plantas extends crearHtml{
                 INNER JOIN aliados A ON A.id_aliado=E.id_aliado
                 WHERE E.activo = 1 and A.id_aliado=".$_SESSION['empresa'];
        $arrClientes = $this->Consulta($sql);
-     
-       $sql = "SELECT id_aliado codigo, NOMBRE as descripcion from aliados WHERE activo = 1"; 
-       
+    				
+       $sql = "SELECT id_aliado codigo, NOMBRE as descripcion from aliados WHERE activo = 1 and tipocliente like '%1%' order by NOMBRE";        
        $arrClientesterce = $this->Consulta($sql);
+	   
+	   
+	   $sql = "SELECT id_aliado codigo, NOMBRE as descripcion from aliados WHERE activo = 1 and tipocliente like '%2%'  order by NOMBRE";        
+       $arrClientesdirectos = $this->Consulta($sql);
 	   
 	   $sql = "UPDATE cupo_fechas SET estado='BLOQUEADO', hora=DATE_ADD(NOW(), INTERVAL -5 HOUR) WHERE id_cupo_fecha=".$_GET['id_fecha'];
        $this->QuerySql($sql);
@@ -83,6 +86,54 @@ class Plantas extends crearHtml{
 <script type=\"text/javascript\">
 
 
+function habilitardiv1() {
+
+    var x = document.getElementById('directo');
+	var y = document.getElementById('tercerizado');
+	  var z = document.getElementById('nuevo');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+		y.style.display = 'none';
+		z.style.display = 'none';
+		document.getElementById('clientenuevo').value = '';
+		document.getElementById('intermediario').value = '';
+		document.getElementById('clientetercerizado').value = '';
+    } else {
+        x.style.display = 'none';
+    }
+}
+function habilitardiv2() {
+
+    var x = document.getElementById('tercerizado');
+	 var y = document.getElementById('directo');
+	  var z = document.getElementById('nuevo');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+		y.style.display = 'none';
+		z.style.display = 'none';
+		document.getElementById('clientenuevo').value = '';
+		document.getElementById('clientefinal').value = '';
+    } else {
+        x.style.display = 'none';
+    }
+}
+	
+	function habilitardiv3() {
+
+    var x = document.getElementById('nuevo');
+	 var y = document.getElementById('directo');
+	  var z = document.getElementById('tercerizado');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+		y.style.display = 'none';
+		z.style.display = 'none';
+		document.getElementById('clientefinal').value = '';
+		document.getElementById('intermediario').value = '';
+		document.getElementById('clientetercerizado').value = '';
+    } else {
+        x.style.display = 'none';
+    }
+}
 	$( document ).ready(function() {
 		$('#mi-modal2').modal('toggle')
 	});
@@ -93,7 +144,7 @@ class Plantas extends crearHtml{
 					});
 				   
 				}
-				setTimeout(sayHi, 600000);
+				//setTimeout(sayHi, 600000);
 			</script>";  
 		
          $html='
@@ -128,17 +179,51 @@ class Plantas extends crearHtml{
                                         <label for="nombre">FECHA PROGRAMADA:</label>
                                         '.$arrcupos[0]['fecha'] .'
 										  <label for="nombre">FRANJA:</label>
-                                        '.$arrcupos[0]['cupo_hora'] .'
+                                        '.$arrcupos[0]['cupo_hora'] .'<br/> 
+										 <label for="id_cursos">HORA DE INICO:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                        
+										 '.$this->create_input('text','horareal','horareal','Hora inicio ',false,' ','', 'style="width: 10%;"').'
+
 									 <br/> * Campos Obligatorios
-                                    </div>
-                                    <br/> <br/>';
+                                    </div>  <p> <p> 
+                                    <br/>  <br/> <br/>';
           
                                     
-                                    $html.='		 <div class="form-group" >
+                                    $html.='	<p> <p> 
+  <label for="id_cursos">Cliente Tipo:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>									
+ <button type="button" id="tomarcupo1" class="btn btn-success" onclick="habilitardiv1()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    Directo &nbsp;&nbsp;&nbsp;
+ <button type="button" id="tomarcupo2"  onclick="habilitardiv2()" style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    Tercerizado  &nbsp;&nbsp;&nbsp;
+ <button type="button" id="tomarcupo3" onclick="habilitardiv3()" style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;"  class="btn btn-warning">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+ Nuevo   
+<p> <p>  <p> <p> 
+
+									<div class="form-group" id="directo" style="display: none">
                                         <label for="id_cursos">Cliente (Empleador):<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->crearSelect('clientefinal','clientefinal',$arrClientes,false,false,'Seleccione...','class=" required" style="width: 50%;"').'
+                                        '.$this->crearSelect('clientefinal','clientefinal',$arrClientesdirectos,false,false,'Seleccione...',' style="width: 50%;"').'
 										  <div id="demo7"></div>
                                     </div>
+									
+									 <div class="form-group" id="tercerizado" style="display: none">
+                                        <label for="id_cursos">Intermediario:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                        '.$this->crearSelect('intermediario','intermediario',$arrClientesterce,false,false,'Seleccione...','class="" style="width: 50%;"').'
+										<br/>
+										<label for="id_cursos">Cliente Final:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                        '.$this->create_input('text','clientetercerizado','clientetercerizado','Cliente Final ',false,' ','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
+										 
+										 <div id="demo7"></div>
+                                    </div>
+									
+									 <div class="form-group" id="nuevo" style="display: none">
+                                        <label for="id_cursos">Cliente Nuevo:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                        '.$this->create_input('text','clientenuevo','clientenuevo','Cliente nuevo ',false,' ','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
+
+ <input type="radio" id="tipocliente" name="tipocliente" value="tercerizado"> <label for="cbox2">Tercerizado</label>  
+<input type="radio" id="tipocliente" name="tipocliente" value="directo" checked> <label for="cbox2">Directo</label>                                                                         
+										<div id="demo7"></div>
+                                    </div>
+									
                                     <div class="form-group" >
                                         <label for="nombre">Tipo de Prueba:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         '.$this->create_input('hidden','id_fecha','id_fecha',false,$_GET['id_fecha']).'                                    
@@ -159,18 +244,12 @@ class Plantas extends crearHtml{
                                           <div id="demo8"></div>
                                     </div>
                                     <div class="form-group" >
-                                        <label for="id_cursos">Nombres del Evaluado:</label>
-                                        '.$this->create_input('text','NOMBRES','NOMBRES','Nombre del Entrevistado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                        <label for="id_cursos">Nombrs y Apellidos del Evaluado:</label>
+                                        '.$this->create_input('text','NOMBRES','NOMBRES','Nombrs y Apellidos del Evaluado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         <div id="demo1"></div>
                                         
-                                    </div>
-									
-									 <div class="form-group" >
-                                        <label for="id_cursos">Apellidos del Evaluado:</label>
-                                        '.$this->create_input('text','APELLIDOS','APELLIDOS','Apellido del Entrevistado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
-                                        <div id="demo2"></div>
-                                        
-                                    </div>
+                                    </div>						
+								
 
                                     <div class="form-group" >
                                          <label for="nombre">Tipo Documento:</label>
@@ -185,13 +264,23 @@ class Plantas extends crearHtml{
                                        '.$this->create_input('number','DOCUMENTO','DOCUMENTO','Numero de Identificacion',false,'  digits','','style="width: 50%;"').'
                                         <div id="demo3"></div>
                                     </div>                                    
-                                   
+                                     
+									 <div class="form-group" >
+                                        <label for="id_cursos" >Fecha Expedicion:</label>
+                                       '.$this->create_input('calendar','fechaexpedicion','fechaexpedicion','DD/MM/AAAA',false,'  digits','','style="width: 20%;"').'
+                                        <div id="demo3"></div>
+                                    </div>   
+									  <div class="form-group" >
+                                        <label for="id_cursos" >Lugar de Expedicion:</label>
+                                       '.$this->create_input('text','lugarexpedicion','lugarexpedicion','Municipo - Deparatamento',false,'  digits','','onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 50%;"').'
+                                        <div id="demo3"></div>
+                                    </div>   
                                     <div class="form-group"  >
                                         <label for="id_cursos">Email:</label>
-                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' email','','style="width: 80%;" ').'
+                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' email','','style="width: 70%;" ').'
                                         <br/>                                       
                                         <label for="id_cursos">Email 2:</label>
-                                        '.$this->create_input('email','EMAIL2','EMAIL2','EMAIL',false,' email ','','style="width: 80%;" ').'
+                                        '.$this->create_input('email','EMAIL2','EMAIL2','EMAIL',false,' email ','','style="width: 70%;" ').'
                                          <div id="demo10"></div>
                                     </div> 
                                     
@@ -286,7 +375,7 @@ class Plantas extends crearHtml{
 					INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba
 					INNER JOIN estados_agenda ea ON ea.id_estados = E.estado
 					LEFT JOIN tipo_identificacion ti on ti.ID_TIPO=c.TIPODOCUMENTO
-					INNER JOIN empresas em on em.id_empresa=E.clientefinal
+					INNER JOIN aliados em on em.id_aliado=E.clientefinal
 					INNER JOIN usuarios u on u.id_usuario=E.id_usuario
 					WHERE CF.id_cupo_fecha =".$_GET['cupo'];
 		   $arrcupos = $this->Consulta($sql);
@@ -413,7 +502,9 @@ class Plantas extends crearHtml{
              $sql="INSERT INTO candidatos (
                     NOMBRES,
                     TIPODOCUMENTO,
-                    DOCUMENTO, 				
+                    DOCUMENTO, 
+					LUGAREXPEDICION,
+					FECHAEXPEDICION,					
                     EMAIL, 
                     TELEFONO,
     				CELULAR,
@@ -421,13 +512,45 @@ class Plantas extends crearHtml{
     				FECHA_CREACION,
     				FECHA_MODIFICACION,
     				SEXO) 
-                    VALUES ('".$_POST['NOMBRES']." ".$_POST['APELLIDOS']."','".$_POST['ID_TIPO']."','".$_POST['DOCUMENTO']."','".$_POST['EMAIL']."','".$_POST['telefono']."','".$_POST['celular']."',
+                    VALUES ('".$_POST['NOMBRES']."','".$_POST['ID_TIPO']."','".$_POST['DOCUMENTO']."','".$_POST['lugarexpedicion']."','".$_POST['fechaexpedicion']."','".$_POST['EMAIL']."','".$_POST['telefono']."','".$_POST['celular']."',
     						".$_SESSION['id_usuario'].",DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),'".$_POST['sexo']."' )";
             $this->QuerySql($sql);            
             
             $sql="SELECT @@identity AS id_candidatos";
             $datos = $this->Consulta($sql,1);     
             
+			
+			if(empty($_POST['clientefinal'])){
+				echo 'hoal';
+				$_POST['clientefinal']=$_POST['intermediario'];
+				
+				if(!empty($_POST['clientetercerizado'])){
+					$sql="INSERT INTO empresas (NOMBRE,id_aliado) 
+						VALUES ('".$_POST['clientetercerizado']."',".$_POST['clientefinal'].")";                
+					$this->QuerySql($sql);
+					
+					$sql="SELECT @@identity AS id_empresa";
+					$datos_aliado = $this->Consulta($sql,1); 					
+					
+					$_POST['clientetercerizado']=$datos_aliado[0]['id_empresa'];
+				}
+				
+			}elseif(empty($_POST['clientefinal']) && empty($_POST['intermediario'])){
+				
+				 $sql="INSERT INTO aliados (
+                    tipocliente, 
+                    NOMBRE) 
+                    VALUES ('".$_POST['tipocliente']."', '".$_POST['clientenuevo']."')";                
+				$this->QuerySql($sql);
+				
+				$sql="SELECT @@identity AS id_aliado";
+				$datos_aliado = $this->Consulta($sql,1); 					
+				
+				$_POST['clientefinal']=$datos_aliado[0]['id_aliado'];
+			}
+			if(empty($_POST['clientetercerizado'])){
+				$_POST['clientetercerizado']=0;
+			}
             $sql="INSERT INTO evaluado (
                     id_tipo_prueba, 
                     id_candidato,
@@ -435,13 +558,13 @@ class Plantas extends crearHtml{
                     resultado,
                     id_usuario,
                     cargo,
-                    clientefinal,
+                    clientefinal,clientetercerizado,
     				fecha_cupo_tomado,
     				fecha_modificacion,
     				id_cupo_fecha,
     				primer_cupo) 
                     VALUES (".$_POST['id_prueba'].", ".$datos[0]['id_candidatos'].", '2', '0',".$_SESSION['id_usuario'].",'".$_POST['cargo']."',
-    						".$_POST['clientefinal'].",
+    						".$_POST['clientefinal'].",".$_POST['clientetercerizado'].",
     						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),
     						".$_POST['id_fecha'].",".$_POST['id_fecha'].")";                
             $this->QuerySql($sql);
@@ -493,7 +616,7 @@ class Plantas extends crearHtml{
         
             //Envio de Correo
             if(!empty($_POST['EMAIL'])){
-                $from = "saiconfirmacion@saipolygraph.com";
+                $from = "confirmacion@saipolygraph.com";
                 $to = trim($_POST['EMAIL']);
                
                 $subject = "Confirmación agendamiento de Cita – Prueba de Polígrafo";             
@@ -505,7 +628,7 @@ class Plantas extends crearHtml{
                     'Reply-To: '.$from."\r\n" .
                     'Cc: '.$_POST['EMAIL2'] . "\r\n" .  // esto sería copia normal
                     'X-Mailer: PHP/' . phpversion();            
-                $fullname=$_POST['NOMBRES']." ".$_POST['APELLIDOS'];
+                $fullname=$_POST['NOMBRES'];
                 $clienteterce=''; 
                 $solicitud='';
                 $fecha=''; 

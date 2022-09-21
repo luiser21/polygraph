@@ -131,7 +131,7 @@ class Plantas extends crearHtml{
             INNER JOIN estados_agenda ea ON ea.id_estados=e.estado 
 			INNER JOIN cupo_fechas cp on cp.id_cupo_fecha=e.id_cupo_fecha
 			INNER JOIN cupo_hora ch on ch.id_cupo_hora=cp.id_cupo_hora
-			INNER JOIN empresas em on em.id_empresa=e.clientefinal
+			INNER JOIN aliados em on em.id_aliado=e.clientefinal
 			WHERE c.idsolicitante=".$_SESSION['id_usuario'];
         
      
