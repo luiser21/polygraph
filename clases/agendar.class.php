@@ -78,7 +78,7 @@ class Plantas extends crearHtml{
 
                     </div> '.$this->tablaDatos().'
 					
-					'.$this->tablaDatos2().'
+				<!--	'.$this->tablaDatos2().'-->
                     
                     
                         </div>
@@ -220,7 +220,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE() and 
+					where c.activo=1   and c.fecha>= CURDATE()-24 and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
@@ -229,7 +229,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE() and
+					where c.activo=1   and c.fecha>= CURDATE()-24 and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
@@ -238,9 +238,9 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 			$k=0;
 			//$this->imprimir($datos2);
 			foreach($datos2 as $value2){
-				if(	$k>=6){
-					unset($datos2[$k]);
-				}else{
+				//if(	$k>=15){
+					//unset($datos2[$k]);
+				//}else{
 					/*$hoy = getdate();
 					print_r($hoy['hours']-5);
 					$cupo_hora_comparar=explode(':',$datos[$i]['cupo_hora']);
@@ -258,7 +258,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					}
 						
 					
-				}
+				//}
 				$k++;
 			}
 			//$this->imprimir($datos2);
@@ -328,7 +328,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE() and
+					where c.activo=1   and c.fecha>= CURDATE()-24 and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                      c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";
@@ -337,7 +337,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE() and
+					where c.activo=1   and c.fecha>= CURDATE()-24 and
                     DAYOFWEEK(fecha) IN (2,3,4,5,6,7) AND
                      c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";

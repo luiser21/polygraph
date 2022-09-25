@@ -516,7 +516,7 @@ function fn_guarda(){
 	  document.getElementById("demo6").innerHTML = "<stron style=' color: red;'> Debe seleccionar un Tipo de Prueba</stron>"; 
 	  return false;	
 	}
-	if( cargo == null || cargo.length == 0 || /^\s+$/.test(cargo) ) {
+	/*if( cargo == null || cargo.length == 0 || /^\s+$/.test(cargo) ) {
 	  document.getElementById("cargo").focus();
 	  document.getElementById("demo").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Cargo </stron>"; 	  
 	  return false;
@@ -527,13 +527,13 @@ function fn_guarda(){
 		seleccionado = true;
 		break;
 	  }
-	}
-
+	}*/
+/*
 	if(!seleccionado) {
 	   document.getElementById("demo8").innerHTML = "<stron style=' color: red;'> Debe Seleccionar el Sexo del Evaluado </stron>"; 	
 	  return false;
 	}
-	/*
+	
 	if( NOMBRES == null || NOMBRES.length == 0 || /^\s+$/.test(NOMBRES) ) {
 	  document.getElementById("NOMBRES").focus();
 	  document.getElementById("demo1").innerHTML = "<stron style=' color: red;'> Campo vacio debe digitar el Nombre del Evaluado </stron>"; 	  

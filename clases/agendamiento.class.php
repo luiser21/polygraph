@@ -62,7 +62,7 @@ class Plantas extends crearHtml{
 		$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
 		$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
 		if($validar_estado[0]['estado']=='BLOQUEADO' || $validar_estado[0]['estado']=='TOMADO'){
-		  	/*
+		  	
 		   echo '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
 			  <div class="modal-dialog modal-sm">
 				<div class="modal-content">
@@ -78,7 +78,7 @@ class Plantas extends crearHtml{
 				  </div>
 				</div>
 			  </div>
-			</div>';*/
+			</div>';
 	    }
 	   
 			
@@ -182,7 +182,7 @@ function habilitardiv2() {
                                         '.$arrcupos[0]['cupo_hora'] .'<br/> 
 										 <label for="id_cursos">HORA DE INICO:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
                                         
-										 '.$this->create_input('text','horareal','horareal','Hora inicio ',false,' ','', 'style="width: 10%;"').'
+										 '.$this->create_input('time','horareal','horareal','Hora inicio ',false,' ','', 'style="width: 15%;"').'
 
 									 <br/> * Campos Obligatorios
                                     </div>  <p> <p> 
@@ -210,8 +210,8 @@ function habilitardiv2() {
                                         '.$this->crearSelect('intermediario','intermediario',$arrClientesterce,false,false,'Seleccione...','class="" style="width: 50%;"').'
 										<br/>
 										<label for="id_cursos">Cliente Final:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('text','clientetercerizado','clientetercerizado','Cliente Final ',false,' ','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
-										 
+                                        <input type="text" name="clientetercerizado"  placeholder="Bucar Empresa..." style="width: 50%;" id="clientetercerizado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeyup="javascript:load_data(this.value);this.value=this.value.toUpperCase();" onfocus="javascript:load_search_history()" />
+										<span id="search_result"></span>
 										 <div id="demo7"></div>
                                     </div>
 									
@@ -231,20 +231,21 @@ function habilitardiv2() {
                                         <div id="demo6"></div>
                                         
                                     </div>
-                                     <div class="form-group" >
-                                        <label for="id_cursos">Cargo Aspirar o Actual del Evaluado:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('text','cargo','cargo','Cargo ',false,' required','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
-                                        <div id="demo"></div>
-                                    </div>
 									<div class="form-group" >
-                                        <label for="nombre">Sexo:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
+                                        <label for="nombre">Sexo:</label>
                                                                
-                                         <input type="radio" name="sexo" id="sexo" value="MASCULINO" class="required"> Hombre
-										 <input type="radio" name="sexo" id="sexo" value="FEMENINO" class="required"> Mujer
+                                         <input type="radio" name="sexo" id="sexo" value="MASCULINO" class=""> Hombre
+										 <input type="radio" name="sexo" id="sexo" value="FEMENINO" class=""> Mujer
                                           <div id="demo8"></div>
                                     </div>
+                                     <div class="form-group" >
+                                        <label for="id_cursos">Cargo Aspirar o Actual del Evaluado:</label>
+                                        '.$this->create_input('text','cargo','cargo','Cargo ',false,' ','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
+                                        <div id="demo"></div>
+                                    </div>
+									
                                     <div class="form-group" >
-                                        <label for="id_cursos">Nombrs y Apellidos del Evaluado:</label>
+                                        <label for="id_cursos">Nombres y Apellidos del Evaluado:</label>
                                         '.$this->create_input('text','NOMBRES','NOMBRES','Nombrs y Apellidos del Evaluado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         <div id="demo1"></div>
                                         
@@ -267,13 +268,14 @@ function habilitardiv2() {
                                      
 									 <div class="form-group" >
                                         <label for="id_cursos" >Fecha Expedicion:</label>
-                                       '.$this->create_input('calendar','fechaexpedicion','fechaexpedicion','DD/MM/AAAA',false,'  digits','','style="width: 20%;"').'
+                                       '.$this->create_input('date','fechaexpedicion','fechaexpedicion','DD/MM/AAAA',false,'  digits','','style="width: 20%;"').'
                                         <div id="demo3"></div>
                                     </div>   
 									  <div class="form-group" >
                                         <label for="id_cursos" >Lugar de Expedicion:</label>
-                                       '.$this->create_input('text','lugarexpedicion','lugarexpedicion','Municipo - Deparatamento',false,'  digits','','onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 50%;"').'
-                                        <div id="demo3"></div>
+                                       <input type="text" name="lugarexpedicion"  placeholder="Bucar municipio..." style="width: 50%;" id="lugarexpedicion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeyup="javascript:load_data_municipio(this.value);this.value=this.value.toUpperCase();"  />
+										<span id="search_result_municipio"></span>
+										<div id="demo3"></div>
                                     </div>   
                                     <div class="form-group"  >
                                         <label for="id_cursos">Email:</label>
@@ -521,18 +523,27 @@ function habilitardiv2() {
             
 			
 			if(empty($_POST['clientefinal'])){
-				echo 'hoal';
+	
 				$_POST['clientefinal']=$_POST['intermediario'];
 				
 				if(!empty($_POST['clientetercerizado'])){
-					$sql="INSERT INTO empresas (NOMBRE,id_aliado) 
-						VALUES ('".$_POST['clientetercerizado']."',".$_POST['clientefinal'].")";                
-					$this->QuerySql($sql);
 					
-					$sql="SELECT @@identity AS id_empresa";
-					$datos_aliado = $this->Consulta($sql,1); 					
+					$sql="SELECT id_empresa FROM empresas WHERE NOMBRE='".$_POST['clientetercerizado']."'";
+					$datos_empresa = $this->Consulta($sql,1);     
 					
-					$_POST['clientetercerizado']=$datos_aliado[0]['id_empresa'];
+					if(!isset($datos_empresa[0]['id_empresa']) && empty($datos_empresa[0]['id_empresa'])){
+					
+						$sql="INSERT INTO empresas (NOMBRE,id_aliado) 
+							VALUES ('".$_POST['clientetercerizado']."',".$_POST['clientefinal'].")";                
+						$this->QuerySql($sql);
+						
+						$sql="SELECT @@identity AS id_empresa";
+						$datos_aliado = $this->Consulta($sql,1); 					
+					
+						$_POST['clientetercerizado']=$datos_aliado[0]['id_empresa'];
+					}else{
+						$_POST['clientetercerizado']=$datos_empresa[0]['id_empresa'];
+					}
 				}
 				
 			}elseif(empty($_POST['clientefinal']) && empty($_POST['intermediario'])){
@@ -562,11 +573,12 @@ function habilitardiv2() {
     				fecha_cupo_tomado,
     				fecha_modificacion,
     				id_cupo_fecha,
-    				primer_cupo) 
+    				primer_cupo,
+					horareal) 
                     VALUES (".$_POST['id_prueba'].", ".$datos[0]['id_candidatos'].", '2', '0',".$_SESSION['id_usuario'].",'".$_POST['cargo']."',
     						".$_POST['clientefinal'].",".$_POST['clientetercerizado'].",
     						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),
-    						".$_POST['id_fecha'].",".$_POST['id_fecha'].")";                
+    						".$_POST['id_fecha'].",".$_POST['id_fecha'].",'".$_POST['horareal']."')";                
             $this->QuerySql($sql);
             
             $sql="SELECT @@identity AS id_evaluado";
