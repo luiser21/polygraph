@@ -1,5 +1,5 @@
 <meta charset="ISO-8859-1">
-<meta http-equiv=refresh content=60;URL=agendar.php>
+<meta http-equiv=refresh content=600;URL=agendar.php>
 <?php
 include('footer.php');
 session_start();

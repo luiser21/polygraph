@@ -1555,6 +1555,11 @@ OE;
                 END AGENDAR
 OE;
                 break;
+			 case 15:
+                  return <<<OE
+                CONCAT(  '<button type="button" id="guardarreagenda"    ONCLICK=javascript:fn_eliminar(',  `$Campo` ,  ',\'{$this->_file}\',\'{$formulario}\'); class="btn btn-success">CANCELAR</button>' ) Eliminar
+OE;
+                break;
             default:
                 return "";
             break;

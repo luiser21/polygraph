@@ -1,10 +1,9 @@
 <?php
-@$_SESSION["liberar"]=@$_GET['id_fecha'];
 
 class Plantas extends crearHtml{
     
     public $_titulo = 'ADMINISTRAR AGENDAMIENTOS';
-    public $_subTitulo = 'Crear Solicitudes';
+    public $_subTitulo = 'Actualizar Solicitudes';
     public $_datos = '';
     public $Table = 'evaluado';
     public $PrimaryKey = 'id_evaluado';
@@ -13,8 +12,48 @@ class Plantas extends crearHtml{
     
    function Contenido(){
        $html='';
-	   if(isset($_GET['id_fecha'])){
-	   
+	  
+	   if(isset($_GET['id_fecha']) && $_GET['actualizar']=='actualizar'){
+		   
+		 
+		    $sql = "SELECT
+						DATE_FORMAT(CF.fecha, '%W, %e %M %Y') AS fecha,
+						CH.cupo_hora,
+						ea.nombre_estado_agenda AS ESTADO,
+						tp.NOMBRE AS TIPO_PRUEBA,
+						c.NOMBRES AS EVALUADO,
+						c.DOCUMENTO AS CEDULA,
+						E.cargo AS CARGO_ASPIRAR,
+						ti.TIPO_DOC AS TIPO_DOCUMENTO,
+					  c.DOCUMENTO,
+					  c.EMAIL,
+					  c.TELEFONO,
+					  c.CELULAR,E.horareal,
+					  CASE  WHEN em.tipocliente=1 THEN 'TERCERIZADO'
+						ELSE 'DIRECTO'
+						END AS TIPOCLIENTE, 
+					 em.NOMBRE AS INTERMEDIARIO, 
+					 cf.NOMBRE AS CLIENTETERCERIZADO,
+					  c.SEXO,
+					  CONCAT(em.nit,' - ',em.NOMBRE) AS CLIENTEFINAL,
+					  DATE_FORMAT( E.fecha_cupo_tomado, '%e %M %Y a las %H:%i:%S' ) AS CUPO_TOMADO,
+					  u.nombres AS PROGAMADOPOR  
+					FROM
+						cupo_fechas CF
+					INNER JOIN cupo_hora CH ON CH.id_cupo_hora = CF.id_cupo_hora
+					INNER JOIN evaluado E ON E.id_cupo_fecha = CF.id_cupo_fecha
+					INNER JOIN candidatos c ON c.id_candidatos = E.id_candidato
+					INNER JOIN tipo_prueba tp ON tp.ID_PRUEBA = E.id_tipo_prueba
+					INNER JOIN estados_agenda ea ON ea.id_estados = E.estado
+					LEFT JOIN tipo_identificacion ti on ti.ID_TIPO=c.TIPODOCUMENTO
+					INNER JOIN aliados em on em.id_aliado=E.clientefinal
+					LEFT JOIN empresas cf on cf.id_empresa=E.clientetercerizado
+					INNER JOIN usuarios u on u.id_usuario=E.id_usuario
+					WHERE CF.id_cupo_fecha =".$_GET['id_fecha'];
+		   $agendamientoact = $this->Consulta($sql);   
+		   
+		   $this->imprimir($agendamientoact);
+		   
 	   $sql = "SELECT estado FROM cupo_fechas WHERE id_cupo_fecha=".$_GET['id_fecha'];
 	   $validar_estado = $this->Consulta($sql);
 	 
@@ -37,8 +76,7 @@ class Plantas extends crearHtml{
 	   $sql = "SELECT id_aliado codigo, NOMBRE as descripcion from aliados WHERE activo = 1 and tipocliente like '%2%'  order by NOMBRE";        
        $arrClientesdirectos = $this->Consulta($sql);
 	   
-	   $sql = "UPDATE cupo_fechas SET estado='BLOQUEADO', hora=DATE_ADD(NOW(), INTERVAL -5 HOUR) WHERE id_cupo_fecha=".$_GET['id_fecha'];
-       $this->QuerySql($sql);
+	  
 	   
 	   $healthy = array("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday");
 	   $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Domingo");  
@@ -61,25 +99,7 @@ class Plantas extends crearHtml{
 	    
 		$arrcupos[0]['fecha'] = str_replace($healthy, $yummy, $arrcupos[0]['fecha']);   
 		$arrcupos[0]['fecha'] = str_replace($mesesin, $meseses, $arrcupos[0]['fecha']);   				
-		if($validar_estado[0]['estado']=='BLOQUEADO' || $validar_estado[0]['estado']=='TOMADO'){
-		  	
-		   echo '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
-			  <div class="modal-dialog modal-sm">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Este cupo <br/>
-						 <label for="nombre">FECHA PROGRAMADA:</label>&nbsp;&nbsp;'.$arrcupos[0]['fecha'] .'<br/>
-										  <label for="nombre">FRANJA:</label>&nbsp;&nbsp;'.$arrcupos[0]['cupo_hora'] .'
-					<br/> ya fue tomado</h4>
-				  </div>
-				  <div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">ACEPTAR</button>
-				  </div>
-				</div>
-			  </div>
-			</div>';
-	    }
+		
 	   
 			
 		echo "    
@@ -166,7 +186,7 @@ function habilitardiv2() {
             <div class="col-md-8 ">
                           <div class="panel panel-default panelCrear">
                              <div class="panel-heading">
-                                <h3 class="panel-title">Desplegar para Crear Solicitud </h3>
+                                <h3 class="panel-title">Desplegar para Actualizar Solicitud </h3>
                                 <div class="actions pull-right">
                                     <i class="fa fa-expand"></i>
                                     <i class="fa fa-chevron-up"></i>
@@ -175,44 +195,32 @@ function habilitardiv2() {
                             </div>
                             <div class="panel-body">
                                 <form id="formCrear" role="form">
-									<div class="form-group" style="height:10px; color: red;">
-                                        <label for="nombre">FECHA PROGRAMADA:</label>
-                                        '.$arrcupos[0]['fecha'] .'
-										  <label for="nombre">FRANJA:</label>
-                                        '.$arrcupos[0]['cupo_hora'] .'<br/> 
-										 <label for="id_cursos">HORA DE INICO:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        
-										 '.$this->create_input('time','horareal','horareal','Hora inicio ',false,' ','', 'style="width: 15%;"').'
-
-									 <br/> * Campos Obligatorios
-                                    </div>  <p> <p> 
-                                    <br/>  <br/> <br/>';
-          
-                                    
-                                    $html.='	<p> <p> 
-  <label for="id_cursos">Cliente Tipo:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>									
- <button type="button" id="tomarcupo1" class="btn btn-success" onclick="habilitardiv1()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-    Directo &nbsp;&nbsp;&nbsp;
- <button type="button" id="tomarcupo2"  onclick="habilitardiv2()" style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-    Tercerizado  &nbsp;&nbsp;&nbsp;
- <button type="button" id="tomarcupo3" onclick="habilitardiv3()" style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;"  class="btn btn-warning">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
- Nuevo   
-<p> <p>  <p> <p> 
-
-									<div class="form-group" id="directo" style="display: none">
-                                        <label for="id_cursos">Cliente (Empleador):<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->crearSelect('clientefinal','clientefinal',$arrClientesdirectos,false,false,'Seleccione...',' style="width: 50%;"').'
-										  <div id="demo7"></div>
-                                    </div>
-									
-									 <div class="form-group" id="tercerizado" style="display: none">
-                                        <label for="id_cursos">Intermediario:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->crearSelect('intermediario','intermediario',$arrClientesterce,false,false,'Seleccione...','class="" style="width: 50%;"').'
+																 
+									<div class="form-group" >
+                                        <label for="nombre">Cupo tomado el :</label>
+                                        '.$agendamientoact[0]['CUPO_TOMADO'] .'  &nbsp;&nbsp;&nbsp;&nbsp;  
+										<label for="nombre">Hora Real:</label>
+										'.$agendamientoact[0]['horareal'] .' 
 										<br/>
-										<label for="id_cursos">Cliente Final:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        <input type="text" name="clientetercerizado"  placeholder="Bucar Empresa..." style="width: 50%;" id="clientetercerizado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeyup="javascript:load_data(this.value);this.value=this.value.toUpperCase();" onfocus="javascript:load_search_history()" />
-										<span id="search_result"></span>
-										 <div id="demo7"></div>
+										  <label for="nombre">Programada Por:</label>
+                                        '.$agendamientoact[0]['PROGAMADOPOR'] .' &nbsp;&nbsp;&nbsp;&nbsp;
+										
+										<label for="nombre">Estado Solicitud:</label>
+                                        '.$agendamientoact[0]['ESTADO'] .'
+										<br/>
+										<label for="nombre">Cliente Tipo:</label>
+                                        '.$agendamientoact[0]['TIPOCLIENTE'] .'  
+                                    </div> ';          
+                                    
+                                    $html.='<div class="form-group" >
+                                        <label for="id_cursos">Cliente (Empleador):</label>
+										'.$agendamientoact[0]['CLIENTEEMPLEADOR'] .'  
+                                    </div>									
+									 <div class="form-group" >
+                                        <label for="id_cursos">Intermediario:</label>
+                                        '.$agendamientoact[0]['INTERMEDIARIO'] .'  &nbsp;&nbsp;&nbsp;&nbsp;										
+										<label for="id_cursos">Cliente Final:</label>
+                                         '.$agendamientoact[0]['CLIENTETERCERIZADO'] .'  										 
                                     </div>
 									
 									 <div class="form-group" id="nuevo" style="display: none">
@@ -296,8 +304,7 @@ function habilitardiv2() {
                                     
 									'; 
                                   
-                                     $html.='<button type="button" class="btn btn-primary" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">Cancelar</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                      $html.='<button  type="button" class="btn btn-primary" id="guardarCurso">Guardar Solicitud</button>';
+                                      $html.='<button  type="button" class="btn btn-primary" id="guardarCurso">Actualizar Solicitud</button>';
                                     $html.='<div id="Resultado" style="display:none; >RESULTADO</div>
                                 
 								</form>
@@ -311,34 +318,6 @@ function habilitardiv2() {
                 </div>         
         </section>
 		
-			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
-			  <div class="modal-dialog modal-sm">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">&iquest;Confirma la Informaci&oacute;n cargada?</h4>
-				  </div>
-				  <div class="modal-footer">
-					<button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
-					<button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
-			
-			  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal3">
-			  <div class="modal-dialog modal-sm">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Se ha exedido el limite de espera para agendar sera redericcionado. <br/> <br/>Vuelva a seleccionar un nuevo cupo</h4>
-				  </div>
-				  <div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="window.location=\'agendar.php?liberar='.$_GET['id_fecha'].'\'">ACEPTAR</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
 			
 		'; 
 	   }
@@ -500,7 +479,7 @@ function habilitardiv2() {
         //$this->imprimir($_SESSION['id_usuario']);
        // exit;
         try {
-			
+			exit;
              $sql="INSERT INTO candidatos (
                     NOMBRES,
                     TIPODOCUMENTO,
@@ -661,12 +640,6 @@ function habilitardiv2() {
 			 exit;
         }
       
-        
-        
-        
-        
-        
-   
         echo $_respuesta;
 		
 		echo '  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal4">
@@ -674,10 +647,10 @@ function habilitardiv2() {
 				<div class="modal-content">
 				  <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Agendamiento Realizado con Exito </h4>
+					<h4 class="modal-title" id="myModalLabel">Actualizacion Realizada con Exito </h4>
 				  </div>
 				  <div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="window.location=\'agendamiento.php?agendar=1&cupo='.$_POST['id_fecha'].'\'">ACEPTAR</button>
+					<button type="button" class="btn btn-default" onclick="window.location=\'agendamientoact.php?agendar=1&cupo='.$_POST['id_fecha'].'\'">ACEPTAR</button>
 				  </div>
 				</div>
 			  </div>

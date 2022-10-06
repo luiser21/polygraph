@@ -28,6 +28,7 @@ function iniciar_scripts(){
     $('#buscarMecanismo').on('click',fn_buscarMecanismo);
     $('#crearOt').on('click',fn_crearOt);
 	$('#fn_tomarcupo').on('click',fn_tomarcupo);
+	$('#fn_tomarcupo_act').on('click',fn_tomarcupo_act);
     $('#verDetalleOt').on('click',fn_verDetalleOt);  
     $('#descargarDetalleOt').on('click',fn_descargarDetalleOt);
     $('#limpiarMecanismo').on('click',fn_limpiarMecanismo);
@@ -887,6 +888,15 @@ function fn_tomarcupo(id_fecha){
 	});
 }
 
+function fn_tomarcupo_act(id_fecha,actualizar){
+    //console.log('aqui');
+    location.href = 'agendamientoact.php?id_fecha='+id_fecha+'&actualizar='+actualizar;    
+	$("#tomarcupo").click(function(){
+	    	$.get("agendamientoact.php", {id_fecha: "id_fecha",actualizar: "actualizar"}, function(htmlexterno){
+	$("#cargaexterna").html(htmlexterno);
+			});
+	});
+}
 
 function fn_verDetalleOt(){
     $("#Resultado").html("Cargando...");

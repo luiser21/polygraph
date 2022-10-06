@@ -16,6 +16,27 @@ class Plantas extends crearHtml{
 		   $this->QuerySql($sql);
 		   unset($_SESSION["liberar"]);
 	   }
+	   
+	   ////Actualizacion cupos reservados liberarlos despues de 5 minutos
+	   
+	   $sql_minutos="SELECT 
+				 id_cupo_fecha,estado,
+				hora,
+				 TIME_FORMAT( hora , '%h:%i')  as hora, 
+				 TIME_FORMAT( DATE_SUB(now(), INTERVAL 5 HOUR)  , '%h:%i'),
+				 TIME_FORMAT(SEC_TO_TIME(TIMESTAMPDIFF(SECOND, DATE_SUB(now(), INTERVAL 5 HOUR), hora)) , '%i')    MINUTOS
+				FROM cupo_fechas 
+				where estado='BLOQUEADO'
+				AND  TIME_FORMAT(SEC_TO_TIME(TIMESTAMPDIFF(SECOND, DATE_SUB(now(), INTERVAL 5 HOUR), hora)) , '%i')>='-06'";
+	    $arrcupos_minutos = $this->Consulta($sql_minutos);
+	   
+	   if(!empty($arrcupos_minutos)){
+		  // var_dump($arrcupos_minutos);
+		   foreach($arrcupos_minutos as $value){
+				$sql_update_minutos="UPDATE cupo_fechas SET estado='SALA1',hora=null where id_cupo_fecha=".$value['id_cupo_fecha'];
+				$this->QuerySql($sql_update_minutos); 
+		   }
+	   }
        
 	   $sql = "SELECT
 	                CH.id_cupo_hora,   
@@ -26,8 +47,8 @@ class Plantas extends crearHtml{
 	   
 	  /*
 	   $date_now = date('Y-m-d');
-	   // $date_now = '2022-08-01';
-	   for($i=0;$i<=60;$i++){
+	    $date_now = '2022-10-01';
+	   for($i=0;$i<=30;$i++){
 	       $date_future = strtotime('+'.$i.' day', strtotime($date_now));
 	       $date_future = date('Y-m-d', $date_future);	       
     	   foreach($arrcupos2 as $value){ 	     	       
@@ -47,8 +68,8 @@ class Plantas extends crearHtml{
     	       $this->QuerySql($sql);    	       
     	   }
 	   }
-	   */
 	   
+	   */
 	   
 	   
          $html='<section class="main-content-wrapper">
@@ -220,7 +241,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-24 and 
+					where c.activo=1   and c.fecha>= date_add(NOW(), INTERVAL -15 DAY)  and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
@@ -229,14 +250,14 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-24 and
+					where c.activo=1   and c.fecha>= date_add(NOW(), INTERVAL -15 DAY) and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
 		    }
 			$datos2 = $this->Consulta($sql2,1);
 			$k=0;
-			//$this->imprimir($datos2);
+			//$this->imprimir(count($datos2));
 			foreach($datos2 as $value2){
 				//if(	$k>=15){
 					//unset($datos2[$k]);
@@ -251,7 +272,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo" style="background-color: #ffe032;border: 2px solid #ffe032 ; color: black;"  ONCLICK=javascript:fn_tomarcupo('.$value2['id_cupo_fecha'].'); class="btn btn-warning">DISPONIBLE</button>';
 					}
 					if($value2['estado']=='TOMADO'){
-						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  class="btn btn-success">'.$value2['CLIENTE_FINAL'].'</button>';
+						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  ONCLICK=javascript:fn_tomarcupo_act('.$value2['id_cupo_fecha'].',"actualizar"); class="btn btn-success">'.$value2['CLIENTE_FINAL'].'</button>';
 					}
 					if($value2['estado']=='BLOQUEADO'){
 						$datos[$i][$value2['fecha']]='<button type="button" id="tomarcupo"  style="background-color: #ff8000;border: 2px solid #ff8000 ;" class="btn btn-danger">RESERVADO</button>';
@@ -328,7 +349,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-24 and
+					where c.activo=1   and c.fecha>= CURDATE()-15 and
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                      c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";
@@ -337,7 +358,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= CURDATE()-24 and
+					where c.activo=1   and c.fecha>= CURDATE()-15 and
                     DAYOFWEEK(fecha) IN (2,3,4,5,6,7) AND
                      c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";

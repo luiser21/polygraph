@@ -2,7 +2,7 @@
 
 //process_data.php
 
-$connect = new PDO("mysql:host=localhost;dbname=polygraph", "cartas_db", "c0ntr4s3n42018*");
+$connect = new PDO("mysql:host=localhost;dbname=polygraph", "cartas_db", "G8uMNWVE4XFTF6cX");
 
 if(isset($_POST["query"]))
 {	

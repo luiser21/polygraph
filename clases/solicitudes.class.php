@@ -70,7 +70,8 @@ class Plantas extends crearHtml{
 				  $this->QuerySql($sql);
 				  
 				 $_respuesta = array('Codigo' => 99, "Mensaje" => 'Registro Eliminado con exito');				  
-				  print_r(json_encode($_respuesta));	
+				 // print_r(json_encode($_respuesta));	
+				
 			}else{
 				 $_respuesta = array('Codigo' => 0, "Mensaje" => 'No se Puede eliminar por favor comuniquese con el administrador');
 				 print_r(json_encode($_respuesta));	
@@ -111,7 +112,7 @@ class Plantas extends crearHtml{
     function tablaDatos(){
        $agendar = $this->Imagenes($this->PrimaryKey,14);
         //$editar = $this->Imagenes($this->PrimaryKey,0);
-        $eliminar = $this->Imagenes($this->PrimaryKey,1);
+        $eliminar = $this->Imagenes($this->PrimaryKey,15);
       //  $eliminar = $this->Imagenes($this->PrimaryKey,1);
 		
         $sql="SELECT
