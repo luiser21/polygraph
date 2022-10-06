@@ -192,17 +192,17 @@ class crearHtml extends sql{
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="agendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                    <a href="agendar.php" title="Listar">
                                         Agendar
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="reagendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                    <a href="reagendar.php" title="Listar">
                                         Reagendar
                                     </a>
                                 </li>
 								 <li>
-                                    <a href="solicitudes.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                    <a href="solicitudes.php" title="Listar">
                                         Reportes
                                     </a>
                                 </li>
@@ -234,23 +234,23 @@ class crearHtml extends sql{
                             </a>
                             <ul class="nav-sub">
 								  <li>
-                                    <a href="agendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                    <a href="agendar.php" title="Listar">
                                         Agendar
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="reagendar.php?adm=1&liberar='.@$_SESSION["liberar"].'" title="Listar">
+                                    <a href="reagendar.php" title="Listar">
                                         Reagendar
                                     </a>
                                 </li>
 								
                                 <li>
-                                    <a href="plantas.php?adm=1" title="Listar">
+                                    <a href="plantas.php" title="Listar">
                                          Listar Solicitudes
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="reportes.php?adm=1" title="Listar">
+                                    <a href="reportes.php" title="Listar">
                                          Listar Autorizaciones
                                     </a>
                                 </li>
