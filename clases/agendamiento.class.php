@@ -521,9 +521,9 @@ function habilitardiv2() {
             $sql="SELECT @@identity AS id_candidatos";
             $datos = $this->Consulta($sql,1);     
             
-			
-			if(empty($_POST['clientefinal'])){
-	
+			//$this->imprimir($_POST['clientefinal']);
+			if(empty($_POST['clientefinal']) && empty($_POST['clientenuevo'])  && !empty($_POST['clientetercerizado'])){
+
 				$_POST['clientefinal']=$_POST['intermediario'];
 				
 				if(!empty($_POST['clientetercerizado'])){
@@ -546,7 +546,9 @@ function habilitardiv2() {
 					}
 				}
 				
-			}elseif(empty($_POST['clientefinal']) && empty($_POST['intermediario'])){
+			}elseif(empty($_POST['clientefinal']) && empty($_POST['intermediario']) && !empty($_POST['clientenuevo'])){
+				
+				$_POST['tipocliente']=($_POST['tipocliente']=='directo')?'2':'1'; 
 				
 				 $sql="INSERT INTO aliados (
                     tipocliente, 

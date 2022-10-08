@@ -24,7 +24,7 @@ class Plantas extends crearHtml{
 						c.NOMBRES AS EVALUADO,
 						c.DOCUMENTO AS CEDULA,
 						E.cargo AS CARGO_ASPIRAR,
-						ti.TIPO_DOC AS TIPO_DOCUMENTO,
+						ti.ID_TIPO AS TIPO_DOCUMENTO,
 					  c.DOCUMENTO,
 					  c.EMAIL,
 					  c.TELEFONO,
@@ -37,7 +37,11 @@ class Plantas extends crearHtml{
 					  c.SEXO,
 					  CONCAT(em.nit,' - ',em.NOMBRE) AS CLIENTEFINAL,
 					  DATE_FORMAT( E.fecha_cupo_tomado, '%e %M %Y a las %H:%i:%S' ) AS CUPO_TOMADO,
-					  u.nombres AS PROGAMADOPOR  
+					  u.nombres AS PROGAMADOPOR,
+					c.LUGAREXPEDICION,
+					c.FECHAEXPEDICION,
+					E.id_evaluado,
+					c.id_candidatos
 					FROM
 						cupo_fechas CF
 					INNER JOIN cupo_hora CH ON CH.id_cupo_hora = CF.id_cupo_hora
@@ -52,7 +56,7 @@ class Plantas extends crearHtml{
 					WHERE CF.id_cupo_fecha =".$_GET['id_fecha'];
 		   $agendamientoact = $this->Consulta($sql);   
 		   
-		   $this->imprimir($agendamientoact);
+		  // $this->imprimir($agendamientoact);
 		   
 	   $sql = "SELECT estado FROM cupo_fechas WHERE id_cupo_fecha=".$_GET['id_fecha'];
 	   $validar_estado = $this->Consulta($sql);
@@ -212,49 +216,58 @@ function habilitardiv2() {
                                         '.$agendamientoact[0]['TIPOCLIENTE'] .'  
                                     </div> ';          
                                     
-                                    $html.='<div class="form-group" >
+									if($agendamientoact[0]['TIPOCLIENTE']=='DIRECTO'){
+										$html.='<div class="form-group" >
                                         <label for="id_cursos">Cliente (Empleador):</label>
-										'.$agendamientoact[0]['CLIENTEEMPLEADOR'] .'  
-                                    </div>									
-									 <div class="form-group" >
-                                        <label for="id_cursos">Intermediario:</label>
-                                        '.$agendamientoact[0]['INTERMEDIARIO'] .'  &nbsp;&nbsp;&nbsp;&nbsp;										
-										<label for="id_cursos">Cliente Final:</label>
-                                         '.$agendamientoact[0]['CLIENTETERCERIZADO'] .'  										 
-                                    </div>
+										'.$agendamientoact[0]['INTERMEDIARIO'] .'  
+										</div>	';	
+									}else{								
+										$html.=' <div class="form-group" >
+											<label for="id_cursos">Intermediario:</label>
+											'.$agendamientoact[0]['INTERMEDIARIO'] .'  &nbsp;&nbsp;&nbsp;&nbsp;										
+											<label for="id_cursos">Cliente Final:</label>
+											 '.$agendamientoact[0]['CLIENTETERCERIZADO'] .'  										 
+										</div>';
+									}
 									
-									 <div class="form-group" id="nuevo" style="display: none">
-                                        <label for="id_cursos">Cliente Nuevo:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('text','clientenuevo','clientenuevo','Cliente nuevo ',false,' ','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
-
- <input type="radio" id="tipocliente" name="tipocliente" value="tercerizado"> <label for="cbox2">Tercerizado</label>  
-<input type="radio" id="tipocliente" name="tipocliente" value="directo" checked> <label for="cbox2">Directo</label>                                                                         
-										<div id="demo7"></div>
-                                    </div>
-									
+									$html.=' 
                                     <div class="form-group" >
                                         <label for="nombre">Tipo de Prueba:<abbr style="color: red;" title="Este campo es obligatorio">*</abbr></label>
-                                        '.$this->create_input('hidden','id_fecha','id_fecha',false,$_GET['id_fecha']).'                                    
-                                        '.$this->crearSelect('id_prueba','id_prueba',$arrPlantas,false,false,'Seleccione...','class=" required" style="width: 40%;"').'
-                                        <div id="demo6"></div>
+                                        '.$this->create_input('hidden','id_fecha','id_fecha',false,$_GET['id_fecha']).'    
+										'.$this->create_input('hidden','id_evaluado','id_evaluado',false,$agendamientoact[0]['id_evaluado']).' 
+										'.$this->create_input('hidden','id_candidatos','id_candidatos',false,$agendamientoact[0]['id_candidatos']).' 
+                                         <select name="id_prueba"  id="id_prueba" class=" required" style="width: 40%;">';
+										   for($i=0;$i<count($arrPlantas);$i++){
+												if($arrPlantas[$i]['descripcion']==$agendamientoact[0]['TIPO_PRUEBA']){
+													$html.= '<option value="'.$arrPlantas[$i]['codigo'].'"  selected="selected" >'.$arrPlantas[$i]['descripcion'].'</option>';
+												}else{
+													$html.= '<option value="'.$arrPlantas[$i]['codigo'].'">'.$arrPlantas[$i]['descripcion'].'</option>';
+												}
+										   }
+								   $html.='  </select>   <div id="demo6"></div>
                                         
                                     </div>
 									<div class="form-group" >
-                                        <label for="nombre">Sexo:</label>
-                                                               
-                                         <input type="radio" name="sexo" id="sexo" value="MASCULINO" class=""> Hombre
-										 <input type="radio" name="sexo" id="sexo" value="FEMENINO" class=""> Mujer
-                                          <div id="demo8"></div>
+                                        <label for="nombre">Sexo:</label>';
+                                                if($agendamientoact[0]['SEXO']=='MASCULINO'){
+												         $html.='  <input type="radio" name="sexo" id="sexo" value="MASCULINO"  checked > Hombre
+																   <input type="radio" name="sexo" id="sexo" value="FEMENINO" > Mujer';
+												}else{
+												         $html.='<input type="radio" name="sexo" id="sexo" value="MASCULINO"   > Hombre 	
+																<input type="radio" name="sexo" id="sexo" value="FEMENINO"  checked > Mujer';
+												}               
+                                         
+                                       $html.='    <div id="demo8"></div>
                                     </div>
                                      <div class="form-group" >
                                         <label for="id_cursos">Cargo Aspirar o Actual del Evaluado:</label>
-                                        '.$this->create_input('text','cargo','cargo','Cargo ',false,' ','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
+                                        '.$this->create_input('text','cargo','cargo','',$agendamientoact[0]['CARGO_ASPIRAR'],'','', 'onkeyup="javascript:this.value=this.value.toUpperCase();" style="width: 60%;"').'
                                         <div id="demo"></div>
                                     </div>
 									
                                     <div class="form-group" >
                                         <label for="id_cursos">Nombres y Apellidos del Evaluado:</label>
-                                        '.$this->create_input('text','NOMBRES','NOMBRES','Nombrs y Apellidos del Evaluado',false,'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
+                                        '.$this->create_input('text','NOMBRES','NOMBRES','',$agendamientoact[0]['EVALUADO'],'form-control','', 'onkeyup="javascript:this.value=this.value.toUpperCase();"').'
                                         <div id="demo1"></div>
                                         
                                     </div>						
@@ -262,32 +275,40 @@ function habilitardiv2() {
 
                                     <div class="form-group" >
                                          <label for="nombre">Tipo Documento:</label>
-                                      
-                                        '.$this->crearSelect('ID_TIPO','ID_TIPO',$arrTipos,false,false,'Seleccione...','class="" style="width: 40%;"').'
-                                         <div id="demo5"></div>
+										  <select name="ID_TIPO"  id="ID_TIPO"  style="width: 40%;">';
+										   for($i=0;$i<count($arrTipos);$i++){
+											  // var_Dump( $value);
+												if($arrTipos[$i]['codigo']==$agendamientoact[0]['TIPO_DOCUMENTO']){
+													$html.= '<option value="'.$arrTipos[$i]['codigo'].'"  selected="selected" >'.$arrTipos[$i]['descripcion'].'</option>';
+												}else{
+													$html.= '<option value="'.$arrTipos[$i]['codigo'].'">'.$arrTipos[$i]['descripcion'].'</option>';
+												}
+										   }
+										
+                                        $html.='  </select>   <div id="demo5"></div>
                                     </div>                                    
                                     
                                     
                                     <div class="form-group" >
                                         <label for="id_cursos" >Numero de Identificacion:</label>
-                                       '.$this->create_input('number','DOCUMENTO','DOCUMENTO','Numero de Identificacion',false,'  digits','','style="width: 50%;"').'
+                                       '.$this->create_input('number','DOCUMENTO','DOCUMENTO','',$agendamientoact[0]['DOCUMENTO'],'  digits','','style="width: 50%;"').'
                                         <div id="demo3"></div>
                                     </div>                                    
                                      
 									 <div class="form-group" >
                                         <label for="id_cursos" >Fecha Expedicion:</label>
-                                       '.$this->create_input('date','fechaexpedicion','fechaexpedicion','DD/MM/AAAA',false,'  digits','','style="width: 20%;"').'
+                                       '.$this->create_input('date','fechaexpedicion','fechaexpedicion','',$agendamientoact[0]['FECHAEXPEDICION'],'  digits','','style="width: 20%;"').'
                                         <div id="demo3"></div>
                                     </div>   
 									  <div class="form-group" >
                                         <label for="id_cursos" >Lugar de Expedicion:</label>
-                                       <input type="text" name="lugarexpedicion"  placeholder="Bucar municipio..." style="width: 50%;" id="lugarexpedicion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeyup="javascript:load_data_municipio(this.value);this.value=this.value.toUpperCase();"  />
+                                       <input type="text" name="lugarexpedicion" value="'.$agendamientoact[0]['LUGAREXPEDICION'].'"  placeholder="Bucar municipio..." style="width: 50%;" id="lugarexpedicion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeyup="javascript:load_data_municipio(this.value);this.value=this.value.toUpperCase();"  />
 										<span id="search_result_municipio"></span>
 										<div id="demo3"></div>
                                     </div>   
                                     <div class="form-group"  >
                                         <label for="id_cursos">Email:</label>
-                                        '.$this->create_input('email','EMAIL','EMAIL','EMAIL',false,' email','','style="width: 70%;" ').'
+                                        '.$this->create_input('email','EMAIL','EMAIL','',$agendamientoact[0]['EMAIL'],' email','','style="width: 70%;" ').'
                                         <br/>                                       
                                         <label for="id_cursos">Email 2:</label>
                                         '.$this->create_input('email','EMAIL2','EMAIL2','EMAIL',false,' email ','','style="width: 70%;" ').'
@@ -296,15 +317,15 @@ function habilitardiv2() {
                                     
                                     <div class="form-group" >
                                         <label for="id_cursos">Telefono Contacto:</label>
-                                            '.$this->create_input('number','celular','celular','Celular Contacto',false,' digits ','',' data-validation-length="min4"').'
-                                            '.$this->create_input('number','telefono','telefono','Telefono Contacto',false,' digits ','',' data-validation-length="min4"').'
+                                            '.$this->create_input('number','celular','celular','',$agendamientoact[0]['CELULAR'],' digits ','',' data-validation-length="min4"').'
+                                            '.$this->create_input('number','telefono','telefono','',$agendamientoact[0]['TELEFONO'],' digits ','',' data-validation-length="min4"').'
                                          
                                         <div id="demo4"></div>
                                     </div>
                                     
 									'; 
                                   
-                                      $html.='<button  type="button" class="btn btn-primary" id="guardarCurso">Actualizar Solicitud</button>';
+                                      $html.='<button  type="button" class="btn btn-primary" id="guardarCursoupdate">Actualizar Solicitud</button>';
                                     $html.='<div id="Resultado" style="display:none; >RESULTADO</div>
                                 
 								</form>
@@ -475,112 +496,34 @@ function habilitardiv2() {
     
 
     function guardarDatos(){
-        //$this->imprimir($_POST);//exit; 
-        //$this->imprimir($_SESSION['id_usuario']);
-       // exit;
+		
         try {
-			exit;
-             $sql="INSERT INTO candidatos (
-                    NOMBRES,
-                    TIPODOCUMENTO,
-                    DOCUMENTO, 
-					LUGAREXPEDICION,
-					FECHAEXPEDICION,					
-                    EMAIL, 
-                    TELEFONO,
-    				CELULAR,
-                    IDSOLICITANTE,
-    				FECHA_CREACION,
-    				FECHA_MODIFICACION,
-    				SEXO) 
-                    VALUES ('".$_POST['NOMBRES']."','".$_POST['ID_TIPO']."','".$_POST['DOCUMENTO']."','".$_POST['lugarexpedicion']."','".$_POST['fechaexpedicion']."','".$_POST['EMAIL']."','".$_POST['telefono']."','".$_POST['celular']."',
-    						".$_SESSION['id_usuario'].",DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),'".$_POST['sexo']."' )";
+			
+             $sql="UPDATE candidatos SET 
+                    NOMBRES='".$_POST['NOMBRES']."',
+                    TIPODOCUMENTO='".$_POST['ID_TIPO']."',
+                    DOCUMENTO='".$_POST['DOCUMENTO']."', 
+					LUGAREXPEDICION='".$_POST['lugarexpedicion']."',
+					FECHAEXPEDICION='".$_POST['fechaexpedicion']."',					
+                    EMAIL='".$_POST['EMAIL']."', 
+                    TELEFONO='".$_POST['telefono']."',
+    				CELULAR='".$_POST['celular']."',
+                    IDSOLICITANTE=".$_SESSION['id_usuario'].",
+    				FECHA_MODIFICACION=DATE_ADD(NOW(), INTERVAL -5 HOUR),
+    				SEXO='".$_POST['sexo']."'
+                   WHERE id_candidatos='".$_POST['id_candidatos']."'";
+            $this->QuerySql($sql);            
+           			
+			
+            $sql="UPDATE evaluado SET
+                    id_tipo_prueba=".$_POST['id_prueba'].",                    
+                    cargo='".$_POST['cargo']."',
+    				fecha_modificacion=DATE_ADD(NOW(), INTERVAL -5 HOUR) 
+					WHERE id_candidato=".$_POST['id_candidatos']." AND id_evaluado=".$_POST['id_evaluado'];                
             $this->QuerySql($sql);            
             
-            $sql="SELECT @@identity AS id_candidatos";
-            $datos = $this->Consulta($sql,1);     
-            
-			
-			if(empty($_POST['clientefinal'])){
-	
-				$_POST['clientefinal']=$_POST['intermediario'];
-				
-				if(!empty($_POST['clientetercerizado'])){
-					
-					$sql="SELECT id_empresa FROM empresas WHERE NOMBRE='".$_POST['clientetercerizado']."'";
-					$datos_empresa = $this->Consulta($sql,1);     
-					
-					if(!isset($datos_empresa[0]['id_empresa']) && empty($datos_empresa[0]['id_empresa'])){
-					
-						$sql="INSERT INTO empresas (NOMBRE,id_aliado) 
-							VALUES ('".$_POST['clientetercerizado']."',".$_POST['clientefinal'].")";                
-						$this->QuerySql($sql);
-						
-						$sql="SELECT @@identity AS id_empresa";
-						$datos_aliado = $this->Consulta($sql,1); 					
-					
-						$_POST['clientetercerizado']=$datos_aliado[0]['id_empresa'];
-					}else{
-						$_POST['clientetercerizado']=$datos_empresa[0]['id_empresa'];
-					}
-				}
-				
-			}elseif(empty($_POST['clientefinal']) && empty($_POST['intermediario'])){
-				
-				 $sql="INSERT INTO aliados (
-                    tipocliente, 
-                    NOMBRE) 
-                    VALUES ('".$_POST['tipocliente']."', '".$_POST['clientenuevo']."')";                
-				$this->QuerySql($sql);
-				
-				$sql="SELECT @@identity AS id_aliado";
-				$datos_aliado = $this->Consulta($sql,1); 					
-				
-				$_POST['clientefinal']=$datos_aliado[0]['id_aliado'];
-			}
-			if(empty($_POST['clientetercerizado'])){
-				$_POST['clientetercerizado']=0;
-			}
-            $sql="INSERT INTO evaluado (
-                    id_tipo_prueba, 
-                    id_candidato,
-                    estado,
-                    resultado,
-                    id_usuario,
-                    cargo,
-                    clientefinal,clientetercerizado,
-    				fecha_cupo_tomado,
-    				fecha_modificacion,
-    				id_cupo_fecha,
-    				primer_cupo,
-					horareal) 
-                    VALUES (".$_POST['id_prueba'].", ".$datos[0]['id_candidatos'].", '2', '0',".$_SESSION['id_usuario'].",'".$_POST['cargo']."',
-    						".$_POST['clientefinal'].",".$_POST['clientetercerizado'].",
-    						DATE_ADD(NOW(), INTERVAL -5 HOUR),DATE_ADD(NOW(), INTERVAL -5 HOUR),
-    						".$_POST['id_fecha'].",".$_POST['id_fecha'].",'".$_POST['horareal']."')";                
-            $this->QuerySql($sql);
-            
-            $sql="SELECT @@identity AS id_evaluado";
-            $datos2 = $this->Consulta($sql,1); 
-           
-            $sql="SELECT U.id_usuario,A.idautorizacion,A.clientetercerizado FROM usuarios U
-                    INNER JOIN usuarios_parametros UP ON UP.id_usuario=U.id_usuario
-                    INNER JOIN autorizaciones A on A.idautorizacion=UP.clientercerizados
-                    where U.id_usuario=".$_SESSION['id_usuario'];
-            $datos3 = $this->Consulta($sql,1); 
-      
-            $sql="INSERT INTO autorizacion_evaluado (
-                    idcandidato,
-                    idautorizacion,
-                    idevaluado,
-                    estado)
-                    VALUES (".$datos[0]['id_candidatos'].", ".$datos3[0]['idautorizacion'].",".$datos2[0]['id_evaluado'].",'P')";         
-            $this->QuerySql($sql);
-            
-    		$sql="UPDATE cupo_fechas set estado='TOMADO' WHERE id_cupo_fecha=".$_POST['id_fecha'];          
-            $this->QuerySql($sql);
     		
-            $_respuesta = 'OK Se ha creado la Solicitud'.PHP_EOL;
+            $_respuesta = 'OK Se Actualizo la Solicitud'.PHP_EOL;
             
             $mesesin = array("January", "February", "March","April","May","June","July","August","September","October","November","December");
             $meseses   = array("de Enero de ", "de Febrero de ", "de Marzo de ","de Abril de ","de Mayo de ","de Junio de ","de Julio de ","de Agosto de ","de Septiembre de ","de Octubre de","de Noviembre de ","de Diciembre de");
@@ -669,13 +612,7 @@ function habilitardiv2() {
     
     function runEliminar(){
         $_respuesta = array('Codigo' => 99, "Mensaje" => 'Registro Eliminado con exito');
-        $sql = 'DELETE  P, S, E, C, M, MM FROM plantas P 
-                LEFT JOIN secciones S ON S.id_planta = P.id_planta
-                LEFT JOIN equipos E ON E.id_secciones = S.id_secciones
-                LEFT JOIN componentes C ON C.id_equipos = E.id_equipos
-                LEFT JOIN mecanismos M ON M.id_componente = C.id_componentes
-                LEFT JOIN mec_met MM ON MM.id_mecanismos = M.id_mecanismos
-                WHERE P.id_planta = ' .  $this->_datos;
+        $sql = '';
         try{
         $this->QuerySql($sql);
         }catch (exception $e) {

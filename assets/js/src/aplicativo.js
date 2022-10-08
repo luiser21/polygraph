@@ -10,6 +10,7 @@ function iniciar_scripts(){
 
     
     $('#guardarCurso').on('click',fn_guarda);
+	 $('#guardarCursoupdate').on('click',fn_guardaupdate);
     $('#guardarCursoPDF').on('click',fn_guardaPDF);
     $('#guardarCurso_autoriza').on('click',fn_guarda_autoriza);
     $('#limpiarForm').on('click',fn_limpiarForm);
@@ -607,6 +608,41 @@ function fn_guarda(){
 	  }else{
 	        alert('Campos obligatorios');
 	  }    
+}
+function fn_guardaupdate(){
+	alert(hola);
+/*
+		 $( document ).ready(function() {
+			$('#mi-modal').modal('show')
+		});
+		modalConfirm(function(confirm){
+			if(confirm){
+			  var datos = $('#formCrear').serializeArray();
+			  var formData = new FormData( document.getElementById( "formCrear" ) );
+					  formData.append( "process", "guardarDatos" );
+					  formData.append( "d", '1' );
+					  
+					  $.ajax({
+						  url: file,
+						  type: "post",
+						  dataType: "html",
+						  data: formData,
+						  cache: false,
+						  contentType: false,
+				 processData: false
+					  })
+						  .done(function(res){
+						  $("#Resultado").removeClass('alert alert-danger alert-dismissable');	                	
+						  $("#Resultado").fadeOut("slow");
+						  $("#Resultado").fadeIn(3000).html(res);
+						  $("#Resultado").addClass('alert alert-success alert-dismissable');
+						  $('#formCrear').find('select').val('');
+						  $('#formCrear').find('input').val('');
+						  recargaDatos('formCrear');	                  
+						  });
+			}
+		});
+	    */
 }
 /*
 	$( document ).ready(function() {
