@@ -494,6 +494,9 @@ function fn_guardarCapitulo(){
     }
 
 /* Funcion estandar para guardar datos*/
+function fn_reagendar(id,f,formulario){
+	location.href ="agendamientoact.php?id_fecha="+id+"&actualizar=actualizar";
+}
 
 function fn_guarda(){
 	//alert(hola);
@@ -610,8 +613,8 @@ function fn_guarda(){
 	  }    
 }
 function fn_guardaupdate(){
-	alert(hola);
-/*
+	//alert(hola);
+
 		 $( document ).ready(function() {
 			$('#mi-modal').modal('show')
 		});
@@ -642,7 +645,7 @@ function fn_guardaupdate(){
 						  });
 			}
 		});
-	    */
+	    
 }
 /*
 	$( document ).ready(function() {

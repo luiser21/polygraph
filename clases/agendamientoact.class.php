@@ -41,7 +41,8 @@ class Plantas extends crearHtml{
 					c.LUGAREXPEDICION,
 					c.FECHAEXPEDICION,
 					E.id_evaluado,
-					c.id_candidatos
+					c.id_candidatos,
+					CF.id_cupo_fecha 
 					FROM
 						cupo_fechas CF
 					INNER JOIN cupo_hora CH ON CH.id_cupo_hora = CF.id_cupo_hora
@@ -53,11 +54,12 @@ class Plantas extends crearHtml{
 					INNER JOIN aliados em on em.id_aliado=E.clientefinal
 					LEFT JOIN empresas cf on cf.id_empresa=E.clientetercerizado
 					INNER JOIN usuarios u on u.id_usuario=E.id_usuario
-					WHERE CF.id_cupo_fecha =".$_GET['id_fecha'];
+					WHERE CF.id_cupo_fecha =".$_GET['id_fecha']." or E.id_evaluado=".$_GET['id_fecha'];
 		   $agendamientoact = $this->Consulta($sql);   
 		   
 		  // $this->imprimir($agendamientoact);
-		   
+	   $_GET['id_fecha']=$agendamientoact[0]['id_cupo_fecha'];
+		
 	   $sql = "SELECT estado FROM cupo_fechas WHERE id_cupo_fecha=".$_GET['id_fecha'];
 	   $validar_estado = $this->Consulta($sql);
 	 
@@ -109,67 +111,11 @@ class Plantas extends crearHtml{
 		echo "    
 <script type=\"text/javascript\">
 
-
-function habilitardiv1() {
-
-    var x = document.getElementById('directo');
-	var y = document.getElementById('tercerizado');
-	  var z = document.getElementById('nuevo');
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-		y.style.display = 'none';
-		z.style.display = 'none';
-		document.getElementById('clientenuevo').value = '';
-		document.getElementById('intermediario').value = '';
-		document.getElementById('clientetercerizado').value = '';
-    } else {
-        x.style.display = 'none';
-    }
-}
-function habilitardiv2() {
-
-    var x = document.getElementById('tercerizado');
-	 var y = document.getElementById('directo');
-	  var z = document.getElementById('nuevo');
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-		y.style.display = 'none';
-		z.style.display = 'none';
-		document.getElementById('clientenuevo').value = '';
-		document.getElementById('clientefinal').value = '';
-    } else {
-        x.style.display = 'none';
-    }
-}
-	
-	function habilitardiv3() {
-
-    var x = document.getElementById('nuevo');
-	 var y = document.getElementById('directo');
-	  var z = document.getElementById('tercerizado');
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-		y.style.display = 'none';
-		z.style.display = 'none';
-		document.getElementById('clientefinal').value = '';
-		document.getElementById('intermediario').value = '';
-		document.getElementById('clientetercerizado').value = '';
-    } else {
-        x.style.display = 'none';
-    }
-}
 	$( document ).ready(function() {
 		$('#mi-modal2').modal('toggle')
 	});
 	
-				function sayHi() {
-					$( document ).ready(function() {
-						$('#mi-modal3').modal('toggle')
-					});
-				   
-				}
-				setTimeout(sayHi, 600000);
-			</script>";  
+</script>";  
 		
          $html='
 		
@@ -339,6 +285,34 @@ function habilitardiv2() {
                 </div>         
         </section>
 		
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+			  <div class="modal-dialog modal-sm">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">&iquest;Confirma la Informaci&oacute;n cargada?</h4>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+					<button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal3">
+			  <div class="modal-dialog modal-sm">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Se ha exedido el limite de espera para agendar sera redericcionado. <br/> <br/>Vuelva a seleccionar un nuevo cupo</h4>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="window.location=\'agendar.php\'">ACEPTAR</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
 			
 		'; 
 	   }
@@ -612,7 +586,13 @@ function habilitardiv2() {
     
     function runEliminar(){
         $_respuesta = array('Codigo' => 99, "Mensaje" => 'Registro Eliminado con exito');
-        $sql = '';
+        $sql = 'DELETE  P, S, E, C, M, MM FROM plantas P 
+                LEFT JOIN secciones S ON S.id_planta = P.id_planta
+                LEFT JOIN equipos E ON E.id_secciones = S.id_secciones
+                LEFT JOIN componentes C ON C.id_equipos = E.id_equipos
+                LEFT JOIN mecanismos M ON M.id_componente = C.id_componentes
+                LEFT JOIN mec_met MM ON MM.id_mecanismos = M.id_mecanismos
+                WHERE P.id_planta = ' .  $this->_datos;
         try{
         $this->QuerySql($sql);
         }catch (exception $e) {

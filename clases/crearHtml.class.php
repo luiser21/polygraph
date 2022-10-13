@@ -1548,9 +1548,9 @@ OE;
             case 14:
                 return <<<OE
                 CASE
-                    WHEN ea.id_estados = 1 THEN CONCAT('<button type="button" id="guardarreagenda"   ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">REAGENDAR</button>' )
-                    WHEN ea.id_estados = 2 THEN CONCAT('<button type="button" id="guardarreagenda"  ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">REAGENDAR</button>' )
-                    WHEN ea.id_estados = 8 THEN CONCAT('<button type="button" id="guardarreagenda"  ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">REAGENDAR</button>' )
+                    WHEN ea.id_estados = 1 THEN CONCAT('<button type="button" id="guardarreagenda"   ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">EDITAR</button>' )
+                    WHEN ea.id_estados = 2 THEN CONCAT('<button type="button" id="guardarreagenda"  ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">EDITAR</button>' )
+                    WHEN ea.id_estados = 8 THEN CONCAT('<button type="button" id="guardarreagenda"  ONCLICK=javascript:fn_reagendar(',  `$Campo` ,  ',\'{$this->_file}\'); class="btn btn-success">EDITAR</button>' )
                     WHEN ea.id_estados IN (4,5,6,7) THEN " "
                 END AGENDAR
 OE;
