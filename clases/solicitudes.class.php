@@ -63,7 +63,7 @@ class Plantas extends crearHtml{
 				  $sql = 'DELETE FROM autorizacion_evaluado where idcandidato='.$evaluado[0]['id_candidato'];
 				  $this->QuerySql($sql);
 
-				  $sql = "UPDATE  cupo_fechas set estado='LIBRE' where id_cupo_fecha=".$evaluado[0]['id_cupo_fecha'];
+				  $sql = "UPDATE  cupo_fechas set estado='SALA1' where id_cupo_fecha=".$evaluado[0]['id_cupo_fecha'];
 				  $this->QuerySql($sql);	
 				  
 				  $sql = 'DELETE FROM candidatos  where id_candidatos='.$evaluado[0]['id_candidato'];
