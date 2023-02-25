@@ -47,8 +47,8 @@ class Plantas extends crearHtml{
 	   
 	  /*
 	   $date_now = date('Y-m-d');
-	    $date_now = '2022-12-02';
-	   for($i=0;$i<=15;$i++){
+	    $date_now = '2023-02-26';
+	   for($i=0;$i<=30;$i++){
 	       $date_future = strtotime('+'.$i.' day', strtotime($date_now));
 	       $date_future = date('Y-m-d', $date_future);	       
     	   foreach($arrcupos2 as $value){ 	     	       
@@ -234,23 +234,26 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
      
         $datos = $this->Consulta($sql,1); 
 		
+		$sqles="SET lc_time_names = 'es_ES'";
+	    $this->Consulta($sqles,1);
+		
 		for($i=0;$i<count($datos);$i++){
 		    $sql2='';
 		    if(date("H")<=22){
-			     $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
+			     $sql2="SELECT DATE_FORMAT(c.fecha, '%a, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= date_add(NOW(), INTERVAL -10 DAY)  and 
+					where c.activo=1   and c.fecha>= date_add(NOW(), INTERVAL -5 DAY)  and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
 		    }elseif(date("H")>=22){
-		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
+		        $sql2="SELECT DATE_FORMAT(c.fecha, '%a, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
-					where c.activo=1   and c.fecha>= date_add(NOW(), INTERVAL -10 DAY) and 
+					where c.activo=1   and c.fecha>= date_add(NOW(), INTERVAL -5 DAY) and 
                     DAYOFWEEK(c.fecha) IN (2,3,4,5,6,7) AND
                     c.id_cupo_hora=".$datos[$i]['ITEM']."
 					";    
@@ -345,7 +348,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
 		for($i=0;$i<count($datos);$i++){
 		    $sql2='';
 		    if(date("H")<=22){
-		      	$sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
+		      	$sql2="SELECT DATE_FORMAT(c.fecha, '%a, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal
@@ -354,7 +357,7 @@ $yummy   = array("Lunes", "Martes", "Miercoles","Jueves","Viernes","Sabado","Dom
                      c.id_cupo_hora=".$datos[$i]['ITEM']." LIMIT 12
 					 ";
 		    }elseif(date("H")>=22){
-		        $sql2="SELECT DATE_FORMAT(c.fecha, '%W, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
+		        $sql2="SELECT DATE_FORMAT(c.fecha, '%a, %e %b') as fecha,c.estado,c.id_cupo_fecha,em.NOMBRE AS CLIENTE_FINAL
 					FROM cupo_fechas c
 					left JOIN evaluado E ON E.id_cupo_fecha = c.id_cupo_fecha
 					LEFT JOIN aliados em on em.id_aliado=E.clientefinal

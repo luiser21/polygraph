@@ -1,4 +1,6 @@
-<?php 
+<?php
+ini_set('display_errors','Off');
+ini_set('error_reporting', E_ALL ); 
 /*
 // Definir un nombre para cachear
 $archivo = basename($_SERVER['PHP_SELF']);
