@@ -45,9 +45,9 @@ class Plantas extends crearHtml{
 					cupo_hora CH ";
 	   $arrcupos2 = $this->Consulta($sql);
 	   
-	  /*
+	  
 	   $date_now = date('Y-m-d');
-	    $date_now = '2023-02-26';
+	  /*  $date_now = '2023-06-01';
 	   for($i=0;$i<=30;$i++){
 	       $date_future = strtotime('+'.$i.' day', strtotime($date_now));
 	       $date_future = date('Y-m-d', $date_future);	       
